@@ -1,0 +1,131 @@
+<?php echo $this->headLink()->appendStylesheet($this->basePath().'/css/consultation/espacerecherchesurveillant.css');
+      echo $this->headLink()->appendStylesheet($this->basePath().'/css/facturation/DatePicker.css'); //DatePicker
+?>
+<?php echo $this->headScript()->appendFile($this->basePath().'/js/consultation/espacerecherchesurv.js');?>
+
+<?php use Facturation\View\Helper\DateHelper;
+$Control = new DateHelper();
+
+//Réduire la chaine addresse
+function adresseText2($Text){
+	$chaine = $Text;
+	if(strlen($Text)>30){
+		$chaine = substr($Text, 0, 30);
+		$nb = strrpos($chaine, ' ');
+		$chaine = substr($chaine, 0, $nb);
+		$chaine .=' ...';
+	}
+	return $chaine;
+}
+?>
+
+
+<style>
+#contenu{ visibility: hidden }
+</style>
+
+<script>
+
+$(window).load(function () {
+
+	$('#wait').toggle(false);
+	$('#contenu').fadeIn().css({'visibility':'visible'});
+	 
+});
+</script>
+
+
+<div id="titre" style='font-family: police2; text-decoration:none; color: green; font-size: 20px; font-weight: bold; padding-left:20px;'> <i style='font-size: 25px;'>&curren;</i> LISTE DES CONSULTATIONS</div>
+<div id="contenu" >
+        <div id="wait" style="color: gray; font-size: 20px; text-align: center; margin-top: 80px;" > <span> Chargement ... </span> </div>
+
+        <div id="liste_personnel" style="float:right; margin-right: 0px; height:5px; margin-top: 10px;">
+          <img id="rechercher" style="display: inline; margin-bottom: 10px; height:22px; width:22px; padding-right:0px;" src='<?php echo $this->basePath().'/images_icons/calendar_16.PNG'?>' alt="Terminer" title="Rechercher">
+          <input type="text" id="calendrier" />
+        </div>
+		<table class="table table-bordered tab_list_mini" id="patient">
+			<thead>
+				<tr style="height:50px; width:100%; cursor:pointer;">
+					<th id="nom" align="center">Nom</th>
+					<th id="prenom" align="center">Pr&eacute;nom</th>
+					<th id="date" align="center" name="date">Date. naiss</th>
+					<th id="sexe" align="center" name="sexe">Sexe</th>
+					<th id="adresse" align="center" name="adresse">Adresse</th>
+					<th id="nationalite" align="center" name="nationalite">Nationalit&eacute;</th>
+					<th id="effectuer" align="center">Options</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+			    <!-- *****************On affiche maintenant tous ceux pour qui on a pris les constantes depuis toujours*********** -->
+
+
+			    <?php foreach($this->donnees as $donnees) :?>
+
+				<tr id="test">
+				    <td id="nomMaj"><?php echo $this->escapeHtml($donnees['Nom']);?></td>
+				    <td><?php echo $this->escapeHtml($donnees['Prenom']);?></td>
+					<td><?php echo $Control->convertDate($this->escapeHtml($donnees['Datenaissance']));?></td>
+					<td><?php echo $this->escapeHtml($donnees['Sexe']);?></td>
+					<td><?php echo $this->escapeHtml(adresseText2($donnees['Adresse']));?></td>
+					<td><?php echo $this->escapeHtml($donnees['Nationalite']);?></td>
+					<td>
+
+					    <a href="<?php echo $this->url('consultation', array('action'=>'maj-consultation'), array('query'=>array('id_patient'=>$this->escapeHtml($donnees['Id']), 'id_cons'=>$this->escapeHtml($donnees['Id_cons']))));?>">
+					       <img src='<?php echo $this->basePath().'/images_icons/voir2.png'?>' title=" Visualisation">
+					    </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+					    <a>
+					      <img src='<?php echo $this->basePath().'/images_icons/tick_16.png'?>' title="Terminer">
+					    </a>
+
+					    <a id='<?php $Id_cons = $this->escapeHtml($donnees['Id_cons']); echo 'cal'.$Id_cons ?>'>
+					    <?php echo $Control->convertDate($this->escapeHtml($donnees['Dateonly']));?>
+					    </a>
+					</td>
+				</tr>
+
+				<script>
+				$("<?php echo '#cal'.$Id_cons ?>").toggle(false);
+				</script>
+				<?php endforeach; ?>
+
+
+			    <!-- *************************************************************************** -->
+			</tbody>
+
+			<tfoot class="foot_style">
+				<tr>
+					<th id="nom_" style='width: 13%;'><input type="text" name="search_browser" value=" Nom" class="search_init" /></th>
+					<th id="prenom_" style='width: 15%;'><input type="text" name="search_browser" value=" Prenom" class="search_init" /></th>
+					<th id="date_" style='width: 12%;'><input type="text" name="search_browser" value=" Date naissance" class="search_init" /></th>
+					<th id="sexe_" style='width: 7%;'><input type="text" name="search_browser" value=" Sexe" class="search_init" /></th>
+					<th id="adresse_" style='width: 28%;'><input type="text" name="search_browser" value=" Adresse" class="search_init" /></th>
+					<th id="nationalite_" style='width: 15%;'><input type="text" name="search_browser" value=" Nationalite" class="search_init" /></th>
+					<th id="effectuer_" style='width: 10%;'><input type="hidden" name="search_browser" value="" class="" /></th>
+
+				</tr>
+			</tfoot>
+		</table>
+
+
+ </div>
+<script type="text/javascript">
+initialisation();
+</script>
+
+<?php echo $this->headScript()->appendFile($this->basePath().'/js/jquery-1.9.1.js');?>
+<?php echo $this->headScript()->appendFile($this->basePath().'/js/jquery-ui.js');?>
+<?php echo $this->headLink()->appendStylesheet($this->basePath().'/css/jquery-ui.css');?>
+<script type="text/javascript">
+calendrier();
+</script>
+
+<script>
+//POUR LE MENU GAUCHE dans -elementgauche.phtml
+$('#plus_naissance').toggle(true);
+$("#naissance").replaceWith("<li id='naissance' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/moins-vert.PNG' alt='Liste' /> Consultations </span></a></li>");
+dep1();
+$('#liste_style').css({'font-weight':'bold','color':'white','font-size':'22px'});
+</script>

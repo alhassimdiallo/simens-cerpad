@@ -1,0 +1,189 @@
+<!-- MES STYLES -->
+<?php echo $this->headLink()->appendStylesheet($this->basePath().'/css/facturation/styleFacturation.css');?>
+
+<!-- MES JS -->
+<?php
+echo $this->headScript ()->appendFile ( $this->basePath () . '/js/facturation/jsFacturation.js' );
+echo $this->headLink ()->appendStylesheet ( $this->basePath () . '/css/facturation/DatePicker.css' );
+?>
+
+<script>
+info_bulle();
+controle_saisie();
+
+var base_url = window.location.toString();
+var tabUrl = base_url.split("public");
+
+//POUR LE MENU GAUCHE dans -elementgauche.phtml
+// $('#plus_dossier_patient').toggle(true);
+// $("#dossier_patient").replaceWith("<li id='dossier_patient' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='"+tabUrl[0]+"public/images_icons/moin-green2.png' alt='Liste' /> Dossier Patient </span></a></li>");
+// dep_dossier_patient1();
+// $('#nouveau_style').css({'font-weight':'bold','color':'white','font-size':'22px'});
+$('#plus_naissance').toggle(true);
+$("#naissance").replaceWith("<li id='naissance' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='"+tabUrl[0]+"public/images_icons/moin-green2.png' alt='Liste' /> Naissances </span></a></li>");
+dep1();
+$('#ajouter_style').css({'font-weight':'bold','color':'white','font-size':'22px'});
+</script>
+
+
+<script type="text/javascript">
+$(window).load(function () {
+	$('#wait').toggle(false);
+	$('#contenu').fadeIn().css({'visibility':'visible'});
+});
+</script>
+
+<style>
+#contenu{ visibility: hidden };
+</style>
+
+
+
+<?php
+$form = $this->form;
+$form->setAttribute ( 'action', $this->url ( 'facturation', array ('action' => 'enregistrement-maman') ) );
+$form->setAttribute ('enctype','multipart/form-data');
+$this->form->prepare ();
+echo $this->form ()->openTag ( $form );
+?>
+
+<div id="titre" style='font-family: police2; text-decoration:none; color: green; font-size: 18px; font-weight: bold; padding-left: 30px;'><iS style='font-size: 25px;'>&curren;</iS> ETAT CIVIL DE LA MAMAN</div>
+<div id="wait" style="color: gray; font-size: 20px; text-align: center; margin-top: 80px;" > <span> Chargement ... </span> </div>
+<div id="contenu" >
+
+	<div style='width: 100%;'>
+    
+	 <div style='width: 15%; height: 150px; float:left;'>
+		<div class="photo_patient" id='photo'>
+			<input type='file' name="fichier" />
+			<!-- RECUPERER L'IMAGE -->
+			<input type='hidden' id="fichier_tmp" name="fichier_tmp" />
+			<!-- FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER -->
+		</div>
+     </div>
+     
+	 <div style='width: 80%; height: 150px; float:left;'>
+		<table id="form_patient" style="float: left;">
+
+			<tr class="comment-form-patient">
+                     <td style="width: 33%;"> <?php echo $this->formRow($this->form->get('SEXE'));?></td>
+                     <td style="width: 33%;"> <?php echo $this->formRow($this->form->get('LIEU_NAISSANCE'));?></td>
+                     <td style="width: 33%;"> <?php echo $this->formRow($this->form->get('EMAIL'));?></td>
+
+                  </tr>
+
+                  <tr class="comment-form-patient">
+                     <td > <?php echo $this->formRow($this->form->get('NOM'));?></td>
+                     <td > <?php echo $this->formRow($this->form->get('TELEPHONE'));?></td>
+                     <td > <?php echo $this->formRow($this->form->get('NATIONALITE_ORIGINE'));?></td>
+                  </tr>
+
+                  <tr class="comment-form-patient">
+                     <td > <?php echo $this->formRow($this->form->get('PRENOM'));?></td>
+                     <td > <?php echo $this->formRow($this->form->get('PROFESSION'));?></td>
+                     <td > <?php echo $this->formRow($this->form->get('NATIONALITE_ACTUELLE'));?></td>
+                  </tr>
+
+                  <tr class="comment-form-patient">
+                     <td > <?php echo $this->formRow($this->form->get('DATE_NAISSANCE'));?></td>
+                     <td > <?php echo $this->formRow($this->form->get('ADRESSE'));?></td>
+                     <td >  </td>
+                  </tr>
+
+		</table>
+	  </div>
+		
+	  <div style='width: 3%; height: 150px; float:left;'>
+		<div class="barre_vertical"></div>
+
+		<div class="vider_formulaire" id="vider_champ">
+			<hass> <input type="submit" title="Vider tout" name="vider"
+				id="vider"> </hass>
+		</div>
+
+		<div class="supprimer_photo" id="div_supprimer_photo">
+			<hass> <input name="supprimer_photo"> </hass>
+			<!-- balise sans importance pour le moment -->
+		</div>
+
+		<div class="ajouter_photo" id="div_ajouter_photo">
+			<hass> <input type="submit" alt="ajouter_photo"
+				title="Ajouter une photo" name="ajouter_photo" id="ajouter_photo"> </hass>
+		</div>
+
+		<div class="modifer_donnees" id="div_modifier_donnees">
+			<hass> <input alt="modifer_donnees" title="modifer les donnees"
+				name="modifer_donnees" id="modifer_donnees"> </hass>
+		</div>
+      </div>
+    </div>
+    
+	<!-- table style='width: 93%; margin-top: 31%; margin-bottom: 2%;'>
+			<tr>
+				<th style="height: 20px; margin-bottom: 15px; margin-top: 25px; float: right;">
+					<div id="bouton_valider_donnees">
+						<button id='bouton_donnees_valider'>Valider</button>
+					</div> 
+					<div id="bouton_modifier_donnees">
+						<button id='bouton_donnees_modifier'>Modifier</button>
+					</div>
+				</th>
+			</tr>
+
+	</table-->
+	
+	<table style="margin-top: 365px; width: 100%;  height: 12px;">
+	  
+	  <tr style="">
+	  <td style="width: 42%;"></td>
+	  <td style="width: 10%;" id="thoughtbot" >
+		<button id="annuler"
+			style="font-family: police2; font-size: 17px; font-weight: bold;">
+			Annuler
+		</button>
+	  </td>
+	  
+	  <td style="width: 10%;" id="thoughtbot">
+		<button type="submit" name="terminer" id="terminer"
+			style=" font-family: police2; font-size: 17px; font-weight: bold;">
+			Terminer
+		</button>
+	  </td>
+	  
+	  <td style="width: 38%;"></td>
+	  
+	  </tr>
+    </table>
+
+</div>
+
+<!-- POP UP pour Confirmation Suppression -->
+<div id="confirmation" title="Confirmation de la suppression"
+	style="display: none;">
+	<p style="font-size: 16px;">
+		<span style="float: left; margin: 0 0px 20px 0;"> <img
+			src="<?php echo $this->basePath().'/images_icons/warning_16.png';?>" />
+
+			Etes-vous s&ucirc;r de vouloir supprimer la photo ?
+		</span>
+	</p>
+</div>
+
+
+<!-- LES BOUTONS "TERMINER" ou "VALIDER" -->
+
+<?php echo $this->form()->closeTag();?>
+
+
+<script> 
+    $('#annuler').click(function(){ 
+		 vart=tabUrl[0]+'public/facturation/ajouter-naissance';
+	     $(location).attr("href",vart);
+	     return false;
+	});
+
+    genreMaman = 1;
+	$('#SEXE').val('Féminin').attr('disabled',true).css({'background':'#f8f8f8'});
+	
+</script>
+

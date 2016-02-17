@@ -1,0 +1,224 @@
+#liste_personnel input[type="text"]
+{
+	border-right-width: 2px;                
+	border-left-width: 2px; 
+	border-top-width: 2px; 
+	border-bottom-width: 2px; 
+	border-color: #cccccc;
+	width: 120px;
+	padding-left: 5px;
+}
+
+#contenu {
+    background: #fff; max-height: 3000px;
+    border: 3px solid #ccc ;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top: 2px solid #cccccc;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-shadow: 0pt 5pt 12px rgba(0, 0, 0, 0.5);
+}
+
+#titre {
+	height: 30px;
+    border: 3px solid #ccc;
+	border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom: 2px solid #cccccc;
+    background : #fff;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    padding-top : 13px;
+    box-shadow: 0pt 0pt 12px rgba(0, 0, 0, 0.5);
+}
+
+tr {
+	background: #fbfbfb;
+}
+
+#nomMaj{
+	text-transform : uppercase;
+}
+
+#patient thead tr th{
+	color: green;
+	text-transform : uppercase;
+	font-size: 15px;
+}
+
+.dataTables_paginate *
+{
+	background: #e9e8e8;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	padding-left: 6px;
+	padding-right: 6px;
+    color: black;	
+	margin-top: -120px;
+	cursor: pointer;
+   
+}
+
+div .dataTables_paginate
+{
+	margin-bottom: 20px;
+}
+
+.dataTables_paginate .first
+{
+	margin-right: 0px;
+}
+
+.dataTables_paginate .last
+{
+	margin-left: 0px;
+}
+
+.dataTables_paginate .previous
+{
+	margin-right: 2px;
+	border-left: 1px solid #bdb9b9;
+}
+
+.dataTables_paginate .next
+{
+	margin-left: 3px;
+	border-right: 1px solid #bdb9b9;
+}
+
+.dataTables_paginate a:hover
+{
+	text-decoration: none;
+	background-color: #c1c1c1;
+	color: white;
+}
+
+.dataTables_paginate .paginate_active
+{
+	text-decoration: none;
+	background-color: #b5b2b2;
+	color: white;
+}
+
+/* EN TETE*/
+#_nom
+{
+	width: 13%;
+}
+
+#_prenom
+{
+	width: 15%;
+}
+
+#_date
+{
+	width: 12%;
+}
+
+#_sexe
+{
+	width: 7%;
+}
+
+#_adresse
+{
+	width: 28%;
+}
+
+#_nationalite
+{
+	width: 15%;
+}
+
+#_effectuer
+{
+	width: 10%;
+}
+
+/* PIED DE PAGE*/
+#nom_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+#prenom_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+#date_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+#sexe_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+#adresse_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+#nationalite_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+#effectuer_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+/* #ui-datepicker-div tr td a:hover{
+	background: green;
+} */
+
+#rechercher{
+	cursor: pointer;
+}
+
+/* STYLE POUR LA LISTE DE SELECTION DE LA TABLE*/
+#listeDataTable{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: -10px;
+}

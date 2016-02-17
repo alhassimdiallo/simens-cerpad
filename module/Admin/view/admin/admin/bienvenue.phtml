@@ -1,0 +1,90 @@
+<?php  echo $this->headLink()->prependStylesheet($this->basePath().'/css/bootstrap.min.css');?>
+<style type="text/css">
+.module {
+	background: url("<?php echo $this->basePath()."/images_icons/fond_module.jpg";?>") no-repeat;
+	display: inline-block;
+	width: 170px;
+	height: 140px;
+	border: 1px dashed #ccc;
+    border-top-right-radius: 40px;
+	border-top-left-radius: 40px;
+	border-bottom-right-radius: 40px;
+	border-bottom-left-radius: 40px;
+	color: blue;
+	margin: 14px;
+	font-size: 25px;
+	text-align: center;
+	text-shadow: green;
+	text-transform: capitalize;
+	vertical-align: middle;
+	padding: 15px;
+	padding-top: 40px;
+}
+
+#module {
+ 	margin: auto; 
+}
+
+body {
+	background-color: #2E363F;
+}
+</style>
+
+<table style="width: 100%; height: 30px;">
+
+  <tr style="width: 100%;">
+     <td>
+     
+        <div style='width: 100%; margin-top: 15px; font-family: times new roman;'>
+	      <div style="width: 70%; float:left; text-align: left; margin-left: 10px;  font-size: 20px; color: white;">
+		    <?php echo "<i>Bienvenue:</i>  M. ".$this->user['Prenom']."  ".$this->user['Nom'];?>
+	      </div>
+	      <div style="width: 27%; float:left; text-align: right; font-size: 15px; color: white; margin-right: 10px;">
+		    <a href="<?php echo $this->url('admin', array('action'=>'logout'));?>">
+			  <span style="color: white; "><i> D&eacute;connexion </i></span>
+		    </a>
+	      </div>
+	    </div>
+     
+     </td>
+  </tr>
+  
+  
+  <tr>
+     <td style=''>
+      <div id="module" style='width: 100%;  margin-top: 70px; '> 
+		
+		<a
+			href="<?php echo $this->url('consultation', array('action'=>'recherche'));?>">
+			<span class="module" > Module Consultation </span>
+		</a>
+		<a
+			href="<?php echo $this->url('hospitalisation', array('action'=>'index'));?>">
+			<span class="module" > Module Hospitalisation </span>
+		</a> <a
+			href="<?php echo $this->url('facturation', array('action'=>'liste-patient'));?>">
+			<span class="module" > Module Facturation </span>
+		</a> <a
+			href="<?php echo $this->url('espace-patient', array('action'=>'recherche'));?>">
+			<span class="module" > Module Espace patient </span>
+		</a> <a
+			href="<?php echo $this->url('personnel', array('action'=>'index'));?>">
+			<span class="module" > Module Personnel </span>
+		</a> <a
+			href="<?php echo $this->url('pharmacie', array('action'=>'index'));?>">
+			<span class="module" > Module Pharmacie </span>
+		</a> <a
+			href="<?php echo $this->url('admin', array('action'=>'parametrages'));?>">
+			<span class="module" style="color:green;"> Module Param&eacute;trages </span>
+		</a> <a
+			href="<?php echo $this->url('admin', array('action'=>'utilisateurs'));?>">
+			<span class="module" style="color:green;"> Gestion des utilisateurs </span>
+		</a>
+		
+		
+
+	  </div>
+     </td>
+  </tr>
+  
+</table>

@@ -1,0 +1,160 @@
+<?php use Facturation\View\Helper\DateHelper; ?>
+<!-- MES STYLES -->
+<?php echo $this->headLink()->appendStylesheet($this->basePath().'/css/facturation/styleDeclarerDeces.css');
+echo $this->headLink()->appendStylesheet($this->basePath().'/css/facturation/DatePicker.css'); //DatePicker?>
+
+<!-- MES JS -->
+<?php echo $this->headScript()->appendFile($this->basePath().'/js/facturation/jsDeclarerDeces.js');?>
+
+<?php $Control = new DateHelper();?>
+
+<script type="text/javascript">
+var base_url = window.location.toString();
+var tabUrl = base_url.split("public");
+
+$('#plus_deces').toggle(true);
+$("#deces").replaceWith("<li id='deces' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='"+tabUrl[0]+"public/images_icons/moin-green2.png' alt='Liste' /> D&eacute;c&egrave;s </span></a></li>");
+dep_deces1();
+$('#declarer_style').css({'font-weight':'bold','color':'white','font-size':'22px'});
+
+
+$(window).load(function () {
+	$('#wait').toggle(false);
+	$('#contenu').fadeIn().css({'visibility':'visible'});
+});
+</script>
+
+<style>
+#contenu{ visibility: hidden };
+</style>
+
+     <div id="titre" style='font-family: police2; text-decoration:none; color: green; font-size: 18px; font-weight: bold; padding-left: 30px;'><iS style='font-size: 25px;'>&curren;</iS> RECHERCHER LE PATIENT</div>
+     
+     <div id="wait" style="color: gray; font-size: 20px; text-align: center; margin-top: 80px;" > <span> Chargement ... </span> </div>
+     
+     <div id="contenu" >
+        <div style="margin-right: 45px; float:right; font-size: 15px; color: gray; margin-top:5px;"><a style="text-decoration: none; cursor:pointer;" href="javascript:ajouterUnPatient()" ><img src='../images_icons/aj.gif' title="ajouter" /><i style="font-family: Times New Roman; font-size: 15px; color: green;"> ajouter le patient</i></a></div>
+		<table style='width:95%; margin-left: 10px; align:center' class="table table-bordered tab_list_mini" id="patient">
+			<thead >
+			    <tr >
+				    <th id="idpatient_" style='width: 10%;'><input type="text" name="search_browser" value=" ID_Patient" class="search_init" /></th>
+					<th id="nom_" style='width: 15%;'><input type="text" name="search_browser" value=" Nom" class="search_init" /></th>
+					<th id="prenom_" style='width: 17%;'><input type="text" name="search_browser" value=" Pr&eacute;nom" class="search_init" /></th>
+					<th id="date_" style='width: 13%;'><input type="text" name="search_browser" value=" Date naissance" class="search_init" /></th>
+					<th id="adresse_" style='width: 40%;'><input type="text" name="search_browser" value=" Adresse" class="search_init" /></th>
+					<th id="effectuer_" style='width: 5%;'><input type="hidden" name="search_browser" value="" class="" />Options</th>
+
+				</tr>
+
+			</thead>
+
+			<tbody id="donnees" class="liste_patient">
+
+	            <?php /*Ici --- Liste Ajax*/ ?>
+
+			</tbody>
+
+		</table>
+
+</div>
+
+<!-- POP UP pour Confirmation Suppression -->
+                            <div id="confirmation" title="Informations" style="display:none;">
+                              <div id="info" style="font-size: 16px;">
+
+                              </div>
+                            </div>
+
+
+<!-- LES BOUTONS "TERMINER" ou "VALIDER" -->
+
+
+
+<!-- PARTIE ENREGISTREMENT DU DECES -->
+
+    <div id="declarer_deces">
+          <a href="" id="precedent" style="text-decoration: none; font-family: police2; width:50px; margin-left:30px;">
+	        <img style="display: inline; " src='<?php echo $this->basePath().'/images_icons/transfert_gauche.PNG'?>' alt='Constantes' title="Rechercher" />
+		    Pr&eacute;c&eacute;dent
+		  </a>
+
+		  <div id="info_patient">
+		  </div>
+
+		  <div id="titre_info_deces">Informations sur le d&eacute;c&egrave;s</div>
+		  <div id="barre_separateur">
+		  </div>
+
+		  <div id="info_bebe" style='width: 100%; margin-top:-10px;'>
+               <div style="float:left; width:18%; height:105px;">
+		       </div>
+		       <?php $form = $this->form ;
+		       $form->setAttribute ( 'action', $this->url ( 'facturation', array ('action' => 'enregistrer-deces') ) );
+		       $form->prepare();
+		       echo $this->form()->openTag($form);?>
+		       <?php echo $this->formhidden($form->get('id_patient'))?>
+		       <div style='width: 77%; float:left;'>
+		       <table id="form_patient" style="width: 100%;">
+		             <tr>
+		                 <td style='width: 33%;' class="comment-form-patient"><?php echo $this->formRow($form->get('date_deces'))?></td>
+		                 <td style='width: 33%;' class="comment-form-patient"><?php echo $this->formRow($form->get('heure_deces'))?></td>
+		                 <td style='width: 33%;' class="comment-form-patient"><?php echo $this->formRow($form->get('age_deces'))?></td>
+
+		             </tr>
+
+		             <tr>
+		                 <td class="comment-form-patient" style="display: inline-block; vertical-align: top;"><?php echo $this->formRow($form->get('lieu_deces'))?></td>
+		                 <td class="comment-form-patient"><?php echo $this->formRow($form->get('circonstances_deces'))?></td>
+		                 <td class="comment-form-patient"><?php echo $this->formRow($form->get('note'))?></td>
+
+		             </tr>
+
+		       </table>
+		       </div>
+		       
+		       <div style="float:left; width:5%;">
+		       <div id="barre_vertical"></div>
+
+		       <div id="menu">
+		           <div class="vider_formulaire" id="vider_champ">
+                     <input title="Vider tout" name="vider" id="vider">
+                   </div>
+
+                   <div class="modifer_donnees" id="div_modifier_donnees">
+                     <input alt="modifer_donnees" title="modifer les donnees" name="modifer_donnees" id="modifer_donnees">
+                   </div>
+
+                   <div class="supprimer_photo" id="div_supprimer_photo">
+                     <input name="supprimer_photo"> <!-- balise sans importance pour le moment -->
+                   </div>
+
+                   <div class="ajouter_photo" id="div_ajouter_photo">
+                     <input type="submit" alt="ajouter_photo" title="Ajouter une photo" name="ajouter_photo" id="ajouter_photo">
+                   </div>
+               </div>
+               </div>
+               <div style="width:100%;">
+               <div id="terminer_annuler">
+                    <div class="block" id="thoughtbot">
+                       <button type="submit" style=" height:35px; ">Terminer</button>
+                    </div>
+
+                    <div class="block" id="thoughtbot">
+                       <button id="annuler" style=" height:35px; ">Annuler</button>
+                    </div>
+               </div>
+               </div>
+               <?php echo $this->form()->closeTag(); ?>
+
+		  </div>
+
+    </div>
+
+<script>
+animation();
+function ajouterUnPatient(){
+	vart=tabUrl[0]+'public/facturation/ajouter-patient';
+    $(location).attr("href",vart);
+    return false;
+}
+</script>

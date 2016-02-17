@@ -1,0 +1,152 @@
+<!-- MES STYLES --> 
+<?php echo $this->headLink()->appendStylesheet($this->basepath().'/css/hospitalisation/styleListeDemandesExamens.css');
+      echo $this->headLink()->appendStylesheet($this->basepath().'/css/facturation/DatePicker.css'); 
+?>
+<!-- MES JS -->
+<?php echo $this->headScript()->appendFile($this->basepath().'/js/archivage/jsListeDemandesExamens.js');?>
+
+<?php $form = $this->form; ?>
+
+<style>
+#contenu{ visibility: hidden; }
+#vue_detail_hospi_patient{ visibility: hidden; }
+#vue_patient{ visibility: hidden; }
+</style>
+
+<script>
+$('#plus_biologieArchive').toggle(true);
+$("#biologieArchive").replaceWith("<li id='biologieArchive' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img src='<?php echo $this->basePath().'/images_icons/moin-green2.png';?>' alt='Liste' /> Biologie </span></a></li>");
+dep_biologieArchive1();
+$('#styleBiologieArchive').css({'font-weight':'bold','color':'white','font-size':'20px'});
+
+$(window).load(function () {
+	$('#wait').toggle(false);
+	$('#contenu').fadeIn().css({'visibility':'visible'});
+});
+</script>
+
+<div id="titre" style='font-family: police2; text-decoration: none; color: green; font-size: 20px; font-weight: bold; padding-left:20px;'>
+	<iS style='font-size: 25px;'>&curren;</iS>
+	LISTE DES PATIENTS
+</div>
+<div id="wait" style="color: gray; font-size: 20px; text-align: center; margin-top: 80px;" > <span> Chargement ... </span> </div>
+<div id="contenu"> 
+
+            <table id="patient" class="table table-bordered tab_list_mini" >
+				<thead>
+					<tr style="height: 50px; width:100%;">
+						<th id="nom" style='cursor: pointer;'>Nom</th>
+						<th id="prenom" style='cursor: pointer;'>Pr&eacute;nom</th>
+						<th id="date" style='cursor: pointer;'>Date. naiss</th>
+						<th id="sexe" style='cursor: pointer;'>Sexe</th>
+						<th id="adresse" style='cursor: pointer;'>Date & Heure Demande</th>
+						<th id="nationalite" style='cursor: pointer;'>M&eacute;decin demandeur</th>
+						<th id="effectuer">Options</th>
+					</tr>
+				</thead>
+
+				<tbody id="donnees" class="liste_patient">
+
+					<!-- ************ On affiche les patients en une liste ordonnï¿½e************ -->
+
+				</tbody>
+
+				<tfoot id="foot" class="foot_style">
+					<tr>
+						<th id="nom_" style='width: 16%;'><input type="text" name="search_browser"
+							value=" Nom" class="search_init" /></th>
+						<th id="prenom_" style='width: 18%;'><input type="text" name="search_browser"
+							value=" Pr&eacute;nom" class="search_init" /></th>
+						<th id="date_" style='width: 12%;'><input type="text" name="search_browser"
+							value=" Date naissance" class="search_init" /></th>
+						<th id="sexe_" style='width: 7%;'><input type="text" name="search_browser"
+							value=" Sexe" class="search_init" /></th>
+						<th id="adresse_" style='width: 20%;'><input type="text" name="search_browser"
+							value=" Adresse" class="search_init" /></th>
+						<th id="nationalite_" style='width: 20%;'><input type="text" name="search_browser"
+							value=" Nationalite" class="search_init" /></th>
+						<th id="effectuer_" style='width: 7%;'><input type="hidden" name="search_browser"
+							value="" class="" /></th>
+
+					</tr>
+				</tfoot>
+			</table>
+</div>
+
+<div id="vue_patient">
+
+</div>
+
+<div id="vue_detail_hospi_patient">
+
+</div>
+
+<!--***********************************************************************************************-->                              
+
+<!--==========================POP UP pour Afficher les détails =================================-->                              
+                          
+<!--***********************************************************************************************-->  
+        <div id="informations" title="D&eacute;tails des infos sur l'examen" style="display:none;">
+             
+             <div id="info" style="font-size: 16px;">
+                              
+             </div>
+             
+        </div>
+        
+        
+<!--***********************************************************************************************-->                              
+
+<!--==========================POP UP pour Afficher les détails =================================-->                              
+                          
+<!--***********************************************************************************************-->  
+        <div id="application_examen" title="Les r&eacute;sultats de l'examen" style="display:none;">
+             
+             <div id="info_examen" style="font-size: 16px;">
+                <?php $form = $this->form;?>
+                <?php echo $this->formhidden($form->get('Examen_id_cons'));?>
+
+                <table id="form_patient" style="width: 100%;">  
+                   <tr class="comment-form-patient" style="width: 100%;">
+                      <td id='technique' style="width: 50%;"> <?php echo $this->formRow($form->get('technique_utilise'));?></td> 
+                      <td id= 'imagesExamensMorphologiques' style="width: 50%;"> <img src='../images_icons/jpg_file.png' title='Ajouter une image'/> </td>
+                   </tr>
+                </table>
+                
+                <table id="form_patient" style="width: 100%;">  
+                   <tr class="comment-form-patient" style="width: 100%;">
+                      <td style="width: 50%; "> <?php echo $this->formRow($form->get('resultat'));?></td> 
+                      <td style="width: 50%; "> <?php echo $this->formRow($form->get('conclusion'));?></td> 
+                   </tr>
+                </table>
+
+             </div>
+             <div id="script_donnees">
+             
+             </div>
+        
+        </div>
+
+        
+<!--***********************************************************************************************-->                              
+
+<!--==========================POP UP pour Afficher les détails =================================-->                              
+                          
+<!--***********************************************************************************************-->  
+        <div id="envoyer_examen" title="Confirmation de l'envoi des r&eacute;sultats" style="display:none;">
+             
+              <p style="font-size: 16px;">
+                 <span style="float:left; margin:0 0px 20px 0; font-size:17px; ">
+                 <img src="<?php echo $this->basepath().'/images_icons/warning_16.png';?>" />
+                                
+                 Etes-vous s&ucirc;r de vouloir envoyer les r&eacute;sultats de l'examen ?</span>
+             </p>
+             
+        </div>
+        
+        
+<script type="text/javascript">
+$(function(){
+	initialisation();
+});
+</script>

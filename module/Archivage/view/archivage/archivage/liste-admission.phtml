@@ -1,0 +1,142 @@
+<script>
+var base_url = window.location.toString();
+var tabUrl = base_url.split("public");
+
+$('#plus_facturationArchive').toggle(true);
+$("#facturationArchive").replaceWith("<li id='facturationArchive' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='"+tabUrl[0]+"public/images_icons/moin-green2.png' alt='Liste' /> Facturation </span></a></li>");
+dep_facturationArchive1();
+$('#listefacturationArchive').css({'font-weight':'bold','color':'white','font-size':'20px'});
+
+</script>
+
+<!-- MES STYLES -->
+<?php echo $this->headLink()->appendStylesheet($this->basePath().'/css/facturation/styleListePatientAdmis.css');?>
+
+<!-- MES JS -->
+<?php echo $this->headScript()->appendFile($this->basePath().'/js/archivage/jsListepatientAdmis.js');?>
+
+<?php use Facturation\View\Helper\DateHelper;
+$Control = new DateHelper();?>
+<style>
+/* STYLE POUR LA LISTE DE SELECTION DE LA TABLE*/
+#listeDataTable{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: -10px;
+}
+
+#contenu{ visibility: hidden; }
+#vue_patient{ visibility: hidden; }
+</style>
+
+<script>
+$(window).load(function () {
+
+	$('#wait').toggle(false);
+	$('#contenu').fadeIn().css({'visibility':'visible'});
+	 
+});
+</script>
+
+
+
+<div id="contenuInterface" >
+
+<div id="titre" style='font-family: police2; text-decoration:none; color: green; font-size: 18px; font-weight: bold; padding-left: 20px;'><iS style='font-size: 25px;'>&curren;</iS> LISTE DES PATIENTS ADMIS</div>
+<div id="wait" style="color: gray; font-size: 20px; text-align: center; margin-top: 80px;" > <span> Chargement ... </span> </div>
+<div id="contenu" >
+
+        <div id="liste_personnel" style="float:right; margin-right: 75px; height:5px; margin-top: 5px; width: 150px;">
+          <?php echo $this->formRow($this->form->get('liste_service'));?>
+        </div>
+
+		<table class="table table-bordered tab_list_mini" id="patientdeces">
+			<thead>
+				<tr style="height:50px; width:100%;">
+					<th id="nom" align="center">Nom</th>
+					<th id="prenom" align="center">Pr&eacute;nom</th>
+					<th id="date" align="center" name="date">D. naissance</th>
+					<th id="sexe" align="center" name="sexe">Sexe</th>
+					<th id="adresse" align="center" name="adresse">Adresse</th>
+					<th id="nationalite" align="center" name="nationalite">Nationalite</th>
+					<th id="effectuer" align="center">Options</th>
+				</tr>
+			</thead>
+
+			<tbody id="donnees" class="liste_patient">
+
+	            <!-- ************ On affiche les patients en une liste ordonn�e************ -->
+
+				<?php foreach($this->listePatientsAdmis as $donnees):?>
+
+				<tr id="<?php echo $this->escapeHtml($donnees['Id_admission']);?>">
+
+				    <td style='text-transform : uppercase;'><?php echo $this->escapeHtml($donnees['Nom']);?></td>
+				    <td><?php echo $this->escapeHtml($donnees['Prenom']);?></td>
+					<td><?php echo $Control->convertDate($this->escapeHtml($donnees['Datenaissance']));?></td>
+					<td><?php echo $this->escapeHtml($donnees['Sexe']);?></td>
+					<td><?php echo $this->escapeHtml($donnees['Adresse']);?></td>
+					<td><?php echo $this->escapeHtml($donnees['Nationalite']);?></td>
+					<td>
+					    <?php $id = $this->escapeHtml($donnees['Id']);?>
+					    <a style='margin-left: 5%; margin-right: 6%;' href="javascript:affichervue('<?php echo $id ?>','<?php echo $this->escapeHtml($donnees['Id_admission']);?>')">
+					       <img style="display: inline;" src='<?php echo $this->basePath().'/images_icons/voir2.png'?>' title="details" />
+					    </a>&nbsp;&nbsp;
+
+					    <a href="javascript:annuler('<?php echo $this->escapeHtml($donnees['Id_admission']);?>')" style="display: inline;" >
+					    	<img  src='<?php echo $this->basePath().'/images_icons/symbol_supprimer.png'?>' title="Annuler" />
+					    </a>&nbsp;
+
+					    <a id='<?php echo 'Service'.$id ?>'>
+					    <?php echo $this->escapeHtml($donnees['Nomservice']);?>
+					    </a>
+
+					</td>
+				</tr>
+
+			    <script>
+				$("<?php echo '#Service'.$id ?>").toggle(false);
+				</script>
+
+				<?php endforeach; ?>
+
+			</tbody>
+
+			<tfoot id="foot" class="foot_style">
+				<tr>
+					<th id="nom_" style="width: 13%;"><input type="text" name="search_browser" value=" Nom" class="search_init" /></th>
+					<th id="prenom_" style="width: 15%;"><input type="text" name="search_browser" value=" Prenom" class="search_init" /></th>
+					<th id="date_" style="width: 12%;"><input type="text" name="search_browser" value=" Date naissance" class="search_init" /></th>
+					<th id="sexe_" style="width: 7%;"><input type="text" name="search_browser" value=" Sexe" class="search_init" /></th>
+					<th id="adresse_" style="width: 28%;"><input type="text" name="search_browser" value=" Adresse" class="search_init" /></th>
+					<th id="nationalite_" style="width: 15%;"><input type="text" name="search_browser" value=" Nationalite" class="search_init" /></th>
+					<th id="effectuer_" style="width: 10%;"><input type="hidden" name="search_browser" value="" class="" /></th>
+
+				</tr>
+			</tfoot>
+		</table>
+
+</div>
+</div>
+<!-- POP UP pour Confirmation Suppression -->
+                            <div id="confirmation" title="Confirmation de l'annulation" style="display:none;">
+                              <p style="font-size: 19px;">
+                                 <span style="float:left; margin:0 0px 20px 0; ">
+                                 <img src="<?php echo $this->basePath().'/images_icons/warning_16.png';?>" />
+                                 Etes-vous s&ucirc;r de vouloir annuler l'admission ?</span>
+
+                              </p>
+                            </div>
+
+
+<!-- LES BOUTONS "TERMINER" ou "VALIDER" -->
+
+<div id="vue_patient">
+
+</div>
+
+<script type="text/javascript">
+$(function(){
+	initialisation();
+});
+</script>

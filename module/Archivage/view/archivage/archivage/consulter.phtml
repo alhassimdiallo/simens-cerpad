@@ -1,0 +1,187 @@
+<!-- Mes CSS -->
+<?php echo $this->headLink()->appendStylesheet($this->basePath().'/css/consultation/styleConsultationMedecin.css');?>
+
+
+<?php echo $this->headLink()->appendStylesheet($this->basePath().'/css/consultation/recherche.css');
+use Facturation\View\Helper\DateHelper;
+use Zend\Db\ResultSet\ResultSet;
+$Control = new DateHelper();
+
+
+function AdresseText($Text){
+	$chaine = $Text;
+	if(strlen($Text)>30){
+		$chaine = substr($Text, 0, 30);
+		$nb = strrpos($chaine, ' ');
+		$chaine = substr($chaine, 0, $nb);
+		$chaine .=' ...';
+	}
+	return $chaine;
+}
+?>
+
+<script>
+$('#plus_consultationArchive').toggle(true);
+$("#consultationArchive").replaceWith("<li id='consultationArchive' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img src='<?php echo $this->basePath().'/images_icons/moin-green2.png';?>' alt='Liste' /> Consultations </span></a></li>");
+dep_consultationArchive1();
+$('#styleConsultation').css({'font-weight':'bold','color':'white','font-size':'20px'});
+
+
+$(window).load(function () {
+	$('#wait').toggle(false);
+	$('#contenu').fadeIn().css({'visibility':'visible'});
+});
+</script>
+
+<style>
+#contenu { visibility: hidden; };
+</style>
+
+<div id="titre" style='font-family: police2; color: green; font-size: 20px; font-weight: bold; padding-left:20px;'><i style='font-size: 25px;'>&curren; </i> LISTE DES CONSULTATIONS</div>
+
+<div id="wait" style="color: gray; font-size: 20px; text-align: center; margin-top: 80px;" > <span> Chargement ... </span> </div>
+
+<div id="contenu" >
+
+		<table class="table table-bordered  tab_list_mini" id="patient">
+			<thead>
+				<tr style="height:50px; width: 100%;">
+					<th id="nom" align="center">Nom</th>
+					<th id="prenom" align="center">Pr&eacute;nom</th>
+					<th id="date" align="center" name="date">Date. naiss</th>
+					<th id="sexe" align="center" name="sexe">Sexe</th>
+					<th id="adresse" align="center" name="adresse">Adresse</th>
+					<th id="nationalite" align="center" name="nationalite">Nationalit&eacute;</th>
+					<th id="effectuer" align="center">Options</th>
+				</tr>
+			</thead>
+
+			<tbody>
+			<!-- ************ On affiche ceux pour qui on n'a pas encore pris les constantes************ -->
+				<?php $resultSet = new ResultSet();
+					  $resultSet->initialize($this->donnees);
+					  $resultSet->buffer(); ?>
+
+				<?php foreach( $resultSet as $donnees) :?>
+
+				<tr>
+				    <td id="nomMaj">
+				       <div id="<?php echo $donnees['Id']; ?>" style="width: 10px; height: 22px; margin-left: -10px; margin-right: 0.5px; float:left;" >
+				          <img id="image-alert" style=" vertical-align: top;" src='<?php echo $this->basePath().'/images_icons/alert_rv_r.png'?>' />
+				       </div>
+				       <?php echo $this->escapeHtml($donnees['Nom']);?>
+				    </td>
+				    <td><?php echo $this->escapeHtml($donnees['Prenom']);?></td>
+					<td><?php echo $Control->convertDate($this->escapeHtml($donnees['Datenaissance']));?></td>
+					<td><?php echo $this->escapeHtml($donnees['Sexe']);?></td>
+					<td><?php echo AdresseText($this->escapeHtml($donnees['Adresse']));?></td>
+					<td><?php echo $this->escapeHtml($donnees['Nationalite']);?></td>
+					<td>
+
+					    <a href="<?php echo $this->url('archivage', array('action'=>'consultation'),  array('query'=>array('id_admission_patient'=>$this->escapeHtml($donnees['Id_admission']))));?>">
+					       <img src='<?php echo $this->basePath().'/images_icons/doctor_16.png'?>' title=" Consultation" />
+					    </a>&nbsp;
+
+					    <a>
+					       <img style="color: white; opacity: 0.05;" src='<?php echo $this->basePath().'/images_icons/modifier.png'?>' />
+					    </a>&nbsp;
+
+					    <a>
+					       <img style="color: white; opacity: 0.05;" src='<?php echo $this->basePath()."/images_icons/tick_16.png"?>' />
+					    </a>
+					</td>
+				</tr>
+				
+				<script> $("#"+"<?php echo $donnees['Id']; ?>").toggle(false); </script>
+				
+				<?php endforeach; ?>
+
+			</tbody>
+
+			<tfoot class="foot_style">
+				<tr>
+					<th id="nom_" style='width: 13%;'><input type="text" name="search_browser" value=" Nom" class="search_init" /></th>
+					<th id="prenom_" style='width: 15%;'><input type="text" name="search_browser" value=" Prenom" class="search_init" /></th>
+					<th id="date_" style='width: 12%;'><input type="text" name="search_browser" value=" Date naissance" class="search_init" /></th>
+					<th id="sexe_" style='width: 7%;'><input type="text" name="search_browser" value=" Sexe" class="search_init" /></th>
+					<th id="adresse_" style='width: 28%;'><input type="text" name="search_browser" value=" Adresse" class="search_init" /></th>
+					<th id="nationalite_" style='width: 15%;'><input type="text" name="search_browser" value=" Nationalite" class="search_init" /></th>
+					<th id="effectuer_" style='width: 10%;'><input type="hidden" name="search_browser" value="" class="" /></th>
+
+				</tr>
+			</tfoot>
+		</table>
+
+</div>
+
+<!-- ul id="ctxMenu" class="contextMenuJQ" style="margin-left: -240px; margin-top: -100px;" >
+	<li class=""><a id="simens_modif" href="#simens_modif">Modifier</a></li>
+	<li class=""><a id="simens_affiche" href="#simens_affiche">Afficher les details</a></li>
+</ul-->
+<script type="text/javascript">
+			var asInitVals = new Array();
+			var oTable = $('#patient').dataTable
+			( {
+							"sPaginationType": "full_numbers",
+							"aaSorting": "", //pour trier la liste affich�e
+							"oLanguage": {
+								//"sProcessing":   "Traitement en cours...",
+								//"sLengthMenu":   "Afficher _MENU_ &eacute;l&eacute;ments",
+								"sZeroRecords":  "Aucun &eacute;l&eacute;ment &agrave; afficher",
+								"sInfo": "_START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+								"sInfoEmpty": "0 &eacute;l&eacute;ment &agrave; afficher",
+								"sInfoFiltered": "",
+								"sInfoPostFix":  "",
+								"sSearch": "",
+								"sUrl": "",
+								"sWidth": "30px",
+								"oPaginate": {
+									"sFirst":    "|<",
+									"sPrevious": "<",
+									"sNext":     ">",
+									"sLast":     ">|"
+									}
+							   },
+							   "iDisplayLength": "10",
+								"bProcessing": false,
+								"bSearch": false,
+								"aLengthMenu": [5,10,15],
+
+
+			} );
+
+			//le filtre du select
+			$('#filter_statut').change(function()
+			{
+				oTable.fnFilter( this.value, 7 );
+			});
+			$("tfoot input").keyup( function () {
+				/* Filter on the column (the index) of this element */
+				oTable.fnFilter( this.value, $("tfoot input").index(this) );
+			} );
+
+			/*
+			 * Support functions to provide a little bit of 'user friendlyness' to the textboxes in
+			 * the footer
+			 */
+			$("tfoot input").each( function (i) {
+				asInitVals[i] = this.value;
+			} );
+
+			$("tfoot input").focus( function () {
+				if ( this.className == "search_init" )
+				{
+					this.className = "";
+					this.value = "";
+				}
+			} );
+
+			$("tfoot input").blur( function (i) {
+				if ( this.value == "" )
+				{
+					this.className = "search_init";
+					this.value = asInitVals[$("tfoot input").index(this)];
+				}
+			} );
+
+</script>

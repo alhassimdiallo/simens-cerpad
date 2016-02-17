@@ -1,0 +1,455 @@
+@CHARSET "ISO-8859-1";
+/*-----STYLE FORMULAIRE ETAT CIVIL DU PATIENT-----*/
+         
+/* table
+{
+	 background: url('/simens_derniereversion/public/images_icons/physiq.JPG') no-repeat;
+	 
+} */
+
+#image { 
+    position:relative;
+	margin-top: 5px;
+	width:220px;
+    height: 283px;
+    overflow:hidden;
+	background: #ddd;
+
+    border: 1px solid white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px; 
+}
+
+#image input {
+    position:absolute;
+    right:0;
+    top:0;
+    font-size:0px;
+    opacity:0;
+    -moz-opacity:0;
+    filter:alpha(opacity=3);
+    cursor:pointer;
+    text-align:right; 
+    width:220px;
+    height:283px;
+}
+
+.supprimer_photo{
+    position:relative;
+    width:20px;
+    height:20px;
+    display: inline;float:left;border:transparent; margin-bottom: 5px; margin-top:5px;
+    background: url("/simens_derniereversion/public/images_icons/mod.png") no-repeat right top;
+}
+
+.supprimer_photo input{
+    position:absolute;
+    right:0;
+    top:0;
+    font-size:100px;
+    opacity:0;
+    -moz-opacity:0;
+    filter:alpha(opacity=0);
+    cursor:pointer;
+    text-align:right; 
+    width:20px;
+    height:20px;
+}
+ 
+tr:hover
+{	
+	 background-color: rgba(0, 0, 0, 0);
+}
+
+#pharmacie_logo {
+	float: right;
+    height: 40px;
+    width: 40px;
+    margin-right: 30px;
+    margin-top: -12px;
+	background: url('/simens_derniereversion/public/images_icons/pharmacie_icone3_a.PNG') no-repeat;
+}
+
+#pharmacie_logo_2 {
+	margin-top: 50px;
+    margin-left: 100px;
+    height: 160px;
+    width: 140px;
+	background: url('/simens_derniereversion/public/images_icons/pharmacie_icone7.JPG') no-repeat;
+    opacity: 0.4;
+}
+
+#titre{
+	height: 30px;
+    border: 3px solid #cccccc;
+	border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: 1px solid #cccccc;
+    background : #fff;
+    padding-left: 25px;
+    padding-bottom: 0px;
+    padding-top : 15px;
+    box-shadow: 0pt 0pt 12px rgba(0, 0, 0, 0.5);
+}
+
+#contenu{
+    background: #fff; height: 420px;
+    border: 3px solid #cccccc ;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top: 1px solid #ccc;
+    padding-left: 35px;
+    padding-top: 20px;
+    box-shadow: 0pt 3pt 12px rgba(0, 0, 0, 0.5);
+}
+
+#ajouter_naissance {
+	height: 510px;
+    background: #fff;
+    border: 1px solid green ;
+    border-top: 2px solid #cccccc;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+#barre_separateur {
+	/*width: 892px;*/
+    width: 100%;
+    height: 2px;
+    border-bottom: 2px solid #ccc;
+    margin-top: 175px;
+    /*margin-left: 195px;*/
+}
+
+.barre_vertical{
+	width:2px;
+    height: 300px;
+    float: left;
+    margin-right: 0px;
+    margin-left: 0px;
+    background-color: #cccccc;
+    margin-top:5px;
+}
+
+
+/*-----STYLE FORMULAIRE ETAT CIVIL DU PATIENT-----*/
+/*-----STYLE FORMULAIRE ETAT CIVIL DU PATIENT-----*/
+/*-----STYLE FORMULAIRE ETAT CIVIL DU PATIENT-----*/
+#form_medicament .comment-form-medicament label, #form_medicament .comment-form-email label, #form_medicament .comment-form-url label, #form_medicament .comment-form-comment label 
+
+{/* le label*/
+line-height: 1.3em;
+
+background-color: #eeeeee;
+
+background-image: none;
+
+background-repeat: repeat;
+
+background-attachment: scroll;
+
+background-position: 0% 0%;
+
+background-clip: border-box;
+
+background-origin: padding-box;
+
+/*border-top-right-radius: 15px;*/
+
+background-size: auto auto;
+
+box-shadow: 1px 2px 2px rgba(204, 204, 204, 0.8);
+
+color: #555555;
+
+display: inline-block;
+
+font-size: 17px;
+
+left: 10px; /*déplacer le label*/
+
+min-width: 60px;
+
+padding-top: 4px;
+
+padding-right: 10px;
+
+padding-bottom: 4px;
+
+padding-left: 10px;
+
+position: relative;
+
+top: 5px;
+
+z-index: 1;
+
+}
+
+#form_medicament select
+{
+	background-image: none;
+
+    background-repeat: repeat;
+
+    background-attachment: scroll;
+
+    background-position: 0% 0%;
+
+    background-clip: border-box;
+
+    background-origin: padding-box;
+
+    background-size: auto auto;
+
+    border-top-width: 4px;
+
+    border-right-width-value: 4px;
+
+	border-top-right-radius: 10px;
+	
+    border-right-width-ltr-source: physical;
+
+    border-right-width-rtl-source: physical;
+
+    border-bottom-width: 4px;
+
+    border-left-width-value: 4px;
+
+    border-left-width-ltr-source: physical;
+
+    border-left-width-rtl-source: physical;
+
+    border-top-style: solid;
+
+    border-right-style-value: solid;
+
+    border-right-style-ltr-source: physical;
+
+    border-right-style-rtl-source: physical;
+
+    border-bottom-style: solid;
+
+    border-left-style-value: solid;
+
+    border-left-style-ltr-source: physical;
+
+    border-left-style-rtl-source: physical;
+
+    border-top-color: #cccccc;
+
+    border-right-color-value: #eeeeee;
+
+    border-right-color-ltr-source: physical;
+
+    border-right-color-rtl-source: physical;
+
+    border-bottom-color: #cccccc;
+
+    border-left-color-value: #eeeeee;
+
+    border-left-color-ltr-source: physical;
+
+    border-left-color-rtl-source: physical;
+	
+	border-top-left-radius: 5px; 
+
+    border-top-right-radius: 10px;
+
+    border-bottom-right-radius: 5px;
+
+    border-bottom-left-radius: 5px;
+
+    box-shadow: 0pt 1px 3px rgba(204, 204, 204, 0.95) inset;
+
+    position: relative;
+	
+	/* les cotés des champs */
+
+    border-right-width: 2px;
+
+    border-left-width: 2px;
+
+    border-top-width: 2px;
+
+    border-bottom-width: 2px;
+	
+	border-left-color: #cccccc;
+	
+	border-right-color: #cccccc;
+	
+	float: left;
+
+    margin-left: 0px;
+	
+	margin-right: 25px;
+	
+	margin-bottom: 15px;
+
+	/*enlever l'icone select*/
+    /*****-webkit-appearance: none;****/
+}
+
+#form_medicament option{ 
+   min-width:100px;
+   color:#00f;
+   background-color:#eee;
+   font-size: 13pt;
+   overflow: auto;
+
+}
+
+#form_medicament input[type="text"], #form_medicament textarea
+
+{ /*le input ou le textarea*/
+
+background-image: none;
+
+background-repeat: repeat;
+
+background-attachment: scroll;
+
+background-position: 0% 0%;
+
+background-clip: border-box;
+
+background-origin: padding-box;
+
+background-size: auto auto;
+
+border-top-width: 2px;
+
+border-right-width-value: 2px;
+
+border-right-width-ltr-source: physical;
+
+border-right-width-rtl-source: physical;
+
+border-bottom-width: 2px;
+
+border-left-width-value: 2px;
+
+border-left-width-ltr-source: physical;
+
+border-left-width-rtl-source: physical;
+
+border-top-style: solid;
+
+border-right-style-value: solid;
+
+border-right-style-ltr-source: physical;
+
+border-right-style-rtl-source: physical;
+
+border-bottom-style: solid;
+
+border-left-style-value: solid;
+
+border-left-style-ltr-source: physical;
+
+border-left-style-rtl-source: physical;
+
+border-right-color-value: #eeeeee;
+
+border-right-color-ltr-source: physical;
+
+border-right-color-rtl-source: physical;
+
+border-left-color-value: #eeeeee;
+
+border-left-color-ltr-source: physical;
+
+border-left-color-rtl-source: physical;
+
+border-top-left-radius: 5px;
+
+border-top-right-radius: 5px;
+
+border-bottom-right-radius: 5px;
+
+border-bottom-left-radius: 5px;
+
+box-shadow: 0pt 1px 3px rgba(204, 204, 204, 0.95) inset;
+
+position: relative;
+
+/* le texte des champs*/
+padding-top: 10px;
+
+padding-right: 10px;
+
+padding-bottom: 10px;
+
+margin-bottom : 15px;
+
+margin-right: 20px;
+
+padding-left: 10px; /* padding du text dans le champ*/
+
+text-indent: 0px; /* alignement du text dans le champ input*/
+
+/* balise input text*/
+display: block;
+
+height: 30px; /*la hauteur du champ input*/
+
+width: 225px; /* la largeur du champ input*/
+
+
+
+/*z-index: 5;*/
+
+}
+
+#form_medicament select
+{
+
+display: block;
+
+height: 30px;  /*la hauteur du champ input*/
+
+width: 225px;   /*la largeur du champ input*/
+
+}
+
+#form_medicament textarea
+{
+	height: 90px;
+}
+
+
+/****************************BOUTON************************/
+#thoughtbot button
+{
+    width:auto;
+    padding:8px 0;
+    text-align:center;
+    display: inline-block;
+    float:left;
+    margin:0 8px 0 0;
+    border-radius:7px;
+    font-size: 0.85em;
+	font-weight: bold;
+    width:80px;
+    color:#000;
+    font-family: Arial,sans-serif;
+	box-shadow: 0 0 1px rgba( 0, 0, 0, 0.2), 0 -1px 0 rgba( 255, 255, 255, 0.1);
+    text-shadow: 0px 1px 0px rgba( 255, 255, 255, 0.3);
+}
+
+#thoughtbot button:hover
+{
+    background: #ccc;
+    background: -webkit-linear-gradient( #eee, #aaa);
+}
+
+a{
+	color: black;
+}
+
+p{
+	font-family: Times  New Roman;
+	color: #065d10;
+}

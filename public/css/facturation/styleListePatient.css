@@ -1,0 +1,195 @@
+
+/* PIED DE PAGE*/
+#nom_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+#prenom_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+#date_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+#sexe_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+#adresse_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+#nationalite_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+#effectuer_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+/* EN TETE*/
+#nom
+{
+	width: 13%;
+}
+
+#prenom
+{
+	width: 15%;
+}
+
+#date
+{
+	width: 12%;
+}
+#sexe
+{
+	width: 7%;
+}
+
+#adresse
+{
+	width: 28%;
+}
+
+#nationalite
+{
+	width: 15%;
+}
+
+#effectuer
+{
+	width: 10%;
+}
+
+/* STYLE POUR LA LISTE DE SELECTION DE LA TABLE*/
+#listeDataTable{
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: -10px;
+}
+
+.dataTables_paginate *
+{
+	background: #e9e8e8;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	padding-left: 6px;
+	padding-right: 6px;
+    color: black;	
+	/*margin-top: 100px;*/
+	cursor: pointer;
+
+}
+
+div .dataTables_paginate
+{
+	margin-bottom: 20px;
+}
+
+.dataTables_paginate .first
+{
+	margin-right: 0px;
+}
+
+.dataTables_paginate .last
+{
+	margin-left: 0px;
+}
+
+.dataTables_paginate .previous
+{
+	margin-right: 2px;
+	border-left: 1px solid #bdb9b9;
+}
+
+.dataTables_paginate .next
+{
+	margin-left: 3px;
+	border-right: 1px solid #bdb9b9;
+}
+
+.dataTables_paginate a:hover
+{
+	text-decoration: none;
+	background-color: #c3c1c1;
+	color: white;
+}
+
+.dataTables_paginate .paginate_active
+{
+	text-decoration: none;
+	background-color: #b5b2b2;
+	color: white;
+}
+
+#nomMaj{
+	text-transform : uppercase;
+}
+
+#contenu {
+    background: #fff; max-height: 3000px;
+    border: 3px solid #ccc;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top: 2px solid #cccccc;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-shadow: 0pt 5pt 12px rgba(0, 0, 0, 0.5);
+}
+
+#titre {
+	height: 30px;
+    border: 3px solid #ccc;
+	border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom: 2px solid #cccccc;
+    background : #fff;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    padding-top : 13px;
+    box-shadow: 0pt 0pt 12px rgba(0, 0, 0, 0.5);
+}

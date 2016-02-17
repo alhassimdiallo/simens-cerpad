@@ -1,0 +1,126 @@
+<!-- MES STYLES --> 
+<?php echo $this->headLink()->appendStylesheet($this->basepath().'/css/hospitalisation/listeLibererPatient.css');
+      echo $this->headLink()->appendStylesheet($this->basepath().'/css/facturation/DatePicker.css'); 
+?>
+<!-- MES JS -->
+<?php echo $this->headScript()->appendFile($this->basepath().'/js/hospitalisation/listeLibererPatient.js');?>
+
+
+<script type="text/javascript">
+$(window).load(function () {
+  $('#wait').toggle(false);
+  $('#contenu').fadeIn().css({'visibility':'visible'});
+});
+
+var base_url = window.location.toString();
+var tabUrl = base_url.split("public");
+
+/***POUR LE MENU GAUCHE dans -elementgauche.phtml***/
+$('#plus_operationMajor').toggle(true); 
+$("#operationMajor").replaceWith("<li id='operationMajor' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:21px; font-family:Times New Roman;'> <img src='"+tabUrl[0]+"public/images_icons/moin-green2.png' /> Hospitalisation </span></a></li>");
+depDemHospi3();
+$('#style_liberer_Major').css({'font-weight':'bold','color':'white','font-size':'20px'});
+$('#menu2').css({'background':'#6c7f93'});
+</script>
+
+
+<style>
+#contenu{ visibility: hidden };
+</style>
+
+<div id="titre" style='font-family: police2; text-decoration: none; color: green; font-size: 20px; font-weight: bold; padding-left:20px;'>
+	<iS style='font-size: 25px;'>&curren;</iS>
+	LISTE DES PATIENTS
+</div>
+<div id="wait" style="color: gray; font-size: 20px; text-align: center; margin-top: 80px;" > <span> Chargement ... </span> </div>
+<div id="contenu">
+ 
+<div style="margin-right: 20px; float:right; font-size: 15px; margin-top:5px; font-family: Times New Roman; font-size: 14px; color: green;"> <i style='cursor:pointer;' id='afficherPatientsALiberer'> Demandes </i> | <i style='cursor:pointer;' id='afficherPatientsLibres'> Libres </i> </div>
+
+            <table id="patient" class="table table-bordered tab_list_mini" >
+				<thead>
+					<tr style="height: 50px; width:100%;">
+						<th id="nom" style='cursor: pointer;'>Nom</th>
+						<th id="prenom" style='cursor: pointer;'>Pr&eacute;nom</th>
+						<th id="date" style='cursor: pointer;'>Date. naiss</th>
+						<th id="sexe" style='cursor: pointer;'>Sexe</th>
+						<th id="adresse" style='cursor: pointer;'>Date D&eacute;but hospi...</th>
+						<th id="nationalite" style='cursor: pointer;'>D<minus>ate demande lib&eacute;rat...</minus></th>
+						<th id="effectuer">Options</th>
+					</tr>
+				</thead>
+
+				<tbody id="donnees" class="liste_patient">
+
+					<!-- ************ On affiche les patients en une liste ordonnï¿½e************ -->
+
+				</tbody>
+
+				<tfoot id="foot" class="foot_style">
+					<tr>
+						<th id="nom_" style='width: 16%;'><input type="text" name="search_browser"
+							value=" Nom" class="search_init" /></th>
+						<th id="prenom_" style='width: 18%;'><input type="text" name="search_browser"
+							value=" Pr&eacute;nom" class="search_init" /></th>
+						<th id="date_" style='width: 12%;'><input type="text" name="search_browser"
+							value=" Date naissance" class="search_init" /></th>
+						<th id="sexe_" style='width: 7%;'><input type="text" name="search_browser"
+							value=" Sexe" class="search_init" /></th>
+						<th id="adresse_" style='width: 20%;'><input type="text" name="search_browser"
+							value=" Adresse" class="search_init" /></th>
+						<th id="nationalite_" style='width: 20%;'><input type="text" name="search_browser"
+							value=" Nationalit&eacute;" class="search_init" /></th>
+						<th id="effectuer_" style='width: 7%;'><input type="hidden" name="search_browser"
+							value="" class="" /></th>
+
+					</tr>
+				</tfoot>
+			</table>
+</div>
+
+
+<div id="vue_patient">
+
+</div>
+
+
+<div id="vue_patient_liberer">
+
+</div>
+
+<!--***********************************************************************************************-->                              
+
+<!--==========================POP UP pour Afficher les détails =================================-->                              
+                          
+<!--***********************************************************************************************-->  
+        <div id="Confirmation" title="Confirmation de la lib&eacute;ration" style="display:none;">
+             
+             <p style="font-size: 16px;">
+                 <span style="float:left; margin:0 0px 20px 0; font-size:17px; ">
+                 <img src="<?php echo $this->basepath().'/images_icons/warning_16.png';?>" />
+                                
+                 Etes-vous s&ucirc;r de vouloir lib&eacute;rer le patient ?</span>
+             </p>
+             
+        </div>
+        
+<!--***********************************************************************************************-->                              
+
+<!--==========================POP UP pour Afficher les détails =================================-->                              
+                          
+<!--***********************************************************************************************-->  
+        <div id="ConfirmationLiberationLit" title="Lib&eacute;ration du lit" style="display:none;">
+             
+             <p style="font-size: 16px;">
+                 <span style="float:left; margin:0 0px 20px 0; font-size:17px; ">
+                 <img src="<?php echo $this->basepath().'/images_icons/warning_16.png';?>" />
+                                
+                 Souhaitez-vous aussi lib&eacute;rer le lit ?</span>
+             </p>
+             
+        </div>
+        
+<script>
+  $("#vue_patient").toggle(false);
+  $("#vue_patient_liberer").toggle(false);
+</script>

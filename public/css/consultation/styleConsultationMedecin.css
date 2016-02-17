@@ -1,0 +1,112 @@
+@CHARSET "ISO-8859-1";
+/* EN TETE*/
+#_nom
+{
+	width: 13%;
+}
+
+#_prenom
+{
+	width: 15%;
+}
+
+#_date
+{
+	width: 12%;
+}
+
+#_sexe
+{
+	width: 7%;
+}
+
+#_adresse
+{
+	width: 28%;
+}
+
+#_nationalite
+{
+	width: 15%;
+}
+
+#_effectuer
+{
+	width: 10%;
+}
+
+/* PIED DE PAGE*/
+#nom_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+#prenom_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+#date_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+#sexe_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+#adresse_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+#nationalite_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+
+#effectuer_ input[type="text"]
+{ /*le input ou le textarea*/
+
+background-color: #fffffa; /*la couleur du champ*/
+
+height: 25px; /*la hauteur du champ input*/
+
+width: 100%; /* la largeur du champ input*/
+}
+/* STYLE POUR LA LISTE DE SELECTION DE LA TABLE*/
+#listeDataTable{
+	margin-bottom: 0px;
+	margin-left: -10px;
+}

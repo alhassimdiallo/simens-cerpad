@@ -1,0 +1,106 @@
+
+<!-- MES STYLES -->
+<?php echo $this->headLink()->appendStylesheet($this->basePath().'/css/facturation/styleListenaissance.css');
+      echo $this->headLink()->appendStylesheet($this->basePath().'/css/facturation/DatePicker.css');
+?>
+
+<!-- MES JS -->
+<?php echo $this->headScript()->appendFile($this->basePath().'/js/facturation/jsListenaissance.js');?>
+
+<?php use Facturation\View\Helper\DateHelper;
+$Control = new DateHelper();?>
+
+<script type="text/javascript">
+var base_url = window.location.toString();
+var tabUrl = base_url.split("public");
+
+$('#plus_naissance').toggle(true); //POUR LE MENU GAUCHE dans -elementgauche.phtml
+$("#naissance").replaceWith("<li id='naissance' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='"+tabUrl[0]+"public/images_icons/moin-green2.png' /> Naissances </span></a></li>");
+dep1();
+$('#liste_style').css({'font-weight':'bold','color':'white','font-size':'22px'});
+
+$(window).load(function () {
+	$('#wait').toggle(false);
+	$('#contenu').fadeIn().css({'visibility':'visible'});
+});
+</script>
+
+<style>
+#contenu{ visibility: hidden };
+</style>
+
+
+ <div id="titre" style='font-family: police2; text-decoration:none; color: green; font-size: 18px; font-weight: bold; padding-left: 20px;'><iS style='font-size: 25px;'>&curren;</iS> LISTE DES NAISSANCES</div>
+ 
+ <div id="wait" style="color: gray; font-size: 20px; text-align: center; margin-top: 80px;" > <span> Chargement ... </span> </div>
+ <div id="contenu" >
+
+		<table class="table table-bordered tab_list_mini" id="patientdeces" >
+			<thead>
+				<tr style="height:50px; width:100%;">
+					<th id="_nom" >Nom</th>
+					<th id="_prenom" >Prenom</th>
+					<th id="_date"  >D. naissance</th>
+					<th id="_sexe"  >Sexe</th>
+					<th id="_adresse" >Adresse</th>
+					<th id="_nationalite" >Nationalite</th>
+					<th id="_effectuer" >Options</th>
+				</tr>
+			</thead>
+
+			<tbody id="donnees" class="liste_patient">
+
+	            <!-- ************ On affiche les patients en une liste ordonn�e************ -->
+
+			</tbody>
+
+			<tfoot id="foot" class="foot_style">
+				<tr>
+					<th id="nom_" style='width: 13%;'><input type="text" name="search_browser" value=" Nom" class="search_init" /></th>
+					<th id="prenom_" style='width: 15%;'><input type="text" name="search_browser" value=" Prenom" class="search_init" /></th>
+					<th id="date_" style='width: 12%;'><input type="text" name="search_browser" value=" Date naissance" class="search_init" /></th>
+					<th id="sexe_" style='width: 7%;'><input type="text" name="search_browser" value=" Sexe" class="search_init" /></th>
+					<th id="adresse_" style='width: 28%;'><input type="text" name="search_browser" value=" Adresse" class="search_init" /></th>
+					<th id="nationalite_" style='width: 15%;'><input type="text" name="search_browser" value=" Nationalite" class="search_init" /></th>
+					<th id="effectuer_" style='width: 10%;'><input type="hidden" name="search_browser" value="" class="" /></th>
+
+				</tr>
+			</tfoot>
+		</table>
+
+</div>
+
+<!-- POP UP pour Confirmation Suppression -->
+                            <div id="confirmation" title="Confirmation de la suppression" style="display:none;">
+                              <p style="font-size: 19px;">
+                                 <span style="float:left; margin:0 0px 20px 0; ">
+                                 <img src="<?php echo $this->basePath().'/images_icons/warning_16.png';?>" />
+                                 Etes-vous s&ucirc;r de vouloir supprimer le patient ?</span>
+
+                              </p>
+                            </div>
+
+<!-- POP UP pour afficher les informations sur la maman -->
+                            <div id="information" title="Informations sur la maman" style="display:none;">
+                              <div id="info" style="font-size: 16px;">
+
+                              </div>
+                            </div>
+
+
+<!-- LES BOUTONS "TERMINER" ou "VALIDER" -->
+
+<div id="vue_patient">
+
+</div>
+
+<div id="modifier_donnees">
+
+</div>
+
+
+<script type="text/javascript">
+controle_saisie();
+$("#vue_patient").toggle(false);
+$("#modifier_donnees").toggle(false);
+</script>

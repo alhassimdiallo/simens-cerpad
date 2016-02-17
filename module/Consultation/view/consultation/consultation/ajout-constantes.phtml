@@ -1,0 +1,486 @@
+<script>
+//POUR LE MENU GAUCHE dans -elementgauche.phtml
+  $('#plus_naissance').toggle(true);
+  $("#naissance").replaceWith("<li id='naissance' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='<?php echo $this->basePath().'/images_icons/moins-vert.PNG';?>' alt='Liste' /> Consultations </span></a></li>");
+  dep1();
+  $('#ajouter_style').css({'font-weight':'bold','color':'white','font-size':'22px'});
+</script>
+
+<?php use Facturation\View\Helper\DateHelper;?>
+<?php echo $this->headScript()->appendFile($this->basePath().'/js/mesjs/accordeon_controle_validation.js');?>
+
+<!-- Mes CSS -->
+<?php echo $this->headLink()->appendStylesheet($this->basePath().'/css/consultation/styleMajConsultation.css');?>
+
+
+<style>
+  #contenu{ visibility: hidden }
+</style>
+
+<script>
+
+$(window).load(function () {
+
+	$('#wait').toggle(false);
+	$('#contenu').fadeIn().css({'visibility':'visible'});
+	 
+});
+</script>
+
+<div id="wait" style="color: gray; font-size: 20px; text-align: center; margin-top: 80px;" > <span> Chargement ... </span> </div>
+
+<div id="contenu" >
+<?php $Control = new DateHelper();?>
+<?php
+$form = $this->form;
+$form->prepare();
+$form->setAttribute('action', $this->url('consultation', array('action'=>'ajout-donnees-constantes')));
+$form->setAttribute('method','post');
+echo $this->form()->openTag($form); ?>
+
+<div id="accordions">  
+
+  <!--Accordeon ETAT CIVIL-->
+    <div style='width:160px; font-family: police2;font-size: 17px; font-weight: bold;'>Etat Civil</div>
+      <div style=' max-height: 350px;'>
+
+         <img id="faces" src='<?php echo $this->basePath().'/img/photos_patients/'.$this->image;?>'  alt="Jonathan Verrecchia" style='float:left; margin-right:40px; width:105px; height:105px;'/>
+
+
+       <p style='color: white; opacity: 0.09;'>
+         <img id="faces" src='<?php echo $this->basePath().'/img/photos_patients/'.$this->image;?>'  alt="Jonathan Verrecchia" style='float:right; margin-right:15px; width:95px; height:95px;'/>
+       </p>
+         <table>
+             <tr>
+			   	<td style='width:160px; font-family: police1;font-size: 12px;'>
+			   		<div id="aa"><a style="text-decoration: underline;">Pr&eacute;nom</a><br><p style='font-weight: bold;font-size: 17px; color:green;'><?php echo $this->lesdetails['PRENOM'];?></p></div>
+			   	</td>
+
+			   	<td style='width:160px; font-family: police1;font-size: 12px;'>
+			   		<div id="aa"><a style="text-decoration: underline;">Lieu de naissance</a><br><p style='font-weight: bold;font-size: 17px; color:green;'><?php echo $this->lesdetails['LIEU_NAISSANCE'];?></p></div>
+			   	</td>
+
+			    <td style='width:160px; font-family: police1;font-size: 12px;'>
+			   		<div id="aa"><a style="text-decoration: underline;">T&eacute;l&eacute;phone</a><br><p style='font-weight: bold;font-size: 17px; color:green;'><?php echo $this->lesdetails['TELEPHONE'];?></p></div>
+			   	</td>
+
+			 </tr>
+
+			 <tr>
+			    <td style=' font-family: police1;font-size: 12px;'>
+			   		<div id="aa"><a style="text-decoration: underline;">Nom</a><br><p style='font-weight: bold;font-size: 19px; color:green;'><?php echo $this->lesdetails['NOM'];?></p></div>
+			   	</td>
+
+			   	<td style=' font-family: police1;font-size: 12px;'>
+			   		<div id="aa"><a style="text-decoration: underline;">Nationalit&eacute; origine</a><br><p style='font-weight: bold;font-size: 19px; color:green;'><?php echo $this->lesdetails['NATIONALITE_ORIGINE'];?></p></div>
+			   	</td>
+
+			   	<td style=' font-family: police1;font-size: 12px;'>
+			   		<div id="aa"><a style="text-decoration: underline;">Email</a><br><p style='font-weight: bold;font-size: 19px; color:green;'><?php echo $this->lesdetails['EMAIL'];?></p></div>
+			   	</td>
+
+			 </tr>
+
+			 <tr>
+			    <td style=' font-family: police1;font-size: 12px;'>
+			   		<div id="aa"><a style="text-decoration: underline;">Sexe</a><br><p style='font-weight: bold;font-size: 19px; color:green;'><?php echo $this->lesdetails['SEXE'];?></p></div>
+			   	</td>
+
+			    <td style=' font-family: police1;font-size: 12px;'>
+			   		<div id="aa"><a style="text-decoration: underline;">Nationalit&eacute; actuelle</a><br><p style='font-weight: bold;font-size: 19px; color:green;'><?php echo $this->lesdetails['NATIONALITE_ACTUELLE'];?></p></div>
+			   	</td>
+
+			   	<td style=' font-family: police1;font-size: 12px;'>
+			   		<div id="aa"><a style="text-decoration: underline;">Profession</a><br><p style='font-weight: bold;font-size: 19px; color:green;'><?php echo $this->lesdetails['PROFESSION'];?></p></div>
+			   	</td>
+
+			 </tr>
+
+			  <tr>
+			   	<td style=' font-family: police1;font-size: 12px;'>
+			   		<div id="aa"><a style="text-decoration: underline;">Date de naissance</a><br><p style='font-weight: bold;font-size: 19px; color:green;'><?php echo $Control->convertDate($this->lesdetails['DATE_NAISSANCE']);?></p></div>
+			   	</td>
+
+			    <td style='display:"block"; width: 195px; font-family: police1;font-size: 12px;'>
+			   		<div id="aa"><a style="text-decoration: underline;">Adresse</a><br><p style='font-weight: bold;font-size: 19px; color:green;'><?php echo $this->lesdetails['ADRESSE'];?></p></div>
+			   	</td>
+			   	
+			   	<td style='display:"block"; width: 300px; font-family: police1;font-size: 12px; text-align: right;'>
+			   	
+			   	    <?php if($this->resultRV){?>
+			   	       <span id='image-neon' style='color:red; font-weight:bold; font-size: 17px; '>Rendez-vous &agrave; <?php echo $this->resultRV; ?> </span>
+			   	       
+			   	    <?php } ?>
+			   	</td>
+			  </tr>
+			  
+         </table>
+
+         <script>
+          function FaireClignoterImage (){
+                  $('#image-neon').fadeOut(900).delay(300).fadeIn(800);
+          }
+          setInterval('FaireClignoterImage()',2200);
+		 </script>
+           <div id="barre"></div>
+           <div style='color: white; opacity: 1; width:95px; height:40px; float:right'>
+             <img  src='<?php echo $this->basePath().'/images_icons/fleur1.jpg'?>'  alt="fleur1" />
+           </div>
+	       <table id="numero" style=" padding-top:5px; width: 550px;">
+           <tr style="width: 550px;">
+             <td style="padding-top:5px; width: 70px; font-size: 12px;"> Consultation: </td>
+             <td style="font-weight: bold;"> <?php echo $this->id_cons;?></td>
+             <td style="font-weight: bold; width:10px;">|</td>
+             <td style="padding-top:5px; width: 80px; font-size: 12px; "> Date & Heure: </td>
+             <td style="font-weight: bold;"> <?php echo $Control->convertDate($this->dateonly);?>  -  <?php echo $this->heure_cons;?></td>
+           </tr>
+          </table>
+
+      </div>
+
+   <!--Accordeon NOUVELLES CONSTANTES-->
+
+     <div style='font-family: police2;font-size: 17px; font-weight: bold;'>Motifs d'admission et Constantes</div>
+        <div style='max-height: 470px;'>
+
+           <?php echo $this->formHidden($form->get('id_patient'));?>
+           <?php echo $this->formHidden($form->get('id_surveillant'));?>
+           <?php echo $this->formHidden($form->get('dateonly'));?>
+           <?php echo $this->formHidden($form->get('heure_cons'));?>
+           <?php echo $this->formhidden($form->get('date_cons'));?>
+
+     <!-- **************************************************************************************************************** -->
+           <!-- SOUS ACCORDEON MOTIF D'ADMISSION ET CONSTANTES -->
+           <div id="accordionss">
+        <!--**************** LES MOTIFS D ADMISSIONS ************************-->
+              <div style='font-family: police2;font-size: 17px; font-weight: bold;'> Motifs d'admission </div>
+               <div>
+                <?php echo  $this->headScript()->appendFile($this->basePath().'/js/consultation/ajouterMotifs.js');?>
+                <div style='width: 100%; height: 30px;'>
+                   <div style='width: 70%; float: left; '>
+                       <table id="responde" style='width: 100%;'>
+                          <tr class="form-author" id="motif1">
+                              <th><?php echo $this->formRow($form->get('motif_admission1'));?> <span id="labelSupMotif"> <img class='supprimerMotif1' style='cursor: pointer;' src='<?php echo $this->basePath().'/images/images/sup.png'?>' title='supprimer' /> </span> </th>
+                          </tr>
+                          <tr class="form-author" id="motif2">
+                              <th><?php echo $this->formRow($form->get('motif_admission2'));?> <span id="labelSupMotif"> <img class='supprimerMotif2' style='cursor: pointer;' src='<?php echo $this->basePath().'/images/images/sup.png'?>' title='supprimer' /> </span> </th>
+                          </tr>
+                          <tr class="form-author" id="motif3">
+                              <th><?php echo $this->formRow($form->get('motif_admission3'));?> <span id="labelSupMotif"> <img class='supprimerMotif3' style='cursor: pointer;' src='<?php echo $this->basePath().'/images/images/sup.png'?>' title='supprimer' /> </span> </th>
+                          </tr>
+                          <tr class="form-author" id="motif4">
+                              <th><?php echo $this->formRow($form->get('motif_admission4'));?> <span id="labelSupMotif"> <img class='supprimerMotif4' style='cursor: pointer;' src='<?php echo $this->basePath().'/images/images/sup.png'?>' title='supprimer' /> </span> </th>
+                          </tr>
+                          <tr class="form-author" id="motif5">
+                              <th><?php echo $this->formRow($form->get('motif_admission5'));?> <span id="labelSupMotif"> <img class='supprimerMotif5' style='cursor: pointer;' src='<?php echo $this->basePath().'/images/images/sup.png'?>' title='supprimer' /> </span> </th>
+                          </tr>
+                       </table>
+                       
+                       
+                       <!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
+                       <!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
+		               <div id="controls_motifs" style="margin-top: 10px; width: 100%;">
+		                  <div style="width: 100%; ">
+		                     <div style="width: 4.5%; height: 1px; float: left; " id="supprimer_donnee">
+			                     <img id="supprimer_motif_img" style='margin-left: 5px; cursor: pointer;' src='<?php echo $this->basePath().'/images_icons/moin-green.png'?>' title='supprimer' />
+			                 </div>
+			                 <div style="width: 4.5%; height: 1px; float: left; " id="ajouter_donnee">
+				                 <img id="ajouter_motif_img" style='margin-left: 5px; cursor: pointer;' src='<?php echo $this->basePath().'/images_icons/plus-green.png'?>' title='ajouter' />
+			                 </div>
+		                  </div>
+		               </div>
+
+		               <!--********************* BOUTON VALIDER-MODIFIER ************************-->
+                       <!--********************* BOUTON VALIDER-MODIFIER ************************-->		            
+                       <table style="width: 86%; position: relative; top: 0px;">
+                          <tr style="width: 100%;">
+                             <th style="width:65%;">
+                                <div style="float:right;">
+                                     <button id='bouton_motif_valider'>Valider</button>
+                                </div>
+                                <div style="float:right;">
+                                     <button id='bouton_motif_modifier'>Modifier</button>
+                                </div>
+                             </th>
+                          </tr>
+                       </table>
+                       
+                       <script>
+                        cacherToutMotif();
+                        afficherMotif(1);
+                        supprimerUnMotif();
+                       </script>
+                       
+                   </div>
+                
+                <div style='width: 27%; float: left;'>
+                  <p style='color: white; opacity: 0.5;'>
+                     <img id="faces" src='<?php echo $this->basePath().'/images_icons/consult-motif.jpg'?>'  alt="consult-motif" style='margin-right:5px; height:315px;'/>
+                  </p>
+                </div>
+              </div>
+                
+             </div>
+          <!--**************** LES CONSTANTES ************************-->
+
+              <div style=' font-family: police2;font-size: 17px; font-weight: bold;'> Constantes </div>
+                <div style="max-height: 340px;">
+                 <table  id="respond" style="width: 100%">
+
+                    <tr class="comment-form-author">
+                        <td><?php echo $this->formRow($form->get('poids'));?></td>
+                        <td><?php echo $this->formRow($form->get('taille'));?></td>
+                        <td><?php echo $this->formRow($form->get('temperature'));?></td>
+                     	<td><?php echo $this->formRow($form->get('pressionarterielle'));?></td>
+                    </tr>
+                       <!-- GESTION DES ERREURS -->
+                       <tr>
+                           <td> <div id="erreur_poids"></div> </td>
+                           <td> <div id="erreur_taille"></div> </td>
+                           <td> <div id="erreur_temperature"></div> </td>
+                           <td> <div id="erreur_pressionarterielle"></div></td>
+                       </tr>
+
+                       
+                    <tr class="comment-form-author">
+                        <td><?php echo $this->formRow($form->get('pouls'));?></td>
+                        <td><?php echo $this->formRow($form->get('frequence_respiratoire'));?></td>
+                        <td><?php echo $this->formRow($form->get('glycemie_capillaire'));?></td>
+                        <td></td>
+                    </tr>
+                        <!-- GESTION DES ERREURS -->
+                       <tr>
+                           <td> <div id="erreur_pouls"></div> </td>
+                           <td> <div id="erreur_frequence"></div> </td>
+                           <td> <div id="erreur_glycemie"></div> </td>
+                       </tr>
+
+                 </table>
+                    
+                 
+                 <table  id="respond" style="width: 100%">
+                    
+                    <tr style="height: 125px; width: 100%; ">
+                        <td style="vertical-align: top; width: 50%;" >
+                        <div class="comment-form-author"> <label> <img style="cursor: pointer; position: absolute; padding-right: 120px; margin-left: -5px;" id="depliantBandelette" src='<?php echo $this->basePath().'/img/light/plus.png'?>' /> <pouss style='margin-left: 20px;'>Bandelette urinaire</pouss> </label> </div>
+                        <div id="BUcheckbox" style="background: #ffffff; width: 95%; height: 125px; border: 0px solid #eeeeee;">
+                        
+                           <div style="float: left;"><label style="width: 125px; text-align: right;"> Albumine :  </label><?php echo $this->formRow($form->get('albumine'));?></div><div id="labelAlbumine"  style="float: left;"> <div id="fleche"  style="float: left;"> <label style="width: 15px;text-align: center;"> » </label></div> <div id="ChoixPlus"  style="float: left;"><label style="width: 15px;text-align: center;"> 3+ </label></div><div id="labelCroixAlbumine"  style="float: left;"><?php echo $this->formRow($form->get('croixalbumine'));?></div></div> <br>
+                           <div style="float: left;"><label style="width: 125px; text-align: right;"> Sucre :  </label><?php echo $this->formRow($form->get('sucre'));?></div><div id="labelSucre"  style="float: left;"> <div id="fleche2"  style="float: left;"> <label style="width: 15px;text-align: center;"> » </label></div> <div id="ChoixPlus2"  style="float: left;"><label style="width: 15px;text-align: center;"> 3+ </label></div><div id="labelCroixSucre"  style="float: left;"><?php echo $this->formRow($form->get('croixsucre'));?></div></div> <br>
+                           <div style="float: left;"><label style="width: 125px; text-align: right;"> Corps cétoniques :  </label><?php echo $this->formRow($form->get('corpscetonique'));?></div><div id="labelCorpscetonique"  style="float: left;"> <div id="fleche3"  style="float: left;"><label style="width: 15px;text-align: center;"> » </label></div> <div id="ChoixPlus3"  style="float: left;"><label style="width: 15px;text-align: center;"> 3+ </label></div><div id="labelCroixCorpscetonique"  style="float: left;"><?php echo $this->formRow($form->get('croixcorpscetonique'));?></div></div>
+                        
+                        </div>
+                        </td>
+                        
+                        <td class="comment-form-author" style="width: 50%; position: absolute; bottom: 40px; right: 40px;">
+                             <div style="float:right;">
+                                  <button id='bouton_constantes_valider'>Valider</button>
+                             </div>
+                             <div style="float:right;">
+                                  <button id='bouton_constantes_modifier'>Modifier</button>
+                             </div>
+                        </td>
+                    </tr>
+                    
+                 </table>
+                </div>
+            </div>
+            
+     <!-- **************************************************************************************************************** -->
+
+     </div>
+</div>
+      <table>
+         <tr>
+           <td style="background-color:#eeeeee;">
+              <div> <button type="submit" name="terminer" id="terminer" style=" margin-left:400px; margin-top: 20px; font-family: police2;font-size: 18px; font-weight: bold;"> Terminer </button> </div>
+           </td>
+           <td style="background-color:#eeeeee;">
+              <div> <button type="submit" id="annuler" style=" margin-right:340px; margin-top: 20px; font-family: police2;font-size: 18px; font-weight: bold;"> Annuler </button> </div>
+           </td>
+         </tr>
+       </table>
+
+                   <!-- POP UP pour Confirmation Annulation -->
+                            <div id="confirmation" title="Confirmation de la suppression" style="display:none;">
+                              <p style="font-size: 16px;">
+                                 <span style="float:left; margin:0 0px 20px 0; ">
+                                 <img src="<?php echo $this->basePath().'/images_icons/warning_16.png';?>" />
+
+                                 Etes-vous s&ucirc;r de vouloir annuler les modifications ?</span>
+                              </p>
+                            </div>
+
+<?php echo $this->form()->closeTag();?>
+</div>
+
+<style>
+/* #responde input:focus  {outline-style : none; background-color: none !important; } */
+/* #responde input:-webkit-autofill { */
+/* background-color: none !important; */
+/* background-image: none !important; */
+/* } */
+</style>
+
+<script>
+$(function(){
+	$('#responde input, #respond input').attr('autocomplete','off');
+//*********************************************************************
+//*********************************************************************
+//*********************************************************************
+	function dep1(){
+		$('#depliantBandelette').click(function(){
+			$("#depliantBandelette").replaceWith("<img id='depliantBandelette' style='cursor: pointer; position: absolute; padding-right: 120px; margin-left: -5px;' src='<?php echo $this->basePath().'/img/light/plus.png'?>' />");
+			dep();
+		    $('#BUcheckbox').animate({
+		        height : 'toggle'
+		    },1000);
+		 return false;
+		});
+	}
+	
+	$('#BUcheckbox').toggle(false);
+	dep();
+	function dep(){
+		$('#depliantBandelette').click(function(){
+			$("#depliantBandelette").replaceWith("<img id='depliantBandelette' style='cursor: pointer; position: absolute; padding-right: 120px; margin-left: -5px;' src='<?php echo $this->basePath().'/img/light/minus.png'?>' />");
+			dep1();
+		    $('#BUcheckbox').animate({
+		        height : 'toggle'
+		    },1000);
+		 return false;
+		});
+	}
+	
+});
+
+
+//TESTER LEQUEL DES CHECKBOX est coch�
+//TESTER LEQUEL DES CHECKBOX est coch�
+maskDeSaisie();
+OptionCochee();
+function OptionCochee() {
+	$("#labelAlbumine").toggle(false);
+	$("#labelSucre").toggle(false);
+	$("#labelCorpscetonique").toggle(false);
+	
+	$('#BUcheckbox input[name=albumine]').click(function(){
+		$("#ChoixPlus").toggle(false);
+		var boutons = $('#BUcheckbox input[name=albumine]');
+		if(boutons[0].checked){	$("#labelAlbumine").toggle(false); $("#BUcheckbox input[name=croixalbumine]").attr('checked', false); }
+		if(boutons[1].checked){ $("#labelAlbumine").toggle(true); $("#labelCroixAlbumine").toggle(true);}
+	});
+
+	$('#BUcheckbox input[name=sucre]').click(function(){
+		$("#ChoixPlus2").toggle(false);
+		var boutons = $('#BUcheckbox input[name=sucre]');
+		if(boutons[0].checked){	$("#labelSucre").toggle(false); $("#BUcheckbox input[name=croixsucre]").attr('checked', false); }
+		if(boutons[1].checked){ $("#labelSucre").toggle(true); $("#labelCroixSucre").toggle(true);}
+	});
+
+	$('#BUcheckbox input[name=corpscetonique]').click(function(){
+		$("#ChoixPlus3").toggle(false);
+		var boutons = $('#BUcheckbox input[name=corpscetonique]');
+		if(boutons[0].checked){	$("#labelCorpscetonique").toggle(false); $("#BUcheckbox input[name=croixcorpscetonique]").attr('checked', false); }
+		if(boutons[1].checked){ $("#labelCorpscetonique").toggle(true); $("#labelCroixCorpscetonique").toggle(true);}
+	});
+
+
+	//CHOIX DU CROIX
+	//========================================================
+	$("#ChoixPlus").toggle(false);
+	$('#BUcheckbox input[name=croixalbumine]').click(function(){
+		var boutons = $('#BUcheckbox input[name=croixalbumine]');
+		if(boutons[0].checked){
+			$("#labelCroixAlbumine").toggle(false); 
+			$("#ChoixPlus").toggle(true); 
+			$("#ChoixPlus label").html("1+");
+
+		}
+		if(boutons[1].checked){ 
+			$("#labelCroixAlbumine").toggle(false); 
+			$("#ChoixPlus").toggle(true); 
+			$("#ChoixPlus label").html("2+");
+
+		}
+		if(boutons[2].checked){ 
+			$("#labelCroixAlbumine").toggle(false); 
+			$("#ChoixPlus").toggle(true); 
+			$("#ChoixPlus label").html("3+");
+			
+		}
+		if(boutons[3].checked){ 
+			$("#labelCroixAlbumine").toggle(false); 
+			$("#ChoixPlus").toggle(true); 
+			$("#ChoixPlus label").html("4+");
+
+		}
+	});
+
+	//========================================================
+	$("#ChoixPlus2").toggle(false);
+	$('#BUcheckbox input[name=croixsucre]').click(function(){
+		var boutons = $('#BUcheckbox input[name=croixsucre]');
+		if(boutons[0].checked){
+			$("#labelCroixSucre").toggle(false); 
+			$("#ChoixPlus2").toggle(true); 
+			$("#ChoixPlus2 label").html("1+");
+
+		}
+		if(boutons[1].checked){ 
+			$("#labelCroixSucre").toggle(false); 
+			$("#ChoixPlus2").toggle(true); 
+			$("#ChoixPlus2 label").html("2+");
+
+		}
+		if(boutons[2].checked){ 
+			$("#labelCroixSucre").toggle(false); 
+			$("#ChoixPlus2").toggle(true); 
+			$("#ChoixPlus2 label").html("3+");
+			
+		}
+		if(boutons[3].checked){ 
+			$("#labelCroixSucre").toggle(false); 
+			$("#ChoixPlus2").toggle(true); 
+			$("#ChoixPlus2 label").html("4+");
+
+		}
+	});
+
+	//========================================================
+	$("#ChoixPlus3").toggle(false);
+	$('#BUcheckbox input[name=croixcorpscetonique]').click(function(){
+		var boutons = $('#BUcheckbox input[name=croixcorpscetonique]');
+		if(boutons[0].checked){
+			$("#labelCroixCorpscetonique").toggle(false); 
+			$("#ChoixPlus3").toggle(true); 
+			$("#ChoixPlus3 label").html("1+");
+
+		}
+		if(boutons[1].checked){ 
+			$("#labelCroixCorpscetonique").toggle(false); 
+			$("#ChoixPlus3").toggle(true); 
+			$("#ChoixPlus3 label").html("2+");
+
+		}
+		if(boutons[2].checked){ 
+			$("#labelCroixCorpscetonique").toggle(false); 
+			$("#ChoixPlus3").toggle(true); 
+			$("#ChoixPlus3 label").html("3+");
+			
+		}
+		if(boutons[3].checked){ 
+			$("#labelCroixCorpscetonique").toggle(false); 
+			$("#ChoixPlus3").toggle(true); 
+			$("#ChoixPlus3 label").html("4+");
+
+		}
+	});
+}
+
+
+//*********************************************************************
+//*********************************************************************
+//*********************************************************************
+</script>
+<?php  echo $this->headScript()->appendFile($this->basePath().'/js/jquery.maskedinput.cons.js');?>

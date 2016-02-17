@@ -1,0 +1,191 @@
+<!-- MES STYLES -->
+<?php echo $this->headLink()->appendStylesheet($this->basePath().'/css/pharmacie/styleListeMedicaments.css');?>
+
+<!-- MES JS -->
+<?php echo $this->headScript()->appendFile($this->basePath().'/js/pharmacie/jsListeMedicaments.js');?>
+
+<?php
+	  function adresseFabriquantText($Text){
+
+	  	//Convertir toute la chaine en minuscule
+	  	//$chaine = strtolower($Text);
+	  	//Convertir les premiers caract�res de chaque mot en majuscule
+	  	//$chaine = ucwords($chaine);
+
+	  	$chaine = $Text;
+
+	  	if(strlen($chaine)>31){
+          //La chaine avec le nombre de caract�re maximun a afficher
+          $chaine = substr($chaine, 0, 32);
+
+          //Le nombre de caract�re en s'arretant sur le dernier de la chaine
+          //'pour eviter d'avoir un dernier mot incompl�
+          $nb = strrpos($chaine, ' ');
+
+          //La chaine finale obtenue
+          $chaine = ucwords(substr($chaine, 0, $nb).' ..');
+
+	  	}
+
+	  	return $chaine.'';
+	  }
+
+	  function miseEnGardeText($Text){
+	  	$chaine = substr($Text, 0, 17);
+	  	$nb = strrpos($chaine, ' ');
+	  	$chaine = substr($chaine, 0, $nb);
+	  	return $chaine.'';
+	  }
+
+	  function excipientNotoirText($Text){
+       $chaine = $Text;
+       if(strlen($Text)>19){
+	       $chaine = substr($Text, 0, 19);
+	  	   $nb = strrpos($chaine, ' ');
+	  	   $chaine = substr($chaine, 0, $nb);
+	  	   $chaine .=' ..';
+	  	}
+	  	return $chaine;
+	  }
+
+	  function intituleText($Text){
+	  	$chaine = $Text;
+	  	if(strlen($Text)>12){
+	  		$chaine = substr($Text, 0, 19);
+	  		$nb = strrpos($chaine, ' ');
+	  		$chaine = substr($chaine, 0, $nb);
+	  		$chaine .=' ..';
+	  	}
+	  	return $chaine;
+	  }
+?>
+
+<!-- TITRE EN TETE DE LA PAGE -->
+<div id="titre" style='font-family: police2; text-decoration:none; color: #48883e; font-size: 20px; font-weight: bold;'><iS style='font-size: 25px;'>&curren;</iS> LISTE DES MEDICAMENTS
+  <!-- div id="pharmacie_logo"></div-->
+</div>
+
+
+<!-- CONTENU AJOUT D'UN MEDICAMENT -->
+<div id="contenu" >
+
+		<table class="table table-bordered tab_list_mini" id="listeMedicaments">
+			<thead>
+				<tr style="height:50px;">
+					<th id="_nom" align="center">INTITULE</th>
+					<th id="_prenom" align="center">EXCIPIENT NOTOIR</th>
+					<th id="_date" align="center" >VOIE ADMINISTRATION</th>
+					<th id="_adresse" align="center" >ADRESSE FABRIQUANT</th>
+					<th id="_nationalite" align="center" >MISE EN GARDE</th>
+					<th id="_effectuer" align="center">Options</th>
+				</tr>
+			</thead>
+
+
+			<tbody id="donnees" class="liste_patient">
+
+	            <!-- ************ On affiche les patients en une liste ordonn�e************ -->
+
+				<?php foreach($this->listeMedicaments as $donnees):?>
+
+				<tr id="<?php echo $this->escapeHtml($donnees->id_materiel);?>">
+
+				    <td style="text-transform : uppercase;"><?php echo intituleText($this->escapeHtml($donnees->intitule));?></td>
+				    <td><?php echo $this->escapeHtml(excipientNotoirText($donnees->excipient_notoire));?></td>
+					<td><?php echo $this->escapeHtml($donnees->voie_administration);?></td>
+					<td><?php echo $this->escapeHtml(adresseFabriquantText($donnees->adresse_fabriquant));?></td>
+					<td><?php echo $this->escapeHtml(miseEnGardeText($donnees->mise_en_garde));?></td>
+
+					<td>
+					    <?php $id = $this->escapeHtml($donnees->id_materiel);?>
+					    <a href="javascript:affichervue('<?php echo $id ?>') ">
+					       <img style="display: inline;" src='<?php echo $this->basePath().'/images_icons/vue.PNG'?>' alt='Constantes' title="details" />
+					    </a>&nbsp;
+
+					    <a href="javascript:modifiermedicament('<?php echo $id ?>')">
+					    	<img style="display: inline;" src='<?php echo $this->basePath().'/images_icons/modifier.PNG'?>' alt='Constantes' title=" Modifier" />
+					    </a>&nbsp;
+
+
+					   <a href="javascript:supprimermedicament('<?php echo $id ?>')" style="display: inline;" >
+					    	<img  style="display: inline;" src='<?php echo $this->basePath().'/images_icons/trash_16.PNG'?>' alt='Constantes' title="Annuler" />
+					    </a>
+
+					</td>
+				</tr>
+
+				<?php endforeach; ?>
+
+			</tbody>
+
+			<tfoot id="foot" class="foot_style">
+				<tr>
+					<th id="nom_"><input type="text" name="search_browser" value=" intitule" class="search_init" /></th>
+					<th id="prenom_"><input type="text" name="search_browser" value=" Excipient notoir" class="search_init" /></th>
+					<th id="date_"><input type="text" name="search_browser" value=" Voie administration" class="search_init" /></th>
+					<th id="adresse_"><input type="text" name="search_browser" value=" Adresse fabricant" class="search_init" /></th>
+					<th id="nationalite_"><input type="text" name="search_browser" value=" Mise en garde" class="search_init" /></th>
+					<th id="effectuer_"><input type="hidden" name="search_browser" value="" class="" /></th>
+
+				</tr>
+			</tfoot>
+		</table>
+
+		<div id="compteur" style="font-size: 17px; padding-top: 10px; padding-bottom: 10px; font-style: bold; font-family: Times  New Roman; margin-left:5px; margin-top:-20px; ">
+		    <?php echo $this->nbMedicaments?> m&eacute;dicament(s)
+		</div>
+
+</div>
+
+            <!-- ***********************************************************************************************
+
+                 ==========================POP UP pour Confirmation Suppression=================================
+
+                 *********************************************************************************************** -->
+                 <div id='confirmationSuppression' title='Confirmation de la suppression' style='display:none;'>
+                   <p style='font-size: 16px;'>
+                       <span style='float:left; margin:0 0px 20px 0; font-size:17px; '>
+                          <img src='/simens_derniereversion/public/images_icons/warning_16.png' />
+                          Etes-vous s&ucirc;r de vouloir supprimer le m&eacute;dicament ?
+        		       </span>
+                   </p>
+                 </div>
+
+
+<!-- CONTENU VUE SUR LE MEDICAMENT -->
+<div id="contenu_vue_medicament">
+</div>
+
+<!-- CONTENU POUR LA MODIFICATION DU MEDICAMENT -->
+<div id="contenu_modification_medicament">
+</div>
+
+
+
+<!-- *************************** STYLE ET SCRIPT **************************** -->
+<!-- *************************** STYLE ET SCRIPT **************************** -->
+<!-- *************************** STYLE ET SCRIPT **************************** -->
+<style>
+/* STYLE POUR LA LISTE DE SELECTION DE LA TABLE*/
+#listeDataTable{
+	margin-bottom: 0px;
+	margin-left: -10px;
+}
+</style>
+
+<script>
+initialisation()
+</script>
+
+
+<script>
+$('#contenu_vue_medicament').toggle(false);
+$('#contenu_modification_medicament').toggle(false);
+
+ //POUR LE MENU GAUCHE dans -elementgauche.phtml
+$('#plus_dossier_patient').toggle(true);
+$("#dossier_patient").replaceWith("<li id='dossier_patient' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:18px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/moins-vert.PNG' alt='Liste' /> M&eacute;dicaments </span></a></li>");
+dep_dossier_patient1();
+$('#liste_dossier_patient_style').css({'font-weight':'bold','color':'white','font-size':'22px'});
+
+</script>

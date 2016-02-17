@@ -1,0 +1,257 @@
+<?php 
+use Facturation\View\Helper\DateHelper;
+use Zend\Db\ResultSet\ResultSet;
+$Control = new DateHelper();
+
+function AdresseText($Text){
+	$chaine = $Text;
+	if(strlen($Text)>30){
+		$chaine = substr($Text, 0, 30);
+		$nb = strrpos($chaine, ' ');
+		$chaine = substr($chaine, 0, $nb);
+		$chaine .=' ...';
+	}
+	return $chaine;
+}
+?>
+
+<?php echo $this->headLink()->appendStylesheet($this->basePath().'/css/consultation/recherche.css'); ?>
+
+<div id="titre" style='font-family: police2; text-decoration:none; color: green; font-size: 20px; font-weight: bold; padding-left:20px;'> <i style='font-size: 25px;'>&curren;</i> LISTE DES CONSULTATIONS</div>
+<div id="contenu" >
+
+		<table class="table table-bordered tab_list_mini" id="patient">
+			<thead>
+				<tr style="height:50px;">
+					<th id="nom" align="center">Nom </th>
+					<th id="prenom" align="center">Pr&eacute;nom</th>
+					<th id="date" align="center" name="date">Date. naiss</th>
+					<th id="sexe" align="center" name="sexe">Sexe</th>
+					<th id="adresse" align="center" name="adresse">Adresse</th>
+					<th id="nationalite" align="center" name="nationalite">Nationalit&eacute;</th>
+					<th id="effectuer" align="center">Options</th>
+				</tr>
+			</thead>
+
+			<tbody>
+			<!-- ************ On affiche ceux pour qui on n'a pas encore pris les constantes************ -->
+				<?php $resultSet1 = new ResultSet();
+					  $resultSet1->initialize($this->donnees[0]);
+					  $resultSet1->buffer();
+					  $resultSet2 = new ResultSet();
+					  $resultSet2->initialize($this->donnees[1]);
+					  $resultSet2->buffer();
+					  
+					  //A revoir pour l'initialisation
+ 					  foreach ($resultSet1 as $resul1){}
+ 					  foreach ($resultSet2 as $resul2){}
+
+ 					  //var_dump($resultSet2); exit();
+				?>
+
+				<?php foreach($resultSet1 as $donnees) { ?>
+
+                <?php $trouver = false; ?>
+	     	    <?php foreach($resultSet2 as $donneees){?>
+			    <?php if($this->escapeHtml($donnees['Id']) == $this->escapeHtml($donneees['Id'])){ $trouver = true; break; }?>
+			    <?php } ?>
+
+				<?php if($trouver == false){ ?>
+				<tr>
+				    <td id="nomMaj">
+				      <div id="<?php echo $donnees['Id']; ?>" style="width: 10px; height: 22px; margin-left: -10px; margin-right: 0.5px; float:left;" >
+				        <img id="image-alert" style=" vertical-align: top;" src='<?php echo $this->basePath().'/images_icons/alert_rv_r.png'?>' />
+				      </div>
+				      <?php echo $this->escapeHtml($donnees['Nom']);?>
+				    </td>
+				    <td><?php echo $this->escapeHtml($donnees['Prenom']);?></td>
+					<td><?php echo $Control->convertDate($this->escapeHtml($donnees['Datenaissance']));?></td>
+					<td><?php echo $this->escapeHtml($donnees['Sexe']);?></td>
+					<td><?php echo AdresseText($this->escapeHtml($donnees['Adresse']));?></td>
+					<td><?php echo $this->escapeHtml($donnees['Nationalite']);?></td>
+					<td>
+					    <a href="<?php echo $this->url('consultation', array('action'=>'ajout-constantes','id_patient'=>$this->escapeHtml($donnees['Id'])));?>">
+					       <img style="display: inline;" src='<?php echo $this->basePath().'/images_icons/surveillante.PNG'?>' alt='Constantes' title=" Ajouter Constantes" />
+					    </a>&nbsp;
+
+					    <a>
+					    	<img style="display: inline; color: white; opacity: 0.15;" src='<?php echo $this->basePath().'/images_icons/modifier.PNG'?>' alt='Constantes' title=" Modifier" />
+					    </a>&nbsp;
+
+					    <a>
+					      <?php  echo ($trouver == true)? "<img style=\"display: inline;\" src='".$this->basePath()."/images_icons/tick_16.PNG' alt='En cours' title=\"En cours\" style=\"float:left;border:transparent;\"/>":"<img style=\"display: inline; color: white; opacity: 0.15;\" src='".$this->basePath()."/images_icons/tick_16.PNG' alt='Terminee' title=\"En attente\" />"; ?>
+					    </a>
+					</td>
+				</tr>
+				<script> $("#"+"<?php echo $donnees['Id']; ?>").toggle(false); </script>
+				<?php if( array_key_exists($donnees['Id'], $this->tabPatientRV) ){?>
+					<script>
+					   $("#"+"<?php echo $donnees['Id']; ?>").toggle(true); 
+
+					   function FaireClignoterImage (){
+						    $("#nomMaj div img").fadeOut(900).delay(300).fadeIn(800);
+					   }
+					   setInterval('FaireClignoterImage()',2200);
+					</script>
+				<?php }?>
+				
+				<?php }?>
+				<?php }?>
+
+			    <!-- *****************On affiche maintenant tous ceux pour qui on a pris les constantes*********** -->
+
+			    <?php 
+			    
+			    foreach($resultSet1 as $donnees) :?>
+
+                <?php $trouver = false;?>
+	     	    <?php foreach($resultSet2 as $donneees):?>
+			    <?php if($this->escapeHtml($donnees['Id']) == $this->escapeHtml($donneees['Id'])){ $trouver = true; break; }?>
+			    <?php endforeach;?>
+
+				<?php if($trouver == true){?>
+				<tr>
+				    <td id="nomMaj">
+				       <div id="<?php echo $donnees['Id']; ?>" style="width: 10px; height: 22px; margin-left: -10px; margin-right: 0.5px; float:left;" >
+				          <img id="image-alert" style=" vertical-align: top;" src='<?php echo $this->basePath().'/images_icons/alert_rv_r.png'?>' />
+				       </div>
+				       <?php echo $this->escapeHtml($donnees['Nom']);?>
+				    </td>
+				    <td><?php echo $this->escapeHtml($donnees['Prenom']);?></td>
+					<td><?php echo $Control->convertDate($this->escapeHtml($donnees['Datenaissance']));?></td>
+					<td><?php echo $this->escapeHtml($donnees['Sexe']);?></td>
+					<td><?php echo AdresseText($this->escapeHtml($donnees['Adresse']));?></td>
+					<td><?php echo $this->escapeHtml($donnees['Nationalite']);?></td>
+					<td>
+					    <a>
+					       <img style="display: inline; color: white; opacity: 0.15; float:left;border:transparent;" src='<?php echo $this->basePath().'/images_icons/surveillante.PNG'?>' alt='Constantes' title=" Ajouter Constantes"/>
+					    </a>&nbsp;&nbsp;
+
+
+					    <a href="<?php echo $this->url('consultation', array('action'=>'maj-consultation'), array('query'=>array('id_patient'=>$this->escapeHtml($donnees->Id),'id_cons'=>$this->escapeHtml($donneees->Id_cons))));?>">
+					       <img style="display: inline;" src='<?php echo $this->basePath().'/images_icons/modifier.PNG'?>' alt='Constantes' title=" Modifier" style="float:left;border:transparent;"/>
+					    </a>&nbsp;
+
+					    <a>
+					      <?php  echo ($trouver == true)? "<img style=\"display: inline;\" src='".$this->basePath()."/images_icons/tick_16.PNG' alt='Terminer' title=\"Terminer\" style=\"float:left;border:transparent;\"/>":"<img style=\"display: inline;\" src='".$this->basePath()."/images_icons/tickn_16.PNG' alt='Terminee' title=\"Terminee\" style=\"float:left;border:transparent;\"/>"; ?>
+					    </a>
+					</td>
+				</tr>
+				
+				<script> $("#"+"<?php echo $donnees['Id']; ?>").toggle(false); </script>
+				<?php if( array_key_exists($donnees['Id'], $this->tabPatientRV) ){?>
+					<script>
+					   $("#"+"<?php echo $donnees['Id']; ?>").toggle(true); 
+
+					   function FaireClignoterImage (){
+						    $("#nomMaj div img").fadeOut(900).delay(300).fadeIn(800);
+					   }
+					   setInterval('FaireClignoterImage()',2200);
+					</script>
+				<?php }?>
+				
+				<?php }?>
+				<?php endforeach; ?>
+
+
+			    <!-- *************************************************************************** -->
+
+			</tbody>
+
+			<tfoot class="foot_style">
+				<tr>
+					<th id="nom_" style='width: 13%;'><input type="text" name="search_browser" value=" Nom" class="search_init" /></th>
+					<th id="prenom_" style='width: 15%;'><input type="text" name="search_browser" value=" Prenom" class="search_init" /></th>
+					<th id="date_" style='width: 12%;'><input type="text" name="search_browser" value=" Date naissance" class="search_init" /></th>
+					<th id="sexe_" style='width: 7%;'><input type="text" name="search_browser" value=" Sexe" class="search_init" /></th>
+					<th id="adresse_" style='width: 28%;'><input type="text" name="search_browser" value=" Adresse" class="search_init" /></th>
+					<th id="nationalite_" style='width: 15%;'><input type="text" name="search_browser" value=" Nationalite" class="search_init" /></th>
+					<th id="effectuer_" style='width: 10%;'><input type="hidden" name="search_browser" value="" class="" /></th>
+
+				</tr>
+			</tfoot>
+		</table>
+
+	</div>
+
+<script type="text/javascript">
+            //$("#nomMaj div").toggle(false); 
+
+			var asInitVals = new Array();
+			var oTable = $('#patient').dataTable
+			( {
+							"bJQueryUI": false,
+							"sPaginationType": "full_numbers",
+							"aaSorting": [], //pour trier la liste affich�e
+							"oLanguage": {
+								"sInfo": "_START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+								"sInfoEmpty": "0 &eacute;l&eacute;ment &agrave; afficher",
+								"sInfoFiltered": "",
+								"sInfoPostFix":  "",
+								"sSearch": "",
+								"sUrl": "",
+								"sWidth": "30px",
+								"oPaginate": {
+									"sFirst":    "|<",
+									"sPrevious": "<",
+									"sNext":     ">",
+									"sLast":     ">|"
+									}
+							   },
+							   "iDisplayLength": "10",
+							   "aLengthMenu": [5,10,15,20],
+
+			} );
+
+			//le filtre du select
+			/*$('#filter_statut').change(function()
+			{
+				oTable.fnFilter( this.value );
+			});*/
+			$("tfoot input").keyup( function () {
+				/* Filter on the column (the index) of this element */
+				oTable.fnFilter( this.value, $("tfoot input").index(this) );
+			} );
+
+			/*
+			 * Support functions to provide a little bit of 'user friendlyness' to the textboxes in
+			 * the footer
+			 */
+			$("tfoot input").each( function (i) {
+				asInitVals[i] = this.value;
+			} );
+
+			$("tfoot input").focus( function () {
+				if ( this.className == "search_init" )
+				{
+					this.className = "";
+					this.value = "";
+				}
+			} );
+
+			$("tfoot input").blur( function (i) {
+				if ( this.value == "" )
+				{
+					this.className = "search_init";
+					this.value = asInitVals[$("tfoot input").index(this)];
+				}
+			} );
+
+			setTimeout(function() {
+				vart='<?php echo $this->basePath().'/consultation/recherche';?>';
+			    $(location).attr("href",vart);
+			}, 15000);
+
+</script>
+
+<script>
+
+//POUR LE MENU GAUCHE dans -elementgauche.phtml
+$('#plus_naissance').toggle(true);
+$("#naissance").replaceWith("<li id='naissance' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='<?php echo $this->basePath().'/images_icons/moins-vert.PNG'?>' alt='Liste' /> Consultations </span></a></li>");
+dep1();
+$('#ajouter_style').css({'font-weight':'bold','color':'white','font-size':'22px'});
+</script>
+
+<?php echo $this->headScript()->appendFile($this->basePath().'/js/jquery-1.9.1.js');?>
+<?php echo $this->headScript()->appendFile($this->basePath().'/js/jquery-ui.js');?>

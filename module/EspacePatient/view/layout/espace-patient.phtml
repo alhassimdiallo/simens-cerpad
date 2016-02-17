@@ -1,0 +1,93 @@
+<html>
+<?php echo $this->doctype("XHTML1_TRANSITIONAL"), PHP_EOL; ?>
+<head>
+ <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css' />
+<?php
+
+echo $this->headLink()->prependStylesheet($this->basePath().'/css/bootstrap.min.css');
+echo  $this->headLink()->prependStylesheet($this->basePath().'/css/bootstrap-responsive.min.css');
+ echo $this->headLink()->prependStylesheet($this->basePath().'/css/uniform.css');
+ echo $this->headLink()->prependStylesheet($this->basePath().'/css/select2.css');
+ echo $this->headLink()->prependStylesheet($this->basePath().'/css/jquery.contextMenu.css');
+ echo $this->headLink()->prependStylesheet($this->basePath().'/css/matrix-style.css');
+ echo $this->headLink()->prependStylesheet($this->basePath().'/css/matrix-media.css');
+echo $this->headLink()->prependStylesheet($this->basePath().'/font-awesome/css/font-awesome.css');
+
+
+ $this->headScript()->appendFile($this->basePath().'/js/jquery.min.js');
+ $this->headScript()->appendFile($this->basePath().'/js/jquery.ui.custom.js');
+ $this->headScript()->appendFile($this->basePath().'/js/bootstrap.min.js');
+ $this->headScript()->appendFile($this->basePath().'/js/jquery.uniform.js');
+ $this->headScript()->appendFile($this->basePath().'/js/select2.min.js');
+ $this->headScript()->appendFile($this->basePath().'/js/jquery.dataTables.min.js');
+ $this->headScript()->appendFile($this->basePath().'/js/jquery.contextMenu.js');
+ $this->headScript()->appendFile($this->basePath().'/js/matrix.js');
+
+
+
+
+echo $this->headTitle($this->pageTitle);?>
+		<?php $this->headLink()->appendStylesheet($this->basePath().'/css/search.css');?>
+		<?php $this->headLink()->appendStylesheet($this->basePath().'/css/niceforms-default.css');?>
+		<?php $this->headLink()->appendStylesheet($this->basePath().'/css/dossier.css');?>
+		<?php $this->headLink()->appendStylesheet($this->basePath().'/css/simplePopup.css');?>
+		<?php $this->headLink()->appendStylesheet($this->basePath().'/css/demo_table.css');?>
+		<?php $this->headLink()->appendStylesheet($this->basePath().'/css/demo_table_jui.css');?>
+		<?php $this->headLink()->appendStylesheet($this->basePath().'/css/tinyTips.css');?>
+		<?php $this->headLink()->appendStylesheet($this->basePath().'/js/jquery.modaldialog/css/jquery.modaldialog.css');?>
+		<?php $this->headLink()->appendStylesheet($this->basePath().'/css/custom.datatable.css');?>
+		<?php $this->headLink()->appendStylesheet($this->basePath().'/css/ui.selectmenu.css');?>
+		<?php $this->headLink()->appendStylesheet($this->basePath().'/css/jquery.autocomplete.css');?>
+
+
+ 		<?php $this->headScript()->appendFile($this->basePath().'/js/plugins/simplePopup.js', 'text/javascript');?>
+		<?php $this->headScript()->appendFile($this->basePath().'/js/plugins/jquery.dataTables.js');?>
+		<?php $this->headScript()->appendFile($this->basePath().'/js/plugins/jquery.contextMenu.js', 'text/javascript');?>
+		<?php $this->headScript()->appendFile($this->basePath().'/js/jquery.modaldialog/js/jquery.modaldialog.js', 'text/javascript');?>
+		<?php $this->headScript()->appendFile($this->basePath().'/js/jquery/js/jquery.form.js', 'text/javascript');?>
+		<?php $this->headScript()->appendFile($this->basePath().'/js/jquery.validate.js', 'text/javascript');?>
+		<?php echo $this->headScript() ?>
+</head>
+
+
+<body id = "bodbod">
+<!--Header-part-->
+<div id="header">
+  <h1><a href="">Simens admin panel</a></h1>
+</div>
+<!--close-Header-part-->
+<!--top Menu au dessus -->
+<div id="user-nav" class="navbar navbar-inverse">
+  <ul class="nav">
+    <li  class="dropdown" id="profile-messages" ><a title="" href="#"  class="dropdown-toggle">
+    <i class="icon icon-user"></i>  <span class="text">Bienvenue utilisateur</span><b class="caret"></b></a>
+    </li>
+
+    <li class=""><a title="" href="">
+    <i class="icon icon-share-alt"></i> <span class="text">D&eacute;connexion</span></a>
+    </li>
+  </ul>
+</div>
+<!--Menu de droite-->
+<div id="sidebar">
+  <?php echo $this->partial('layout/menugauche-espace-patient'); ?>
+</div>
+<div id="content">
+  	<div id="content-header">
+    <div class="container-fluid">
+    	<hr>
+   		 <div class="row-fluid">
+	         <?php echo $this->content; ?>
+         </div>
+  	</div>
+	</div>
+</div>
+<!--Pied de Page debut-->
+<div class="row-fluid">
+	 <div id="footer" class="span12"><?php echo $this->partial('layout/piedpage-espace-patient'); ?> </div>
+</div>
+<!--Fin de pied de page-->
+</body>
+</html>

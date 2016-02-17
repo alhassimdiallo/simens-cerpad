@@ -1,0 +1,285 @@
+<!-- MES STYLES --> 
+<?php echo $this->headLink()->appendStylesheet($this->basepath().'/css/hospitalisation/GestionDesLits.css');
+      echo $this->headLink()->appendStylesheet($this->basepath().'/css/facturation/DatePicker.css'); 
+?>
+<!-- MES JS -->
+<?php echo $this->headScript()->appendFile($this->basepath().'/js/hospitalisation/GestionDesLits.js');?>
+
+
+<script type="text/javascript">
+$(window).load(function () {
+  $('#wait').toggle(false);
+  $('#contenu').fadeIn().css({'visibility':'visible'});
+});
+
+var base_url = window.location.toString();
+var tabUrl = base_url.split("public");
+
+/***POUR LE MENU GAUCHE dans -elementgauche.phtml***/
+$('#plus_operationMajor').toggle(true); 
+$("#operationMajor").replaceWith("<li id='operationMajor' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:21px; font-family:Times New Roman;'> <img src='"+tabUrl[0]+"public/images_icons/moin-green2.png' /> Hospitalisation </span></a></li>");
+depDemHospi3();
+$('#style_listeLit_Major').css({'font-weight':'bold','color':'white','font-size':'20px'});
+$('#menu3').css({'background':'#6c7f93'});
+</script>
+
+
+<style>
+#contenu{ visibility: hidden };
+</style>
+
+<div id="titre" style='font-family: police2; text-decoration: none; color: green; font-size: 20px; font-weight: bold; padding-left:20px;'>
+	<iS style='font-size: 25px;'>&curren;</iS>
+	LISTE DES LITS
+</div>
+<div id="wait" style="color: gray; font-size: 20px; text-align: center; margin-top: 80px;" > <span> Chargement ... </span> </div>
+<div id="contenu">
+ 
+     <table style="width: 100%;">
+
+       <tr style="width: 100%;">  
+            <td style="width: 40%; height: 300px; vertical-align: top;">
+               
+               <table style="width: 95%; margin-top: 7px; border: 1px solid #cccccc; border-radius: 7px; box-shadow: 0pt 5pt 12px rgba(0, 0, 0, 0.2);">
+                   <tr style='vertical-align: top; background: #efefef; height: 25px; border: 1px solid #cccccc;'>
+                       <td colspan='3' style='height: 25px; padding: 7px; font-family: times new roman; color: green; font-weight: bold;'><i> D&eacute;tails des infos sur le lit <img style='float: right; cursor:pointer;' src='/simens/public/images_icons/infos.png' title='informations' /></i></td>
+                   </tr>
+                   
+                   <tr style='vertical-align: top;'>
+                       <td style='width: 33%; height: 50px; padding: 7px;'>
+                           <a style='text-decoration:underline; font-size:12px;'>Intitul&eacute;:</a><br>
+                           <p style='font-weight:bold; font-size:17px;' id='intitule'> Intitule </p>
+                       </td>
+                       
+                       <td style='width: 33%; height: 50px; padding: 7px;'>
+                           <a style='text-decoration:underline; font-size:12px;'>Salle:</a><br>
+                           <p style='font-weight:bold; font-size:17px;' id='sallevue'> Salle </p>
+                       </td>
+                       
+                       <td style='width: 33%; height: 50px; padding: 7px;'>
+                           <a style='text-decoration:underline; font-size:12px;'>Batiment:</a><br>
+                           <p style='font-weight:bold; font-size:17px;' id='batiment'> Batiment </p>
+                       </td>
+                   </tr> 
+                   
+                    <tr style='vertical-align: top;'>
+                       <td style='height: 50px; padding: 7px;'>
+                           <a style='text-decoration:underline; font-size:12px;'>Date d'acquisition:</a><br>
+                           <p style='font-weight:bold; font-size:17px;' id='date_acquisition'> Date </p>
+                       </td>
+                       
+                       <td style='height: 50px; padding: 7px;'>
+                           <a style='text-decoration:underline; font-size:12px;'>Date maintenance:</a><br>
+                           <p style='font-weight:bold; font-size:17px;' id='date_maintenance'> Date </p>
+                       </td>
+                       
+                       <td style='height: 50px; padding: 7px;'>
+                           <a style='text-decoration:underline; font-size:12px;'>Etat:</a><span id='iconeEtat'> </span><br>
+                           <p style='font-weight:bold; font-size:17px;' id='etat'> Etat </p>
+                       </td>
+                   </tr> 
+                   
+                    <tr style='vertical-align: top;'>
+                       
+                 	   <td colspan='3' style='padding-top: 10px; padding-bottom: 0px; padding-right: 30px; width: 20%; padding: 7px;'>
+                 	      <a style='text-decoration:underline; font-size:13px;'>Description:</a><br>
+                 	      <p id='description' style='background:#f8faf8; font-weight:bold; font-size:17px;'> Description </p>
+                 	   </td>
+                       
+                   </tr> 
+               </table>
+            </td>
+            
+            <td style="width: 60%; vertical-align: top;">
+              <div style="margin-right: 0px; float:right; font-size: 15px; margin-top:5px; font-family: Times New Roman; font-size: 14px; color: green;"> <i style='cursor:pointer;' id='afficherLitsDisponibles'> Disponibles </i> | <i style='cursor:pointer;' id='afficherLitsOccupes'> Occup&eacute;s </i> | <i style='cursor:pointer;' id='afficherLitsIndisponibles'> Indisponibles </i> </div>
+              <table id="patient" class="table table-bordered tab_list_mini" >
+				<thead>
+					<tr style="height: 40px; width:100%; cursor: pointer; font-family: times new roman;">
+						<th style='width:22%; font-size:17px; '>I<minus>ntitul&eacute;</minus></th>
+						<th style='width:18%; font-size:17px; '>S<minus>alle</minus></th>
+						<th style='width:22%; font-size:17px; '>B<minus>atiment</minus></th>
+						<th style='width:20%; font-size:17px; '>E<minus>tat</minus></th>
+						<th style='width:18%; font-size:17px; '>O<minus>ptions</minus></th>
+					</tr>
+				</thead>
+
+				<tbody id="donnees" class="liste_patient">
+
+					<!-- ************ On affiche les patients en une liste ordonnï¿½e************ -->
+
+				</tbody>
+
+				<tfoot id="foot" class="foot_style">
+					<tr style="height: 35px;">
+						<th id="intitule" style='width: 22%;'><input type="text" name="search_browser"
+							value=" Intitul&eacute;" class="search_init" /></th>
+						<th id="salleFooter" style='width: 18%;'><input type="text" name="search_browser"
+							value=" Salle" class="search_init" /></th>
+						<th id="batiment" style='width: 22%;'><input type="text" name="search_browser"
+							value=" Batiment" class="search_init" /></th>
+						<th id="etat" style='width: 20%;'><input type="text" name="search_browser"
+							value=" Etat" class="search_init" /></th>
+						<th id="options" style='width: 18%;'><input type="hidden" name="search_browser"
+							value="" class="" /></th>
+
+					</tr>
+				</tfoot>
+			  </table>
+			</td>
+			
+		 </tr>
+      </table>
+</div>
+
+
+<div id="contenuListePatientsAHospitaliser"> 
+            <div style="margin-right: 0px; float:right; font-size: 15px; margin-top:5px; font-family: Times New Roman; font-size: 14px; color: green;">
+                 <i style='cursor:pointer;' id='afficherListeDesLits'> <img src="<?php echo $this->basepath().'/images_icons/left_16.png';?>" /> Pr&eacute;c&eacute;dent </i> 
+            </div>
+            
+            <table id="patientAHospitaliser" class="table table-bordered tab_list_mini" >
+				<thead>
+					<tr style="height: 50px; width:100%;">
+						<th id="nom" style='cursor: pointer;'>Nom</th>
+						<th id="prenom" style='cursor: pointer;'>Prenom</th>
+						<th id="date" style='cursor: pointer;'>Date. naiss</th>
+						<th id="sexe" style='cursor: pointer;'>Sexe</th>
+						<th id="adresse" style='cursor: pointer;'>Date & Heure D&eacute;but</th>
+						<th id="nationalite" style='cursor: pointer;'>Date fin pr&eacute;vue.</th>
+						<th id="effectuer">Options</th>
+					</tr>
+				</thead>
+
+				<tbody id="donnees" class="liste_patient">
+
+					<!-- ************ On affiche les patients en une liste ordonnï¿½e************ -->
+
+				</tbody>
+
+				<tfoot id="foot" class="foot_style">
+					<tr>
+						<th id="nom_" style='width: 16%;'><input type="text" name="search_browser"
+							value=" Nom" class="search_init" /></th>
+						<th id="prenom_" style='width: 18%;'><input type="text" name="search_browser"
+							value=" Pr&eacute;nom" class="search_init" /></th>
+						<th id="date_" style='width: 12%;'><input type="text" name="search_browser"
+							value=" Date naissance" class="search_init" /></th>
+						<th id="sexe_" style='width: 7%;'><input type="text" name="search_browser"
+							value=" Sexe" class="search_init" /></th>
+						<th id="adresse_" style='width: 20%;'><input type="text" name="search_browser"
+							value=" Date et heure" class="search_init" /></th>
+						<th id="nationalite_" style='width: 20%;'><input type="text" name="search_browser"
+							value=" Date fin" class="search_init" /></th>
+						<th id="effectuer_" style='width: 7%;'><input type="hidden" name="search_browser"
+							value="" class="" /></th>
+
+					</tr>
+				</tfoot>
+			</table>
+</div>
+
+<div id='vue_patient'> 
+ <!-- POUR AFFICHER LA VUE DU PATIENT -->
+</div>
+
+<div id="hospitaliser">
+
+    <div id="vue_patient_hospi">
+
+    </div>
+    
+    <?php
+    $form = $this->form;
+    $form->setAttribute ( 'action', $this->url ( 'hospitalisation', array ('action' => 'gestion-des-lits') ));
+    $form->prepare ();
+    echo $this->form ()->openTag ( $form );
+    ?>
+    <?php echo $this->formhidden($form->get('code_demande'));?>
+    <?php echo $this->formhidden($form->get('id_lit'));?>
+
+    <table id="form_patient" style="margin-left: 195px; width: 80%;">  
+      
+      <tr class="comment-form-patient" style="width: 80%;">
+         <td style="width: 33%;"> <?php echo $this->formRow($form->get('division'));?></td> 
+         <td style="width: 33%;"> <?php echo $this->formRow($form->get('salle'));?></td> 
+         <td style="width: 33%;"> <?php echo $this->formRow($form->get('lit'));?></td> 
+      </tr>
+   
+      <tr class="comment-form-patient" style="width: 80%; height: 70px; vertical-align: bottom;">
+         <td style="width: 33%;"></td>
+         <td style="width: 33%; padding-left: 30px;"> 
+            <?php echo $this->formSubmit($form->get('annuler')); ?>
+            <?php echo $this->formSubmit($form->get('valider')); ?>
+         </td> 
+         <td style="width: 33%;"></td>
+      </tr>
+      
+    </table>
+
+    <?php echo $this->form()->closeTag();?>
+    
+    
+    <div id="scriptPourInfosLitSalleBatiment">
+
+    </div>
+</div>
+
+<!--***********************************************************************************************-->                              
+
+<!--==========================POP UP pour Afficher les détails =================================-->                              
+                          
+<!--***********************************************************************************************-->  
+        <div id="ConfirmationIndisponibilite" title="Confirmation d'indisponibilit&eacute;" style="display:none;">
+             
+             <p style="font-size: 16px;">
+                 <span style="float:left; margin:0 0px 20px 0; font-size:17px; ">
+                 <img src="<?php echo $this->basepath().'/images_icons/warning_16.png';?>" />
+                                
+                 Vous allez rendre ce lit indisponible !</span>
+             </p>
+             
+        </div>
+        
+        
+<!--***********************************************************************************************-->                              
+
+<!--==========================POP UP pour Afficher les détails =================================-->                              
+                          
+<!--***********************************************************************************************-->  
+        <div id="ConfirmationDisponibilite" title="Confirmation de disponibilit&eacute;" style="display:none;">
+             
+             <p style="font-size: 16px; float :left;">
+                 <span style="float:left; margin:0 0px 0px 0; font-size:17px; ">
+                 <img src="<?php echo $this->basepath().'/images_icons/warning_16.png';?>" />
+                 Vous allez rendre ce lit disponible !</span>
+             </p>
+             
+             <p >
+                 <span id='etatLitPopup' style="float: left; margin-left: 25px; margin-top: -10px; font-size:14px; color: red;">
+                                
+                 </span>
+                 
+             </p>
+             
+        </div>
+        
+        
+<!--***********************************************************************************************-->                              
+
+<!--==========================POP UP pour Afficher les détails =================================-->                              
+                          
+<!--***********************************************************************************************-->  
+        <div id="Informations" title="Informations" style="display:none;">
+             <div id="info-patient" style="font-size: 16px;">
+                              
+             </div>
+        </div>
+        
+        
+        
+        
+<script>
+$('#contenuListePatientsAHospitaliser').toggle(false);
+$('#hospitaliser, #vue_patient').toggle(false);
+listePatientsAHospitaliser();
+</script>

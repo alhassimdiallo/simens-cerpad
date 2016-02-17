@@ -1,0 +1,93 @@
+<html>
+<?php echo $this->doctype("XHTML1_TRANSITIONAL"), PHP_EOL; ?>
+<head>
+ <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css' />
+        <?php echo $this->headTitle('SIMENS '. $this->translate('Systeme Information Medical'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+		
+<?php 	
+  echo $this->headLink()->prependStylesheet($this->basePath().'/css/bootstrap.min.css');
+  echo $this->headLink()->prependStylesheet($this->basePath().'/css/uniform.css');
+  echo $this->headLink()->prependStylesheet($this->basePath().'/css/select2.css');
+  echo $this->headLink()->prependStylesheet($this->basePath().'/css/jquery.contextMenu.css');
+  echo $this->headLink()->prependStylesheet($this->basePath().'/css/matrix-style.css');
+  echo $this->headLink()->prependStylesheet($this->basePath().'/css/matrix-media.css');
+  echo $this->headLink()->prependStylesheet($this->basePath().'/font-awesome/css/font-awesome.css');
+  echo $this->headLink()->prependStylesheet($this->basePath().'/css/tooltipster.css');
+  echo $this->headLink()->prependStylesheet($this->basePath().'/css/smoothness/jquery-ui.css');
+
+  $this->headScript()->appendFile($this->basePath().'/js/jquery.min.js');
+  $this->headScript()->appendFile($this->basePath().'/js/jquery.tooltipster.min.js');
+  $this->headScript()->appendFile($this->basePath().'/js/bootstrap.min.js');
+  $this->headScript()->appendFile($this->basePath().'/js/jquery.uniform.js');
+  $this->headScript()->appendFile($this->basePath().'/js/select2.min.js');
+  $this->headScript()->appendFile($this->basePath().'/js/jquery.dataTables.min.js');
+  $this->headScript()->appendFile($this->basePath().'/js/jquery-ui.js');
+  
+  $this->headScript()->appendFile($this->basePath().'/js/jquery.maskedinput.js');
+  $this->headScript()->appendFile($this->basePath().'/js/controle_saisie/controle_saisie.js');?>
+  <?php echo $this->headScript();?>
+</head>
+
+
+<?php
+
+//RECUPERER LES INFOS SUR LE MEDECIN OU SUR LE SURVEILLANT
+  $user = $this->layout()->user;
+  $nom = $user->nom;
+  $prenom = $user->prenom;
+  $service = $this->layout()->service;
+  if($user->role == 'superAdmin') { $service = "INFORMATIQUE";} 
+?>
+
+
+<body id="bodbod">
+	<!--Header-part-->
+	<div id="logoSimens" style=" height: 70px;">
+			<div style="font-size: 28px; color: red; padding-top: 20px; padding-left: 35px;">+<div style="font-size: 27px; color: #48ce77; font-family: Bookman Old Style; float:left; ">SIMENS</div></div>
+	</div>
+	
+	<!--close-Header-part-->
+	<!--top Menu au dessus -->
+<div id="user-nav" class="navbar navbar-inverse" style="padding-top: 0px; width: 80%;">
+ <div style="width:100%;">
+  <ul class="nav" style="width:100%;">
+    <li  class="dropdown" style=" width: 30%;"><a title=""  class="dropdown-toggle">
+      <i> <span style="color: white; font-size: 13px;">Service: </span></i>
+      <b class="caret" ></b> <span style="font-size: 15px; color: white; font-family: Times  New Roman;"><?php echo $service;?></span></a>
+    </li>
+
+    <li  class="dropdown" style=" width: 55%;"><a title="" class="dropdown-toggle">
+      <i class="icon icon-user"></i>  <span style="color: white; font-size: 13px;"><i>Bienvenue: </i> M.</span>
+      <b class="caret" ></b> <span style="font-size: 15px; color: white;font-family: Times  New Roman;"><?php echo $prenom.'  '.$nom;?></span></a>
+    </li>
+
+    <li style="width: 15%;"><a title="" style="" href="<?php echo $this->url('admin', array('action'=>'logout'));?>">
+      <i class="icon icon-share-alt"></i> <span style="color: white; font-size: 12px;">D&eacute;connexion</span></a>
+    </li>
+  </ul>
+ </div>
+</div>
+<!--Menu de droite-->
+<div id="sidebar">
+  <?php echo $this->partial('layout/menugauche-personnel'); ?>
+</div>
+<div id="content">
+  	<div id="content-header">
+    <div style="width: 96%; margin-left:25px; ">
+    	<hr>
+   		 <div class="row-fluid">
+	         <?php echo $this->content; ?>
+         </div>
+  	</div>
+	</div>
+</div>
+<!--Pied de Page debut-->
+<div class="row-fluid">
+	 <div id="footer" class="span12" style="color: white;"><?php echo $this->partial('layout/piedpage'); ?> </div>
+</div>
+<!--Fin de pied de page-->
+</body>
+</html>

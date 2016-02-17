@@ -1,0 +1,401 @@
+<?php
+//CHOISIR LE MENU A AFFICHER SELON QUE C'EST LE MEDECIN OU SUR LE SURVEILLANT
+$user = $this->layout()->user;
+$role = $user['role'];
+
+if($role == 'medecin'){ ?>
+<script>
+$("#creationDossierPatientArchive").toggle(true);
+$("#facturationArchive").toggle(true);
+$("#consultationArchive").toggle(true);
+$("#hospitalisationArchive").toggle(true);
+$("#radiologieArchive").toggle(true);
+$("#biologieArchive").toggle(true);
+$("#anesthesieArchive").toggle(true);
+</script>
+<?php
+}
+?>
+
+<ul>
+	
+	<!-- MENU ***MEDECIN DE SERVICE*** -->
+	<!-- MENU ***MEDECIN DE SERVICE*** -->
+	<!-- MENU ***MEDECIN DE SERVICE*** -->
+	
+	<!-- Menu ***DossierPatient*** -->
+	<!-- Menu ***DossierPatient*** -->
+	<li id="creationDossierPatientArchive"><a href="">
+	    <span style="margin-left:0px; color: #48ce77; font-weight:bold; font-size:20px; font-family:Times New Roman;"> <img id="image" style="display: inline;" src='<?php echo $this->basePath().'/images_icons/plus-green1.png'?>' alt='Liste' /> Dossier Patient </span></a> </li>
+
+	<li id="plus_creationDossierPatientArchive" style="background: #4a5765;" >
+	   <div style="margin-left:30px; height:40px; padding-top:20px;"><a href="<?php echo $this->url('archivage', array('action'=> 'ajouter'));?>"  >
+	       <span id="stylecreationDossierPatientArchive" style="margin-left:5px; color: white; font-size:15px; font-family:Times New Roman;"><img style="display: inline;" src='<?php echo $this->basePath().'/images_icons/dossier.PNG'?>' alt='Liste' />  Nouveau </span></a>
+	   </div>
+
+	   <div style="margin-left:30px; height:40px;"><a href="<?php echo $this->url('archivage', array('action'=> 'liste-dossiers-patients'));?>">
+	       <img style="margin-left:5px; display: inline;" src='<?php echo $this->basePath().'/images_icons/Search_22.PNG'?>' alt='Liste' />
+	       <span id="listeDossierPatientArchive" style="font-size:15px; color: white; font-family:Times New Roman;">Liste</span></a>
+	   </div>
+	</li>
+	
+	
+	<!-- Menu ***Facturation*** -->
+	<!-- Menu ***Facturation*** -->
+	<li id="facturationArchive"><a href="">
+	    <span style="margin-left:0px; color: #48ce77; font-weight:bold; font-size:20px; font-family:Times New Roman;"> <img id="image" style="display: inline;" src='<?php echo $this->basePath().'/images_icons/plus-green1.png'?>' alt='Liste' />  Facturation </span></a> </li>
+
+	<li id="plus_facturationArchive" style="background: #4a5765;" >
+	   <div style="margin-left:30px; height:40px; padding-top:20px;"><a href="<?php echo $this->url('archivage', array('action'=> 'admission'));?>"  >
+	       <span id="stylefacturationArchive" style="margin-left:5px; color: white; font-size:15px; font-family:Times New Roman;"><img style="display: inline;" src='<?php echo $this->basePath().'/images_icons/dossier.PNG'?>' alt='Liste' />  Admission </span></a>
+	   </div>
+
+	   <div style="margin-left:30px; height:40px;"><a href="<?php echo $this->url('archivage', array('action'=> 'liste-admission'));?>">
+	       <img style="margin-left:5px; display: inline;" src='<?php echo $this->basePath().'/images_icons/Search_22.PNG'?>' alt='Liste' />
+	       <span id="listefacturationArchive" style="font-size:15px; color: white; font-family:Times New Roman;">Liste</span></a>
+	   </div>
+	</li>
+	
+	
+	<!-- Menu ***Consultation*** -->
+	<!-- Menu ***Consultation*** -->
+	<li id="consultationArchive"><a href="">
+	    <span style="margin-left:0px; color: #48ce77; font-weight:bold; font-size:20px; font-family:Times New Roman;"> <img id="image" style="display: inline;" src='<?php echo $this->basePath().'/images_icons/plus-green1.png'?>' alt='Liste' /> Consultations </span></a> </li>
+
+	<li id="plus_consultationArchive" style="background: #4a5765;" >
+	   <div style="margin-left:30px; height:40px; padding-top:20px;"><a href="<?php echo $this->url('archivage', array('action'=> 'consulter'));?>"  >
+	       <span id="styleConsultation" style="margin-left:5px; color: white; font-size:15px; font-family:Times New Roman;"><img style="display: inline;" src='<?php echo $this->basePath().'/images_icons/dossier.PNG'?>' alt='Liste' />  Consulter </span></a>
+	   </div>
+
+	   <div style="margin-left:30px; height:40px;"><a href="<?php echo $this->url('archivage', array('action'=> 'liste-consultation'));?>">
+	       <img style="margin-left:5px; display: inline;" src='<?php echo $this->basePath().'/images_icons/Search_22.PNG'?>' alt='Liste' />
+	       <span id="rechercheConsultationArchive" style="font-size:15px; color: white; font-family:Times New Roman;">Liste</span></a>
+	   </div>
+	</li>
+	
+	<!-- Menu ***Hospitalisation*** -->
+	<!-- Menu ***Hospitalisation*** -->
+	<li id="hospitalisationArchive"><a href="">
+	    <span style="margin-left:0px; color: #48ce77; font-weight:bold; font-size:20px; font-family:Times New Roman;"> <img id="image" style="display: inline;" src='<?php echo $this->basePath().'/images_icons/plus-green1.png'?>' alt='Liste' /> Hospitalisations </span></a> </li>
+	
+	<li id="plus_hospitalisationArchive" style="background: #4a5765;" >
+	<!-- LIEN ***Hospitaliser*** -->
+	<div style="margin-left:30px; height:40px; padding-top:20px;"><a href="<?php echo $this->basePath().'/archivage/liste-demande-hospitalisation';?>">
+	       <img style="margin-left:5px; display: inline;" src='<?php echo $this->basePath().'/images_icons/liste.png'?>' alt='Liste' />
+	       <span id="styleHospitalisationArchive" style="font-size:15px; color: white; font-family:Times New Roman;">Hospitaliser</span></a>
+	   </div>
+	
+	<!-- LIEN ***Administrer soin*** -->
+	<div style="margin-left:30px; height:40px;"><a href="<?php echo $this->basePath().'/archivage/administrer-soin';?>">
+	       <img style="margin-left:5px; display: inline;" src='<?php echo $this->basePath().'/images_icons/liste.png'?>' alt='Liste' />
+	       <span id="style2HospitalisationArchive" style="font-size:15px; color: white; font-family:Times New Roman;">Administrer soin</span></a>
+	   </div>
+	   
+	<!-- LIEN ***Appliquer soin*** -->
+	<div style="margin-left:30px; height:40px;"><a href="<?php echo $this->basePath().'/archivage/appliquer-soin';?>">
+	       <img style="margin-left:5px; display: inline;" src='<?php echo $this->basePath().'/images_icons/liste.png'?>' alt='Liste' />
+	       <span id="style3HospitalisationArchive" style="font-size:15px; color: white; font-family:Times New Roman;">Appliquer soin</span></a>
+	   </div>
+	   
+	</li>
+	
+	
+	<!-- Menu ***Radiologie*** -->
+	<!-- Menu ***Radiologie*** -->
+	<li id="radiologieArchive"><a href="">
+	    <span style="margin-left:0px; color: #48ce77; font-weight:bold; font-size:20px; font-family:Times New Roman;"> <img id="image" style="display: inline;" src='<?php echo $this->basePath().'/images_icons/plus-green1.png'?>' alt='Liste' /> Radiologie </span></a> </li>
+
+	<li id="plus_radiologieArchive" style="background: #4a5765;" >
+	   <?php /* ?> <div style="margin-left:30px; height:40px; padding-top:20px;"><a href="<?php echo $this->url('archivage', array('action'=> 'ajouter-resultat-radiologie'));?>"  >
+	       <span id="styleRadiologieArchive" style="margin-left:5px; color: white; font-size:15px; font-family:Times New Roman;"><img style="display: inline;" src='<?php echo $this->basePath().'/images_icons/dossier.PNG'?>' alt='Liste' />  Ajouter r&eacute;sultats </span></a>
+	   </div> <?php */ ?>
+
+	   <div style="margin-left:30px; height:40px; padding-top:20px;"><a href="<?php echo $this->url('archivage', array('action'=> 'liste-resultats-radiologie'));?>">
+	       <img style="margin-left:5px; display: inline;" src='<?php echo $this->basePath().'/images_icons/Search_22.PNG'?>' alt='Liste' />
+	       <span id="listeRadiologieArchive" style="font-size:15px; color: white; font-family:Times New Roman;">Liste</span></a>
+	   </div>
+	</li>
+	
+	
+	<!-- Menu ***Biologie*** -->
+	<!-- Menu ***Biologie*** -->
+	<li id="biologieArchive"><a href="">
+	    <span style="margin-left:0px; color: #48ce77; font-weight:bold; font-size:20px; font-family:Times New Roman;"> <img id="image" style="display: inline;" src='<?php echo $this->basePath().'/images_icons/plus-green1.png'?>' alt='Liste' /> Biologie </span></a> </li>
+
+	<li id="plus_biologieArchive" style="background: #4a5765;" >
+	   <div style="margin-left:30px; height:40px; padding-top:20px;"><a href="<?php echo $this->url('archivage', array('action'=> 'ajouter-resultat-biologique'));?>"  >
+	       <span id="styleBiologieArchive" style="margin-left:5px; color: white; font-size:15px; font-family:Times New Roman;"><img style="display: inline;" src='<?php echo $this->basePath().'/images_icons/dossier.PNG'?>' alt='Liste' />  Ajouter r&eacute;sultats </span></a>
+	   </div>
+
+	   <div style="margin-left:30px; height:40px;"><a href="<?php echo $this->url('archivage', array('action'=> 'liste-resultats-biologie'));?>">
+	       <img style="margin-left:5px; display: inline;" src='<?php echo $this->basePath().'/images_icons/Search_22.PNG'?>' alt='Liste' />
+	       <span id="listeBiologieArchive" style="font-size:15px; color: white; font-family:Times New Roman;">Liste</span></a>
+	   </div>
+	</li>
+	
+	
+	<!-- Menu ***Anesthesie*** -->
+	<!-- Menu ***Anesthesie*** -->
+	<li id="anesthesieArchive"><a href="">
+	    <span style="margin-left:0px; color: #48ce77; font-weight:bold; font-size:20px; font-family:Times New Roman;"> <img id="image" style="display: inline;" src='<?php echo $this->basePath().'/images_icons/plus-green1.png'?>' alt='Liste' /> Anesth&eacute;sie </span></a> </li>
+
+	<li id="plus_anesthesieArchive" style="background: #4a5765;" >
+	   <div style="margin-left:30px; height:40px; padding-top:20px;"><a href="<?php echo $this->url('archivage', array('action'=> 'ajouter-resultat-vpa'));?>"  >
+	       <span id="styleAnesthesieArchive" style="margin-left:5px; color: white; font-size:15px; font-family:Times New Roman;"><img style="display: inline;" src='<?php echo $this->basePath().'/images_icons/dossier.PNG'?>' alt='Liste' />  Ajouter r&eacute;sultats </span></a>
+	   </div>
+
+	   <div style="margin-left:30px; height:40px;"><a href="<?php echo $this->url('archivage', array('action'=> 'liste-resultats-vpa'));?>">
+	       <img style="margin-left:5px; display: inline;" src='<?php echo $this->basePath().'/images_icons/Search_22.PNG'?>' alt='Liste' />
+	       <span id="listeAnesthesieArchive" style="font-size:15px; color: white; font-family:Times New Roman;">Liste</span></a>
+	   </div>
+	</li>
+
+</ul>
+
+<script>
+
+//*******************************************************************************************************************************
+//CREATION DOSSIER PATIENT
+function dep_creationDossierPatientArchive1(){
+	$('#creationDossierPatientArchive').click(function(){
+		$("#creationDossierPatientArchive").replaceWith("<li id='creationDossierPatientArchive'><a href=''><span style='margin-left:0px; color: #48ce77; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/plus-green1.png' alt='Liste' /> Dossier Patient </span></a></li>");
+		dep_creationDossierPatientArchive2();
+	    $('#plus_creationDossierPatientArchive').animate({
+	        height : 'toggle'
+	    },1000);
+	 return false;
+	});
+}
+
+function dep_creationDossierPatientArchive2(){
+	$('#creationDossierPatientArchive').click(function(){
+		$("#creationDossierPatientArchive").replaceWith("<li id='creationDossierPatientArchive' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/moin-green2.png' alt='Liste' /> Dossier Patient </span></a></li>");
+		dep_creationDossierPatientArchive1();
+	    $('#plus_creationDossierPatientArchive').animate({
+	        height : 'toggle'
+	    },1000);
+	 return false;
+	});
+}
+
+$('#plus_creationDossierPatientArchive').toggle(false);
+$('#creationDossierPatientArchive').click(function(){
+	$("#creationDossierPatientArchive").replaceWith("<li id='creationDossierPatientArchive' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/moin-green2.png' alt='Liste' /> Dossier Patient </span></a></li>");
+	dep_creationDossierPatientArchive1();
+$('#plus_creationDossierPatientArchive').animate({
+height : 'toggle'
+},1000);
+return false;
+});
+
+
+//*******************************************************************************************************************************
+//ADMISSION
+function dep_facturationArchive1(){
+	$('#facturationArchive').click(function(){
+		$("#facturationArchive").replaceWith("<li id='facturationArchive'><a href=''><span style='margin-left:0px; color: #48ce77; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/plus-green1.png' alt='Liste' />   Facturation  </span></a></li>");
+		dep_facturationArchive2();
+	    $('#plus_facturationArchive').animate({
+	        height : 'toggle'
+	    },1000);
+	 return false;
+	});
+}
+
+function dep_facturationArchive2(){
+	$('#facturationArchive').click(function(){
+		$("#facturationArchive").replaceWith("<li id='facturationArchive' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/moin-green2.png' alt='Liste' />   Facturation  </span></a></li>");
+		dep_facturationArchive1();
+	    $('#plus_facturationArchive').animate({
+	        height : 'toggle'
+	    },1000);
+	 return false;
+	});
+}
+
+$('#plus_facturationArchive').toggle(false);
+$('#facturationArchive').click(function(){
+	$("#facturationArchive").replaceWith("<li id='facturationArchive' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/moin-green2.png' alt='Liste' />   Facturation  </span></a></li>");
+	dep_facturationArchive1();
+$('#plus_facturationArchive').animate({
+height : 'toggle'
+},1000);
+return false;
+});
+
+
+//*******************************************************************************************************************************
+//CONSULTATION
+function dep_consultationArchive1(){
+	$('#consultationArchive').click(function(){
+		$("#consultationArchive").replaceWith("<li id='consultationArchive'><a href=''><span style='margin-left:0px; color: #48ce77; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/plus-green1.png' alt='Liste' /> Consultations </span></a></li>");
+		dep_consultationArchive2();
+	    $('#plus_consultationArchive').animate({
+	        height : 'toggle'
+	    },1000);
+	 return false;
+	});
+}
+
+function dep_consultationArchive2(){
+	$('#consultationArchive').click(function(){
+		$("#consultationArchive").replaceWith("<li id='consultationArchive' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/moin-green2.png' alt='Liste' /> Consultations </span></a></li>");
+		dep_consultationArchive1();
+	    $('#plus_consultationArchive').animate({
+	        height : 'toggle'
+	    },1000);
+	 return false;
+	});
+}
+
+$('#plus_consultationArchive').toggle(false);
+$('#consultationArchive').click(function(){
+	$("#consultationArchive").replaceWith("<li id='consultationArchive' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/moin-green2.png' alt='Liste' /> Consultations </span></a></li>");
+	dep_consultationArchive1();
+$('#plus_consultationArchive').animate({
+    height : 'toggle'
+},1000);
+return false;
+});
+
+//*******************************************************************************************************************************
+//HOSPITALISATION
+function dep_hospitalisationArchive1(){
+	$('#hospitalisationArchive').click(function(){
+		$("#hospitalisationArchive").replaceWith("<li id='hospitalisationArchive'><a href=''><span style='margin-left:0px; color: #48ce77; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/plus-green1.png' alt='Liste' /> Hospitalisations </span></a></li>");
+		dep_hospitalisationArchive2();
+	    $('#plus_hospitalisationArchive').animate({
+	        height : 'toggle'
+	    },1000);
+	 return false;
+	});
+}
+
+function dep_hospitalisationArchive2(){
+	$('#hospitalisationArchive').click(function(){
+		$("#hospitalisationArchive").replaceWith("<li id='hospitalisationArchive' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/moin-green2.png' alt='Liste' /> Hospitalisations </span></a></li>");
+		dep_hospitalisationArchive1();
+	    $('#plus_hospitalisationArchive').animate({
+	        height : 'toggle'
+	    },1000);
+	 return false;
+	});
+}
+
+$('#plus_hospitalisationArchive').toggle(false);
+$('#hospitalisationArchive').click(function(){
+	$("#hospitalisationArchive").replaceWith("<li id='hospitalisationArchive' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/moin-green2.png' alt='Liste' /> Hospitalisations </span></a></li>");
+	dep_hospitalisationArchive1();
+$('#plus_hospitalisationArchive').animate({
+height : 'toggle'
+},1000);
+return false;
+});
+
+
+//*******************************************************************************************************************************
+//RADIOLOGIE
+function dep_radiologieArchive1(){
+	$('#radiologieArchive').click(function(){
+		$("#radiologieArchive").replaceWith("<li id='radiologieArchive'><a href=''><span style='margin-left:0px; color: #48ce77; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/plus-green1.png' alt='Liste' /> Radiologie </span></a></li>");
+		dep_radiologieArchive2();
+	    $('#plus_radiologieArchive').animate({
+	        height : 'toggle'
+	    },1000);
+	 return false;
+	});
+}
+
+function dep_radiologieArchive2(){
+	$('#radiologieArchive').click(function(){
+		$("#radiologieArchive").replaceWith("<li id='radiologieArchive' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/moin-green2.png' alt='Liste' /> Radiologie </span></a></li>");
+		dep_radiologieArchive1();
+	    $('#plus_radiologieArchive').animate({
+	        height : 'toggle'
+	    },1000);
+	 return false;
+	});
+}
+
+$('#plus_radiologieArchive').toggle(false);
+$('#radiologieArchive').click(function(){
+	$("#radiologieArchive").replaceWith("<li id='radiologieArchive' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/moin-green2.png' alt='Liste' /> Radiologie </span></a></li>");
+	dep_radiologieArchive1();
+$('#plus_radiologieArchive').animate({
+height : 'toggle'
+},1000);
+return false;
+});
+
+
+//*******************************************************************************************************************************
+//BIOLOGIE
+function dep_biologieArchive1(){
+	$('#biologieArchive').click(function(){
+		$("#biologieArchive").replaceWith("<li id='biologieArchive'><a href=''><span style='margin-left:0px; color: #48ce77; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/plus-green1.png' alt='Liste' /> Biologie </span></a></li>");
+		dep_biologieArchive2();
+	    $('#plus_biologieArchive').animate({
+	        height : 'toggle'
+	    },1000);
+	 return false;
+	});
+}
+
+function dep_biologieArchive2(){
+	$('#biologieArchive').click(function(){
+		$("#biologieArchive").replaceWith("<li id='biologieArchive' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/moin-green2.png' alt='Liste' /> Biologie </span></a></li>");
+		dep_biologieArchive1();
+	    $('#plus_biologieArchive').animate({
+	        height : 'toggle'
+	    },1000);
+	 return false;
+	});
+}
+
+$('#plus_biologieArchive').toggle(false);
+$('#biologieArchive').click(function(){
+	$("#biologieArchive").replaceWith("<li id='biologieArchive' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/moin-green2.png' alt='Liste' /> Biologie </span></a></li>");
+	dep_biologieArchive1();
+$('#plus_biologieArchive').animate({
+height : 'toggle'
+},1000);
+return false;
+});
+
+
+
+//*******************************************************************************************************************************
+//ANESTHESIE
+function dep_anesthesieArchive1(){
+	$('#anesthesieArchive').click(function(){
+		$("#anesthesieArchive").replaceWith("<li id='anesthesieArchive'><a href=''><span style='margin-left:0px; color: #48ce77; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/plus-green1.png' alt='Liste' /> Anesth&eacute;sie </span></a></li>");
+		dep_anesthesieArchive2();
+	    $('#plus_anesthesieArchive').animate({
+	        height : 'toggle'
+	    },1000);
+	 return false;
+	});
+}
+
+function dep_anesthesieArchive2(){
+	$('#anesthesieArchive').click(function(){
+		$("#anesthesieArchive").replaceWith("<li id='anesthesieArchive' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/moin-green2.png' alt='Liste' /> Anesth&eacute;sie </span></a></li>");
+		dep_anesthesieArchive1();
+	    $('#plus_anesthesieArchive').animate({
+	        height : 'toggle'
+	    },1000);
+	 return false;
+	});
+}
+
+$('#plus_anesthesieArchive').toggle(false);
+$('#anesthesieArchive').click(function(){
+	$("#anesthesieArchive").replaceWith("<li id='anesthesieArchive' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/moin-green2.png' alt='Liste' /> Anesth&eacute;sie </span></a></li>");
+	dep_anesthesieArchive1();
+$('#plus_anesthesieArchive').animate({
+height : 'toggle'
+},1000);
+return false;
+});
+
+</script>

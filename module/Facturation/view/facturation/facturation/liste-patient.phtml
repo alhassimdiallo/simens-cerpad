@@ -1,0 +1,119 @@
+<!-- MES STYLES -->
+<?php echo $this->headLink()->appendStylesheet($this->basePath().'/css/facturation/styleListePatient.css');?>
+
+<!-- MES JS -->
+<?php echo $this->headScript()->appendFile($this->basePath().'/js/facturation/jsListepatient.js');?>
+
+<div id="titre" style='font-family: police2; text-decoration: none; color: green; font-size: 20px; font-weight: bold; padding-left:20px;'>
+	<iS style='font-size: 25px;'>&curren;</iS>
+	LISTE DES PATIENTS
+</div>
+<div id="contenu">
+
+			<table class="table table-bordered tab_list_mini" id="patient">
+				<thead>
+					<tr style="height: 50px; width:100%;">
+						<th id="nom" style='cursor: pointer;'>Nom</th>
+						<th id="prenom" style='cursor: pointer;'>Prenom</th>
+						<th id="date" style='cursor: pointer;'>Date. naiss</th>
+						<th id="sexe" style='cursor: pointer;'>Sexe</th>
+						<th id="adresse" style='cursor: pointer;'>Adresse</th>
+						<th id="nationalite" style='cursor: pointer;'>Nationalite</th>
+						<th id="effectuer">Options</th>
+					</tr>
+				</thead>
+
+				<tbody id="donnees" class="liste_patient">
+
+					<!-- ************ On affiche les patients en une liste ordonn�e************ -->
+
+				</tbody>
+
+				<tfoot id="foot" class="foot_style">
+					<tr>
+						<th id="nom_" style='width: 13%;'><input type="text" name="search_browser"
+							value=" Nom" class="search_init" /></th>
+						<th id="prenom_" style='width: 15%;'><input type="text" name="search_browser"
+							value=" Pr&eacute;nom" class="search_init" /></th>
+						<th id="date_" style='width: 12%;'><input type="text" name="search_browser"
+							value=" Date naissance" class="search_init" /></th>
+						<th id="sexe_" style='width: 7%;'><input type="text" name="search_browser"
+							value=" Sexe" class="search_init" /></th>
+						<th id="adresse_" style='width: 28%;'><input type="text" name="search_browser"
+							value=" Adresse" class="search_init" /></th>
+						<th id="nationalite_" style='width: 15%;'><input type="text" name="search_browser"
+							value=" Nationalite" class="search_init" /></th>
+						<th id="effectuer_" style='width: 10%;'><input type="hidden" name="search_browser"
+							value="" class="" /></th>
+
+					</tr>
+				</tfoot>
+			</table>
+</div>
+
+<!-- POP UP pour Confirmation Suppression -->
+<div id="confirmation" title="Confirmation de la suppression"
+	style="display: none;">
+	<p style="font-size: 16px;">
+		<span style="float: left; margin: 0 0px 20px 0;"> <img
+			src="<?php echo $this->basePath().'/images_icons/warning_16.png';?>" />
+			Etes-vous s&ucirc;r de vouloir supprimer le patient ?
+		</span>
+
+	</p>
+</div>
+
+
+<!-- LES BOUTONS "TERMINER" ou "VALIDER" -->
+
+<script type="text/javascript">
+
+$(function(){
+	initialisation();
+	setTimeout(function() {
+		infoBulle();
+	}, 1000);
+});
+
+function infoBulle(){
+	/***
+	 * INFO BULLE FE LA LISTE
+	 */
+	 var tooltips = $( 'table tbody tr td infoBulleVue, #9' ).tooltip({show: {effect: 'slideDown', delay: 250}});
+	     tooltips.tooltip( 'close' );
+	  $('table tbody tr td infoBulleVue, #9').mouseenter(function(){
+	    var tooltips = $( 'table tbody tr td infoBulleVue, #9' ).tooltip({show: {effect: 'slideDown', delay: 250}});
+	    tooltips.tooltip( 'open' );
+	  });
+}
+
+var base_url = window.location.toString();
+var tabUrl = base_url.split("public");
+//POUR LE MENU GAUCHE dans -menugauche.phtml
+$('#plus_dossier_patient').toggle(true);
+$("#dossier_patient").replaceWith("<li id='dossier_patient' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='"+tabUrl[0]+"public/images_icons/moin-green2.png' alt='Liste' /> Dossier Patient </span></a></li>");
+dep_dossier_patient1();
+$('#liste_dossier_patient_style').css({'font-weight':'bold','color':'white','font-size':'22px'});
+
+var oTable = $('#patient').dataTable
+( {
+				"sPaginationType": "full_numbers",
+				"aLengthMenu": [5,7,10,15],
+				"aaSorting": [], //On ne trie pas la liste automatiquement
+				"oLanguage": {
+					"sInfo": "_START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+					"sInfoEmpty": "0 &eacute;l&eacute;ment &agrave; afficher",
+					"sInfoFiltered": "",
+					"sUrl": "",
+					"oPaginate": {
+						"sFirst":    "|<",
+						"sPrevious": "<",
+						"sNext":     ">",
+						"sLast":     ">|"
+						}
+				   },
+
+				"sAjaxSource":  "<?php echo $this->url('facturation', array('action' => 'liste-patient-ajax', 'format' => 'json')); ?>",
+
+} );
+</script>
