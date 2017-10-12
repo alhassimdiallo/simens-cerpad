@@ -1210,6 +1210,16 @@
 	    return tab;
     }
     
+    function getDensiteGoutteEpaisse(valeur, iddemande){
+    	
+    	if(valeur == 'Positif'){ 
+    		$('.ER_'+iddemande+' #goutte_epaisse_positif').toggle(true); 
+    	}else{ 
+    		$('.ER_'+iddemande+' #goutte_epaisse_positif').toggle(false); 
+    	} 
+    };
+    
+    
     //Automatisation des champs calculables  -----  Automatisation des champs calculables
     //Automatisation des champs calculables  -----  Automatisation des champs calculables
     //Automatisation des champs calculables  -----  Automatisation des champs calculables
@@ -1639,32 +1649,32 @@
     	});
     }
     
-    function getAlbumineUrinaireVal(resultat){
+    function getAlbumineUrinaireVal(resultat, iddemande){
     	
     	if(resultat == 'positif'){
-    		$('#albumine_urinaire_degres').fadeIn(500);
+    		$('.ER_'+iddemande+' #albumine_urinaire_degres').fadeIn(500);
     	}else{
-    		$('#albumine_urinaire_degres').toggle(false);
+    		$('.ER_'+iddemande+' #albumine_urinaire_degres').toggle(false);
     	}
     	
     }
     
-    function getSucreUrinaireVal(resultat){
+    function getSucreUrinaireVal(resultat, iddemande){
     	
     	if(resultat == 'positif'){
-    		$('#sucre_urinaire_degres').fadeIn(500);
+    		$('.ER_'+iddemande+' #sucre_urinaire_degres').fadeIn(500);
     	}else{
-    		$('#sucre_urinaire_degres').toggle(false);
+    		$('.ER_'+iddemande+' #sucre_urinaire_degres').toggle(false);
     	}
     	
     }
     
-    function getCorpsCetoniqueUrinaireVal(resultat){
+    function getCorpsCetoniqueUrinaireVal(resultat, iddemande){
     	
     	if(resultat == 'positif'){
-    		$('#corps_cetonique_urinaire_degres').fadeIn(500);
+    		$('.ER_'+iddemande+' #corps_cetonique_urinaire_degres').fadeIn(500);
     	}else{
-    		$('#corps_cetonique_urinaire_degres').toggle(false);
+    		$('.ER_'+iddemande+' #corps_cetonique_urinaire_degres').toggle(false);
     	}
     	
     }
@@ -1844,21 +1854,110 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /**GESTION DE L'INTERFACE D'ENREGISTREMENT MULTIPLE DES RESULTATS D'ANALYSES **/
+    /**GESTION DE L'INTERFACE D'ENREGISTREMENT MULTIPLE DES RESULTATS D'ANALYSES **/
+    /**GESTION DE L'INTERFACE D'ENREGISTREMENT MULTIPLE DES RESULTATS D'ANALYSES **/
+    /**GESTION DE L'INTERFACE D'ENREGISTREMENT MULTIPLE DES RESULTATS D'ANALYSES **/
+    /**GESTION DE L'INTERFACE D'ENREGISTREMENT MULTIPLE DES RESULTATS D'ANALYSES **/
+    
+    function enregistrementResultatsAnalyses_TAD(idanalyse, iddemande, tab){
+
+    	$(".examenSaveTick_"+iddemande).html('<img style="margin-left: 10px; width: 16px; height: 16px;" src="../images/loading/Chargement_1.gif">');
+    	$.ajax({
+			type: 'POST',
+			url: tabUrl[0]+'public/technicien/enregistrer-resultat',
+			data: {'idanalyse':idanalyse, 'iddemande':iddemande, 'tab':tab},
+			success: function(data) {
+				var result = jQuery.parseJSON(data);  
+				var resultatExiste = result[1];
+				
+				if(resultatExiste == 1){
+					$(".examenSaveTick_"+iddemande).html("<img style='margin-left: 10px;'  src='../images_icons/tick_16.png'>");
+				}else{
+					$(".examenSaveTick_"+iddemande).html("");
+				}
+				
+			}
+		});
+    	
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    var listeDemandesSelectionnees;
+    var listeAnalysesSelectionnees;
     /**
-     * RECUPERER LES DONNEES POUR L'ENREGISTREMENT PAR TYPE ET PAR ANALYSE ET PAR DATE --TAD
-     * id = idpatient
+     * RECUPERER LES DONNEES POUR L'ENREGISTREMENT 
+     * id = iddemande
      */
     function getChampsNfs_TAD(id){
     	var tab = new Array();
     	var i;
-    	for(i = 1 ; i <= 23 ; i++){
-    		if($('.entrezResult_'+id+' #champ'+i).val()){ tab[i] = $('.entrezResult_'+id+' #champ'+i).val(); }
+    	for(i = 1 ; i <= 25 ; i++){
+    		if($('.ER_'+id+' #champ'+i).val()){ tab[i] = $('.ER_'+id+' #champ'+i).val(); }
     		else { tab[i] = null; }
     	}
-    	tab[i] = $('.entrezResult_'+id+' #type_materiel_nfs').val();
+    	tab[i] = $('.ER_'+id+' #type_materiel_nfs').val();
+    	tab[i+1] = $('#commentaire_hemogramme').val();
+    	
     	return tab;
     }
     
+    /*
+     * tamponGroupageRhesus
+     */
+    var tamponGroupageRhesusTab = new Array();
+    
+
+    function getGroupageRhesus_TAD(id){
+    	var tab = new Array();
+    	tab[1] = $('.ER_'+id+' #groupe').val(); 
+		tab[2] = $('.ER_'+id+' #rhesus').val();
+		tab[3] = $('.ER_'+id+' #type_materiel_gsrh_groupage').val();
+    	
+    	return tab;
+    }
 
     
     
@@ -1876,36 +1975,48 @@
     	    modal: true,
     	    buttons: {
     	        "Enregistrer": function() {
-    	            //$( this ).dialog( "close" );
     	            
-    	        	//alert(getChampsNfs_TAD(listeDesPatientsSelect[1]));
-    	            
+    	        	for(var i=0 ; i<listeAnalysesSelectionnees.length ; i++){
+    	        		var idanalyse = listeAnalysesSelectionnees[i];
+    	        		var iddemande = listeDemandesSelectionnees[i];
+    	        		
+    	        		if(idanalyse == 1){
+        	        		
+    	        			var tab = getChampsNfs_TAD(iddemande);
+    	        			enregistrementResultatsAnalyses_TAD(idanalyse, iddemande, tab);
+        	        		
+    	        		}else
+    	        			if(idanalyse == 2){
+    	        				
+    	        				var tab = getGroupageRhesus_TAD(iddemande);
+    	        				if(JSON.stringify(tamponGroupageRhesusTab[iddemande]) === JSON.stringify(tab)){
+    	        					//alert("on ne fait rien");
+    	        				}else{
+    	        					tamponGroupageRhesusTab[iddemande] = tab;
+    	        					/*
+    	        					alert("on fait quelque chose");
+    	        					alert(tamponGroupageRhesusTab[iddemande]);
+    	        					alert(tab);
+    	        					*/
+        	        				enregistrementResultatsAnalyses_TAD(idanalyse, iddemande, tab);
+    	        				}
+    	        				
+    	        			}
+    	        	}
+    	        	
     	            
     	            return false;
     	            
-    	            var chemin = ""; //tabUrl[0]+'public/facturation/supprimer';
-    	            $.ajax({
-    	                type: 'POST',
-    	                url: chemin ,
-    	                data: $(this).serialize(),  
-    	                data:'id=',
-    	                success: function(data) {
-    	                	     var result = jQuery.parseJSON(data);  
-    	                	     nb = result;
-    	                	     $("#"+cle).parent().parent().fadeOut(function(){
-    		                	 	 $("#"+cle).empty();
-    		                	 });
-    	                }
-    	            });
-    	            
     	        },
-    	        "Annuler": function() {
+    	        
+    	        "Fermer": function() {
                     $(this).dialog( "close" );
                 }
     	   }
     	  });
         
     }
+    
     
     //Recupérer la liste des analyses à l'entrée pour initialisation
     //Recupérer la liste des analyses à l'entrée pour initialisation
@@ -1925,6 +2036,8 @@
             success: function(data) {
             	var result = jQuery.parseJSON(data);  
             	$('#contenuResultatsAnalysesParType div').html(result);
+            	listeDemandesSelectionnees = listeDesDemandesSelect;
+            	listeAnalysesSelectionnees = listeDesAnalysesSelect;
             	
             	var scriptFormule;
             	
@@ -1937,8 +2050,11 @@
             	scriptFormule += gestionFormuleCholesterolHDL_TAD(listeDesDemandesSelect);
             	scriptFormule += gestionFormuleCholesterolLDL_TAD(listeDesDemandesSelect);
             	scriptFormule += gestionFormuleRapportCholHdl_TAD(listeDesDemandesSelect);
+            	scriptFormule += gestionFormuleElectrophoreseProteines_TAD(listeDesDemandesSelect);
+            	scriptFormule += gestionFormuleElectrophoreseHemoglobine(listeDesDemandesSelect);
             	
             	$('#scriptFormules').html(scriptFormule);
+            	
             }
         });
     	
@@ -1973,6 +2089,8 @@
             	scriptFormule += gestionFormuleCholesterolHDL_TAD(listeDesDemandesSelect);
             	scriptFormule += gestionFormuleCholesterolLDL_TAD(listeDesDemandesSelect);
             	scriptFormule += gestionFormuleRapportCholHdl_TAD(listeDesDemandesSelect);
+            	scriptFormule += gestionFormuleElectrophoreseProteines_TAD(listeDesDemandesSelect);
+            	scriptFormule += gestionFormuleElectrophoreseHemoglobine(listeDesDemandesSelect);
             	
             	$('#scriptFormules').html(scriptFormule);
              }
@@ -2008,6 +2126,9 @@
             	scriptFormule += gestionFormuleCholesterolHDL_TAD(listeDesDemandesSelect);
             	scriptFormule += gestionFormuleCholesterolLDL_TAD(listeDesDemandesSelect);
             	scriptFormule += gestionFormuleRapportCholHdl_TAD(listeDesDemandesSelect);
+            	scriptFormule += gestionFormuleElectrophoreseProteines_TAD(listeDesDemandesSelect);
+            	scriptFormule += gestionFormuleElectrophoreseHemoglobine(listeDesDemandesSelect);
+            	
             	
             	$('#scriptFormules').html(scriptFormule);
             	
@@ -2046,6 +2167,8 @@
             	scriptFormule += gestionFormuleCholesterolHDL_TAD(listeDesDemandesSelect);
             	scriptFormule += gestionFormuleCholesterolLDL_TAD(listeDesDemandesSelect);
             	scriptFormule += gestionFormuleRapportCholHdl_TAD(listeDesDemandesSelect);
+            	scriptFormule += gestionFormuleElectrophoreseProteines_TAD(listeDesDemandesSelect);
+            	scriptFormule += gestionFormuleElectrophoreseHemoglobine(listeDesDemandesSelect);
             	
             	$('#scriptFormules').html(scriptFormule);
              }
@@ -2530,13 +2653,226 @@
     }
     
     
+    function gestionFormuleElectrophoreseProteines_TAD(demande){
+    	
+    	var scriptFormule = "<script>";
+    	for(var i=0 ; i<demande.length ; i++){
+        	var iddemande = demande[i];
+        	
+        	//Albumine
+        	scriptFormule += "$('.ER_"+iddemande+" #albumine, .ER_"+iddemande+" #proteine_totale').keyup( function () { "+
+        
+        	                     "var albumine = $('.ER_"+iddemande+" #albumine').val();"+
+    		                     "var proteine_totale = $('.ER_"+iddemande+" #proteine_totale').val();"+
+    		                     "if(albumine && proteine_totale){"+ 
+    		                         "var albumine_abs = (albumine * proteine_totale)/100;"+
+    		                         "$('.ER_"+iddemande+" #albumine_abs').val(albumine_abs.toFixed(1));"+
+    	                         "}else{"+
+    		                         "$('.ER_"+iddemande+" #albumine_abs').val(null);"+
+    		                     "}"+
+    				
+        	                 "}).change( function() { "+
+        	                 
+        	                     "var albumine = $('.ER_"+iddemande+" #albumine').val();"+
+		                         "var proteine_totale = $('.ER_"+iddemande+" #proteine_totale').val();"+
+		                         "if(albumine && proteine_totale){"+ 
+		                             "var albumine_abs = (albumine * proteine_totale)/100;"+
+		                             "$('.ER_"+iddemande+" #albumine_abs').val(albumine_abs.toFixed(1));"+
+	                             "}else{"+
+		                             "$('.ER_"+iddemande+" #albumine_abs').val(null);"+
+		                         "}"+
+		                     
+        	                 "});";
+        	
+        	//Alpha 1
+        	scriptFormule += "$('.ER_"+iddemande+" #alpha_1, .ER_"+iddemande+" #proteine_totale').keyup( function () { "+
+            
+                                 "var alpha_1 = $('.ER_"+iddemande+" #alpha_1').val();"+
+                                 "var proteine_totale = $('.ER_"+iddemande+" #proteine_totale').val();"+
+                                 "if(alpha_1 && proteine_totale){"+ 
+                                     "var alpha_1_abs = (alpha_1 * proteine_totale)/100;"+
+                                     "$('.ER_"+iddemande+" #alpha_1_abs').val(alpha_1_abs.toFixed(1));"+
+                                 "}else{"+
+                                     "$('.ER_"+iddemande+" #alpha_1_abs').val(null);"+
+                                 "}"+
+
+                             "}).change( function() { "+
+        
+                                 "var alpha_1 = $('.ER_"+iddemande+" #alpha_1').val();"+
+                                 "var proteine_totale = $('.ER_"+iddemande+" #proteine_totale').val();"+
+                                 "if(alpha_1 && proteine_totale){"+ 
+                                     "var alpha_1_abs = (alpha_1 * proteine_totale)/100;"+
+                                     "$('.ER_"+iddemande+" #alpha_1_abs').val(alpha_1_abs.toFixed(1));"+
+                                 "}else{"+
+                                     "$('.ER_"+iddemande+" #alpha_1_abs').val(null);"+
+                                 "}"+
+        
+                             "});";
+        	
+        	//Alpha 2
+        	scriptFormule += "$('.ER_"+iddemande+" #alpha_2, .ER_"+iddemande+" #proteine_totale').keyup( function () { "+
+            
+                                 "var alpha_2 = $('.ER_"+iddemande+" #alpha_2').val();"+
+                                 "var proteine_totale = $('.ER_"+iddemande+" #proteine_totale').val();"+
+                                 "if(alpha_2 && proteine_totale){"+ 
+                                     "var alpha_2_abs = (alpha_2 * proteine_totale)/100;"+
+                                     "$('.ER_"+iddemande+" #alpha_2_abs').val(alpha_2_abs.toFixed(1));"+
+                                 "}else{"+
+                                     "$('.ER_"+iddemande+" #alpha_2_abs').val(null);"+
+                                 "}"+
+
+                             "}).change( function() { "+
+        
+                                 "var alpha_2 = $('.ER_"+iddemande+" #alpha_2').val();"+
+                                 "var proteine_totale = $('.ER_"+iddemande+" #proteine_totale').val();"+
+                                 "if(alpha_2 && proteine_totale){"+ 
+                                     "var alpha_2_abs = (alpha_2 * proteine_totale)/100;"+
+                                     "$('.ER_"+iddemande+" #alpha_2_abs').val(alpha_2_abs.toFixed(1));"+
+                                 "}else{"+
+                                     "$('.ER_"+iddemande+" #alpha_2_abs').val(null);"+
+                                 "}"+
+        
+                             "});";
+        	
+        	//Beta 1
+        	scriptFormule += "$('.ER_"+iddemande+" #beta_1, .ER_"+iddemande+" #proteine_totale').keyup( function () { "+
+            
+                                 "var beta_1 = $('.ER_"+iddemande+" #beta_1').val();"+
+                                 "var proteine_totale = $('.ER_"+iddemande+" #proteine_totale').val();"+
+                                 "if(beta_1 && proteine_totale){"+ 
+                                     "var beta_1_abs = (beta_1 * proteine_totale)/100;"+
+                                     "$('.ER_"+iddemande+" #beta_1_abs').val(beta_1_abs.toFixed(1));"+
+                                 "}else{"+
+                                     "$('.ER_"+iddemande+" #beta_1_abs').val(null);"+
+                                 "}"+
+
+                             "}).change( function() { "+
+        
+                                 "var beta_1 = $('.ER_"+iddemande+" #beta_1').val();"+
+                                 "var proteine_totale = $('.ER_"+iddemande+" #proteine_totale').val();"+
+                                 "if(beta_1 && proteine_totale){"+ 
+                                     "var beta_1_abs = (beta_1 * proteine_totale)/100;"+
+                                     "$('.ER_"+iddemande+" #beta_1_abs').val(beta_1_abs.toFixed(1));"+
+                                 "}else{"+
+                                     "$('.ER_"+iddemande+" #beta_1_abs').val(null);"+
+                                 "}"+
+        
+                             "});";
+        	
+        	//Beta 2
+        	scriptFormule += "$('.ER_"+iddemande+" #beta_2, .ER_"+iddemande+" #proteine_totale').keyup( function () { "+
+            
+                                 "var beta_2 = $('.ER_"+iddemande+" #beta_2').val();"+
+                                 "var proteine_totale = $('.ER_"+iddemande+" #proteine_totale').val();"+
+                                 "if(beta_2 && proteine_totale){"+ 
+                                     "var beta_2_abs = (beta_2 * proteine_totale)/100;"+
+                                     "$('.ER_"+iddemande+" #beta_2_abs').val(beta_2_abs.toFixed(1));"+
+                                 "}else{"+
+                                     "$('.ER_"+iddemande+" #beta_2_abs').val(null);"+
+                                 "}"+
+
+                             "}).change( function() { "+
+        
+                                 "var beta_2 = $('.ER_"+iddemande+" #beta_2').val();"+
+                                 "var proteine_totale = $('.ER_"+iddemande+" #proteine_totale').val();"+
+                                 "if(beta_2 && proteine_totale){"+ 
+                                     "var beta_2_abs = (beta_2 * proteine_totale)/100;"+
+                                     "$('.ER_"+iddemande+" #beta_2_abs').val(beta_2_abs.toFixed(1));"+
+                                 "}else{"+
+                                     "$('.ER_"+iddemande+" #beta_2_abs').val(null);"+
+                                 "}"+
+        
+                             "});";
+    	
+        	//Gamma
+        	scriptFormule += "$('.ER_"+iddemande+" #gamma, .ER_"+iddemande+" #proteine_totale').keyup( function () { "+
+            
+                                 "var gamma = $('.ER_"+iddemande+" #gamma').val();"+
+                                 "var proteine_totale = $('.ER_"+iddemande+" #proteine_totale').val();"+
+                                 "if(gamma && proteine_totale){"+ 
+                                     "var gamma_abs = (gamma * proteine_totale)/100;"+
+                                     "$('.ER_"+iddemande+" #gamma_abs').val(gamma_abs.toFixed(1));"+
+                                 "}else{"+
+                                     "$('.ER_"+iddemande+" #gamma_abs').val(null);"+
+                                 "}"+
+
+                             "}).change( function() { "+
+        
+                                 "var gamma = $('.ER_"+iddemande+" #gamma').val();"+
+                                 "var proteine_totale = $('.ER_"+iddemande+" #proteine_totale').val();"+
+                                 "if(gamma && proteine_totale){"+ 
+                                     "var gamma_abs = (gamma * proteine_totale)/100;"+
+                                     "$('.ER_"+iddemande+" #gamma_abs').val(gamma_abs.toFixed(1));"+
+                                 "}else{"+
+                                     "$('.ER_"+iddemande+" #gamma_abs').val(null);"+
+                                 "}"+
+        
+                             "});";
+    	   
+    	}
+    	
+    	scriptFormule += "</script>";
+        
+    	return scriptFormule;
+    }
     
     
-    
-    
-    
-    
-    
+    function gestionFormuleElectrophoreseHemoglobine(demande){
+    	
+    	var scriptFormule = "<script>";
+    	for(var i=0 ; i<demande.length ; i++){
+        	var iddemande = demande[i];
+
+        	scriptFormule += "$('.ER_"+iddemande+" #electro_hemo_moins').toggle(false);";
+        	
+        	scriptFormule += "$('.ER_"+iddemande+" #electro_hemo_plus').click( function (){ "+
+        	
+        	                     "var nbLigne = $('.ER_"+iddemande+" #electro_hemo tr').length;"+
+	    	                     "$('.ER_"+iddemande+" #electro_hemo_moins').toggle(true);"+
+	    	                     "if(nbLigne < 10){"+
+	    	                        "var html ='<tr id=electro_hemo_\'+nbLigne+\' class=ligneAnanlyse style=width: 100%; >"+
+	    	                        
+	                                           "<td style=\"width: 45%;\"><label class=\"lab1\"><span style=\"font-weight: bold;\" >  <input id=\"electro_hemo_label_\'+nbLigne+\'\" type=\"text\" style=\"font-weight: bold; padding-right: 5px; margin-right: 30px;\"> </span></label></td>"+
+	                                           "<td style=\"width: 35%;\"><label class=\"lab2\" style=\"padding-top: 5px;\"> <input id=\"electro_hemo_valeur_\'+nbLigne+\'\" type=\"number\" step=\"any\"> % </label></td>"+
+	                                           "<td style=\"width: 20%;\"><label class=\"lab3\" style=\"padding-top: 5px; width: 80%;\"> </label></td>"+
+	                                           
+	    	                                   "</tr>';"+
+	    	                     
+	                                 "$('.ER_"+iddemande+" #electro_hemo_'+(nbLigne-1)).after(html);"+
+	    	         		    	
+	    	         		    	"if(nbLigne == 9){"+
+	    	         		    		"$('.ER_"+iddemande+" #electro_hemo_plus').toggle(false);"+
+	    	         		    	"}"+
+	    	         	    	 "}"+
+	    	         	    	
+	    	         	     "});";
+        	
+        	scriptFormule += "$('.ER_"+iddemande+" #electro_hemo_moins').click( function (){ "+
+        	                      
+        	                     "var nbLigne = $('.ER_"+iddemande+" #electro_hemo tr').length;"+
+        	                     
+        	                     "if(nbLigne > 2){"+
+        	         		    	"$('.ER_"+iddemande+" #electro_hemo_'+(nbLigne-1)).remove();"+
+        	         		    	"if(nbLigne == 3){"+ 
+        	         		    		"$('.ER_"+iddemande+" #electro_hemo_moins').toggle(false);"+
+        	         		    	"}"+
+        	         		    	
+        	         		    	"if(nbLigne == 10){"+
+        	         		    		"$('.ER_"+iddemande+" #electro_hemo_plus').toggle(true);"+
+        	         		    	"}"+
+        	         	    	 "}"+
+        	
+        	
+        	
+        	                 "});";
+        	
+
+    	}
+    	
+    	scriptFormule += "</script>";
+        
+    	return scriptFormule;
+    }
     
     
     

@@ -3066,13 +3066,13 @@ class TechnicienController extends AbstractActionController {
 	
 	protected function getResultatsGoutteEpaisse($iddemande){
 	    $resultat = $this->getResultatDemandeAnalyseTable()->getValeursGoutteEpaisse($iddemande);
-	    $html ="";
+	    $html ="<script> $('.ER_".$iddemande." #goutte_epaisse').attr('onchange','getDensiteGoutteEpaisse(this.value,".$iddemande.")');</script>";
 	    if($resultat){
 	        $html .=
 	        "<script>
- 	        	$('#type_materiel_goutte_epaisse').val('".str_replace( "'", "\'",$resultat['type_materiel'])."');
-	            $('#goutte_epaisse').val('".$resultat['goutte_epaisse']."');
-	            if('".$resultat['goutte_epaisse']."' == 'Positif'){ $('#goutte_epaisse_positif').toggle(true); $('#densite_parasitaire').val('".$resultat['densite_parasitaire']."'); }
+ 	        	$('.ER_".$iddemande." #type_materiel_goutte_epaisse').val('".str_replace( "'", "\'",$resultat['type_materiel'])."');
+	            $('.ER_".$iddemande." #goutte_epaisse').val('".$resultat['goutte_epaisse']."');
+	            if('".$resultat['goutte_epaisse']."' == 'Positif'){ $('.ER_".$iddemande." #goutte_epaisse_positif').toggle(true); $('.ER_".$iddemande." #densite_parasitaire').val('".$resultat['densite_parasitaire']."'); }
 	        </script>";
 	    }
 	    return $html;
@@ -3523,20 +3523,24 @@ class TechnicienController extends AbstractActionController {
 	
 	protected function getResultatsAlbumineUrinaire($iddemande){
 	    $resultat = $this->getResultatDemandeAnalyseTable()->getValeursAlbumineUrinaire($iddemande);
-	    $html ="";
+	    $html  ="<script>$('.ER_".$iddemande." #albumine_urinaire').attr('onchange', 'getAlbumineUrinaireVal(this.value,".$iddemande.")');</script>";
+	    $html .="<script>$('.ER_".$iddemande." #sucre_urinaire').attr('onchange', 'getSucreUrinaireVal(this.value,".$iddemande.")');</script>";
+	    $html .="<script>$('.ER_".$iddemande." #corps_cetonique_urinaire').attr('onchange', 'getCorpsCetoniqueUrinaireVal(this.value,".$iddemande.")');</script>";
+
+	    
 	    if($resultat){
 	        $html .=
 	        "<script>
-	            $('#type_materiel_albumine_urinaire').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');
-	    	    $('#albumine_urinaire').val('".$resultat['albumine_urinaire']."');
-	    	    $('#sucre_urinaire').val('".$resultat['sucre_urinaire']."');
-	    	    $('#corps_cetonique_urinaire').val('".$resultat['corps_cetonique_urinaire']."');
+	            $('.ER_".$iddemande." #type_materiel_albumine_urinaire').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');
+	    	    $('.ER_".$iddemande." #albumine_urinaire').val('".$resultat['albumine_urinaire']."');
+	    	    $('.ER_".$iddemande." #sucre_urinaire').val('".$resultat['sucre_urinaire']."');
+	    	    $('.ER_".$iddemande." #corps_cetonique_urinaire').val('".$resultat['corps_cetonique_urinaire']."');
 	    	 </script>";
 	        
 	        if($resultat['albumine_urinaire'] == 'positif'){
 	        	$html .=
 	        	"<script>
-	    	        $('#albumine_urinaire_degres').val('".$resultat['albumine_urinaire_degres']."').toggle(true);
+	    	        $('.ER_".$iddemande." #albumine_urinaire_degres').val('".$resultat['albumine_urinaire_degres']."').toggle(true);
 	    	     </script>";
 	        	
 	        }
@@ -3544,7 +3548,7 @@ class TechnicienController extends AbstractActionController {
 	        if($resultat['sucre_urinaire'] == 'positif'){
 	            $html .=
 	            "<script>
-	    	        $('#sucre_urinaire_degres').val('".$resultat['sucre_urinaire_degres']."').toggle(true);
+	    	        $('.ER_".$iddemande." #sucre_urinaire_degres').val('".$resultat['sucre_urinaire_degres']."').toggle(true);
 	    	     </script>";
 	        
 	        }
@@ -3552,7 +3556,7 @@ class TechnicienController extends AbstractActionController {
 	        if($resultat['corps_cetonique_urinaire'] == 'positif'){
 	            $html .=
 	            "<script>
-	    	        $('#corps_cetonique_urinaire_degres').val('".$resultat['corps_cetonique_urinaire_degres']."').toggle(true);
+	    	        $('.ER_".$iddemande." #corps_cetonique_urinaire_degres').val('".$resultat['corps_cetonique_urinaire_degres']."').toggle(true);
 	    	     </script>";
 	        
 	        }
@@ -4751,6 +4755,7 @@ class TechnicienController extends AbstractActionController {
 		$tableauDonnees = array();
 		$tableauPatients = array();
 		$tableauDemandes = array();
+		$tableauAnalyses = array();
 		$tableauNumerosDossiers = array();
 		
 		foreach ($listeAnalysesType as $liste){
@@ -4773,10 +4778,11 @@ class TechnicienController extends AbstractActionController {
 						$html .="<tr style='width: 90%;' > <td class='enTete2'>". $tableauDonnees[$j]['prenom'].' '.$tableauDonnees[$j]['nom'] .' ('.$tableauDonnees[$j]['numero_dossier'].")</td> </tr>";
 					}
 		
-					$html .="<tr> <th class='enTitre'> <div>". $tableauDonnees[$j]['Designation'] ."</div> </th> </tr>";
+					$html .="<tr> <th class='enTitre'> <div>". $tableauDonnees[$j]['Designation'] ."<span class='examenSaveTick_".$tableauDonnees[$j]['iddemande']."'> </span></div> </th> </tr>";
 				    
 					
 					$tableauDemandes [] = $tableauDonnees[$j]['iddemande'];
+					$tableauAnalyses [] = $tableauDonnees[$j]['Idanalyse'];
 					//Pour la reconnaissance de l'analyse demandée
 					$html .="<tr><td><table style='width: 100%; margin-left: 0px;'  class='listeAnalyseTAD  ER_".$tableauDonnees[$j]['iddemande']."' >";
 					
@@ -4790,7 +4796,7 @@ class TechnicienController extends AbstractActionController {
 	                if($tableauDonnees[$j]['Idanalyse'] ==  7){ $html .= $this->vitesse_sedimentation_7(); }
 	                if($tableauDonnees[$j]['Idanalyse'] ==  8){ $html .= $this->test_demmel_8();           }
 	                if($tableauDonnees[$j]['Idanalyse'] ==  9){ $html .= $this->taux_reticulocytes_9();    }
-	                if($tableauDonnees[$j]['Idanalyse'] == 10){ $html .= $this->goutte_epaisse_10();       }
+	                if($tableauDonnees[$j]['Idanalyse'] == 10){ $html .= $this->goutte_epaisse_10();      $html .= $this->getResultatsGoutteEpaisse($tableauDonnees[$j]['iddemande']); }
 	                 
 	                   if($tableauDonnees[$j]['Idanalyse'] == 11){ $html .= $this->adenogramme_11();                 }
 	                   if($tableauDonnees[$j]['Idanalyse'] == 12){ $html .= $this->medulodramme_12();                }
@@ -4847,7 +4853,7 @@ class TechnicienController extends AbstractActionController {
 	                if($tableauDonnees[$j]['Idanalyse'] == 44){ $html .= $this->electrophorese_hemoglobine_44(); }
 	                if($tableauDonnees[$j]['Idanalyse'] == 45){ $html .= $this->electrophorese_preteines_45();   }
 	                if($tableauDonnees[$j]['Idanalyse'] == 46){ $html .= $this->albuminemie_46();                }
-	                if($tableauDonnees[$j]['Idanalyse'] == 47){ $html .= $this->albumine_urinaire_47();          }
+	                if($tableauDonnees[$j]['Idanalyse'] == 47){ $html .= $this->albumine_urinaire_47();     $html .= $this->getResultatsAlbumineUrinaire($tableauDonnees[$j]['iddemande']);       }
 	                if($tableauDonnees[$j]['Idanalyse'] == 48){ $html .= $this->protidemie_48();                 }
 	                if($tableauDonnees[$j]['Idanalyse'] == 49){ $html .= $this->proteinurie_49();                }
 	                if($tableauDonnees[$j]['Idanalyse'] == 50){ $html .= $this->hlm_compte_daddis_50();          }
@@ -4922,8 +4928,10 @@ class TechnicienController extends AbstractActionController {
 		
 		//Récupération de la liste des demandes, pour savoir les patients pour qui on a entré des résultats
 		$html .="<script> var listeDesDemandesSelect = []; </script>";
+		$html .="<script> var listeDesAnalysesSelect = []; </script>";
 		for($i = 0 ; $i < count($tableauDemandes) ; $i++){
 		    $html .="<script> listeDesDemandesSelect[".$i."]=".$tableauDemandes[$i]."; </script>";
+		    $html .="<script> listeDesAnalysesSelect[".$i."]=".$tableauAnalyses[$i]."; </script>";
 		}
 		
 		
@@ -4958,6 +4966,7 @@ class TechnicienController extends AbstractActionController {
 	    $tableauDonnees = array();
 	    $tableauPatients = array();
 	    $tableauDemandes = array();
+	    $tableauAnalyses = array();
 	    $tableauNumerosDossiers = array();
 	
 	    foreach ($listeAnalysesType as $liste){
@@ -4980,10 +4989,11 @@ class TechnicienController extends AbstractActionController {
 	                    $html .="<tr style='width: 90%;' > <td class='enTete2'>". $tableauDonnees[$j]['prenom'].' '.$tableauDonnees[$j]['nom'] .' ('.$tableauDonnees[$j]['numero_dossier'].") </td> </tr>";
 	                }
 	
-	                $html .="<tr> <th class='enTitre'> <div>". $tableauDonnees[$j]['Designation'] ." </div> </th> </tr>";
-	
+	                $html .="<tr> <th class='enTitre'> <div>". $tableauDonnees[$j]['Designation'] ."<span class='examenSaveTick_".$tableauDonnees[$j]['iddemande']."'> </span></div> </th> </tr>";
 	                
+	                	
 	                $tableauDemandes [] = $tableauDonnees[$j]['iddemande'];
+	                $tableauAnalyses [] = $tableauDonnees[$j]['Idanalyse'];
 	                //Pour la reconnaissance de l'analyse demandée
 	                $html .="<tr><td><table style='width: 100%; margin-left: 0px;'  class='listeAnalyseTAD  ER_".$tableauDonnees[$j]['iddemande']."' >";
 	                 
@@ -4997,7 +5007,7 @@ class TechnicienController extends AbstractActionController {
 	                if($tableauDonnees[$j]['Idanalyse'] ==  7){ $html .= $this->vitesse_sedimentation_7(); }
 	                if($tableauDonnees[$j]['Idanalyse'] ==  8){ $html .= $this->test_demmel_8();           }
 	                if($tableauDonnees[$j]['Idanalyse'] ==  9){ $html .= $this->taux_reticulocytes_9();    }
-	                if($tableauDonnees[$j]['Idanalyse'] == 10){ $html .= $this->goutte_epaisse_10();       }
+	                if($tableauDonnees[$j]['Idanalyse'] == 10){ $html .= $this->goutte_epaisse_10();      $html .= $this->getResultatsGoutteEpaisse($tableauDonnees[$j]['iddemande']); }
 	                 
 	                   if($tableauDonnees[$j]['Idanalyse'] == 11){ $html .= $this->adenogramme_11();                 }
 	                   if($tableauDonnees[$j]['Idanalyse'] == 12){ $html .= $this->medulodramme_12();                }
@@ -5054,7 +5064,7 @@ class TechnicienController extends AbstractActionController {
 	                if($tableauDonnees[$j]['Idanalyse'] == 44){ $html .= $this->electrophorese_hemoglobine_44(); }
 	                if($tableauDonnees[$j]['Idanalyse'] == 45){ $html .= $this->electrophorese_preteines_45();   }
 	                if($tableauDonnees[$j]['Idanalyse'] == 46){ $html .= $this->albuminemie_46();                }
-	                if($tableauDonnees[$j]['Idanalyse'] == 47){ $html .= $this->albumine_urinaire_47();          }
+	                if($tableauDonnees[$j]['Idanalyse'] == 47){ $html .= $this->albumine_urinaire_47();  $html .= $this->getResultatsAlbumineUrinaire($tableauDonnees[$j]['iddemande']); }
 	                if($tableauDonnees[$j]['Idanalyse'] == 48){ $html .= $this->protidemie_48();                 }
 	                if($tableauDonnees[$j]['Idanalyse'] == 49){ $html .= $this->proteinurie_49();                }
 	                if($tableauDonnees[$j]['Idanalyse'] == 50){ $html .= $this->hlm_compte_daddis_50();          }
@@ -5124,10 +5134,13 @@ class TechnicienController extends AbstractActionController {
 	    
 	    //Récupération de la liste des demandes, pour savoir les patients pour qui on a entré des résultats
 	    $html .="<script> var listeDesDemandesSelect = []; </script>";
+	    $html .="<script> var listeDesAnalysesSelect = []; </script>";
 	    for($i = 0 ; $i < count($tableauDemandes) ; $i++){
-	        $html .="<script> listeDesDemandesSelect[".$i."]=".$tableauDemandes[$i]."; </script>";
+	    	$html .="<script> listeDesDemandesSelect[".$i."]=".$tableauDemandes[$i]."; </script>";
+	    	$html .="<script> listeDesAnalysesSelect[".$i."]=".$tableauAnalyses[$i]."; </script>";
 	    }
- 	    
+	    
+	    
 	    
 	    //Récupération de la liste des codes des patients
 	    //Récupération de la liste des codes des patients
@@ -5168,6 +5181,7 @@ class TechnicienController extends AbstractActionController {
 	    $tableauDonnees = array();
 	    $tableauPatients = array();
 	    $tableauDemandes = array();
+	    $tableauAnalyses = array();
 	    $tableauNumerosDossiers = array();
 	    
 	    if($listeAnalysesType){
@@ -5190,23 +5204,23 @@ class TechnicienController extends AbstractActionController {
 	                        $html .="<tr style='width: 90%;' > <td class='enTete2'>". $tableauDonnees[$j]['prenom'].' '.$tableauDonnees[$j]['nom'] .' ('.$tableauDonnees[$j]['numero_dossier'].")</td> </tr>";
 	                    }
 	                     
-	                    $html .="<tr> <th class='enTitre'> <div>". $tableauDonnees[$j]['Designation'] ." </div> </th> </tr>";
-	                     
+	                    $html .="<tr> <th class='enTitre'> <div>". $tableauDonnees[$j]['Designation'] ."<span class='examenSaveTick_".$tableauDonnees[$j]['iddemande']."'> </span></div> </th> </tr>";
 	                    
 	                    $tableauDemandes [] = $tableauDonnees[$j]['iddemande'];
+	                    $tableauAnalyses [] = $tableauDonnees[$j]['Idanalyse'];
 	                    //Pour la reconnaissance de l'analyse demandée
 	                    $html .="<tr><td><table style='width: 100%; margin-left: 0px;'  class='listeAnalyseTAD  ER_".$tableauDonnees[$j]['iddemande']."' >";
 	                    
 	                    if($tableauDonnees[$j]['Idanalyse'] ==  1){ $html .= $this->nfs_1();                   }
 	                    if($tableauDonnees[$j]['Idanalyse'] ==  2){ $html .= $this->gsrh_groupage_2();         }
 	                    if($tableauDonnees[$j]['Idanalyse'] ==  3){ $html .= $this->recherche_antigene_3();    }
-	                    if($tableauDonnees[$j]['Idanalyse'] ==  4){ $html .= $this->test_combs_direct_4();     }
-	                    if($tableauDonnees[$j]['Idanalyse'] ==  5){ $html .= $this->test_combs_indirect_5();   }
-	                    if($tableauDonnees[$j]['Idanalyse'] ==  6){ $html .= $this->test_compatibilite_6();    }
+	                    if($tableauDonnees[$j]['Idanalyse'] ==  4){ $html .= $this->test_combs_direct_4();      $html .= $this->getResultatsTestCombsDirect($tableauDonnees[$j]['iddemande']);   }
+	                    if($tableauDonnees[$j]['Idanalyse'] ==  5){ $html .= $this->test_combs_indirect_5();    $html .= $this->getResultatsTestCombsIndirect($tableauDonnees[$j]['iddemande']); }
+	                    if($tableauDonnees[$j]['Idanalyse'] ==  6){ $html .= $this->test_compatibilite_6();     $html .= $this->getResultatsTestCompatibilite($tableauDonnees[$j]['iddemande']); }
 	                    if($tableauDonnees[$j]['Idanalyse'] ==  7){ $html .= $this->vitesse_sedimentation_7(); }
 	                    if($tableauDonnees[$j]['Idanalyse'] ==  8){ $html .= $this->test_demmel_8();           }
 	                    if($tableauDonnees[$j]['Idanalyse'] ==  9){ $html .= $this->taux_reticulocytes_9();    }
-	                    if($tableauDonnees[$j]['Idanalyse'] == 10){ $html .= $this->goutte_epaisse_10();       }
+	                    if($tableauDonnees[$j]['Idanalyse'] == 10){ $html .= $this->goutte_epaisse_10();       $html .= $this->getResultatsGoutteEpaisse($tableauDonnees[$j]['iddemande']);     }
 	                     
     	                   if($tableauDonnees[$j]['Idanalyse'] == 11){ $html .= $this->adenogramme_11();                 }
 	                       if($tableauDonnees[$j]['Idanalyse'] == 12){ $html .= $this->medulodramme_12();                }
@@ -5263,7 +5277,7 @@ class TechnicienController extends AbstractActionController {
 	                    if($tableauDonnees[$j]['Idanalyse'] == 44){ $html .= $this->electrophorese_hemoglobine_44(); }
 	                    if($tableauDonnees[$j]['Idanalyse'] == 45){ $html .= $this->electrophorese_preteines_45();   }
 	                    if($tableauDonnees[$j]['Idanalyse'] == 46){ $html .= $this->albuminemie_46();                }
-	                    if($tableauDonnees[$j]['Idanalyse'] == 47){ $html .= $this->albumine_urinaire_47();          }
+	                    if($tableauDonnees[$j]['Idanalyse'] == 47){ $html .= $this->albumine_urinaire_47();    $html .= $this->getResultatsAlbumineUrinaire($tableauDonnees[$j]['iddemande']);        }
 	                    if($tableauDonnees[$j]['Idanalyse'] == 48){ $html .= $this->protidemie_48();                 }
 	                    if($tableauDonnees[$j]['Idanalyse'] == 49){ $html .= $this->proteinurie_49();                }
 	                    if($tableauDonnees[$j]['Idanalyse'] == 50){ $html .= $this->hlm_compte_daddis_50();          }
@@ -5317,9 +5331,12 @@ class TechnicienController extends AbstractActionController {
 	    
 	    //Récupération de la liste des demandes, pour connaitre les demandes 
 	    $html .="<script> var listeDesDemandesSelect = []; </script>";
+	    $html .="<script> var listeDesAnalysesSelect = []; </script>";
 	    for($i = 0 ; $i < count($tableauDemandes) ; $i++){
-	        $html .="<script> listeDesDemandesSelect[".$i."]=".$tableauDemandes[$i]."; </script>";
+	    	$html .="<script> listeDesDemandesSelect[".$i."]=".$tableauDemandes[$i]."; </script>";
+	    	$html .="<script> listeDesAnalysesSelect[".$i."]=".$tableauAnalyses[$i]."; </script>";
 	    }
+	    
 	    
 	    $this->getResponse ()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html; charset=utf-8' );
 	    return $this->getResponse ()->setContent ( Json::encode ( $html ) );
@@ -5839,7 +5856,7 @@ class TechnicienController extends AbstractActionController {
 	    //POUR LE NOM DU TYPE DE MATERIEL UTILISE
 	    
 	    $html .= "<tr class='ligneAnanlyse' style='width: 100%;'>";
-	    $html .= "  <td style='width: 55%;'><label class='lab1' ><span style='font-weight: bold;'> Goutte &eacute;paisse <select onchange='getDensiteGE(this.value)' name='goutte_epaisse' id='goutte_epaisse' > <option >  </option> <option value='Positif' >Positif</option> <option value='Negatif' >N&eacute;gatif</option> </select> </span></label></td>";
+	    $html .= "  <td style='width: 55%;'><label class='lab1' ><span style='font-weight: bold;'> Goutte &eacute;paisse <select name='goutte_epaisse' id='goutte_epaisse' > <option >  </option> <option value='Positif' >Positif</option> <option value='Negatif' >N&eacute;gatif</option> </select> </span></label></td>";
 	    $html .= "  <td style='width: 15%;'><label class='lab2' style='padding-top: 5px;'>  </label></td>";
 	    $html .= "  <td style='width: 30%;'><label class='lab3' style='padding-top: 5px; width: 80%;'>  </label></td>";
 	    $html .= "</tr>";
@@ -5850,8 +5867,7 @@ class TechnicienController extends AbstractActionController {
 	    $html .= "  <td style='width: 30%;'><label class='lab3' style='padding-top: 5px; width: 80%;'>  </label></td>";
 	    $html .= "</tr>";
 	    
-	    $html .= "<script>  function getDensiteGE(valeur){ if(valeur == 'Positif'){ $('#goutte_epaisse_positif').toggle(true); }else{ $('#goutte_epaisse_positif').toggle(false); } } </script>";
-	
+	    	
 	    $html .= "</table> </td> </tr>";
 	
 	    return $html;
