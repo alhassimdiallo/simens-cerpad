@@ -1507,6 +1507,20 @@ class BiologisteController extends AbstractActionController {
 		return $html;
 	}
 	
+	protected function getResultatsDDimeres($iddemande){
+		$resultat = $this->getResultatDemandeAnalyseTable()->getValeursDDimeres($iddemande);
+		$html ="";
+		if($resultat){
+			$html .=
+			"<script>
+	            $('#type_materiel_dimeres').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');
+	    	    $('#d_dimeres').val('".$resultat['d_dimeres']."');
+	    	 </script>";
+		}
+		return $html;
+	}
+	
+	
 	protected function getResultatsGlycemie($iddemande){
 	    $resultat = $this->getResultatDemandeAnalyseTable()->getValeursGlycemie($iddemande);
 	    $html ="";
@@ -1561,59 +1575,59 @@ class BiologisteController extends AbstractActionController {
 	}
 	
 	protected function getResultatsCholesterolTotal($iddemande){
-	    $resultat = $this->getResultatDemandeAnalyseTable()->getValeursCholesterolTotal($iddemande);
-	    $html ="";
-	    if($resultat){
-	        $html .=
-	        "<script>
-	            $('#type_materiel_cholesterol_total').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');	
-	            $('#cholesterol_total_1').val('".$resultat['cholesterol_total_1']."');
-                $('#cholesterol_total_2').val('".$resultat['cholesterol_total_2']."');
+		$resultat = $this->getResultatDemandeAnalyseTable()->getValeursCholesterolTotal($iddemande);
+		$html ="";
+		if($resultat){
+			$html .=
+			"<script>
+	            $('.ER_".$iddemande." #type_materiel_cholesterol_total').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');
+	            $('.ER_".$iddemande." #cholesterol_total_1').val('".$resultat['cholesterol_total_1']."');
+                $('.ER_".$iddemande." #cholesterol_total_2').val('".$resultat['cholesterol_total_2']."');
 	        </script>";
-	    }
-	    return $html;
+		}
+		return $html;
 	}
 	
 	protected function getResultatsTriglycerides($iddemande){
-	    $resultat = $this->getResultatDemandeAnalyseTable()->getValeursTriglycerides($iddemande);
-	    $html ="";
-	    if($resultat){
-	        $html .=
-	        "<script>
-	        	$('#type_materiel_triglycerides').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');	
-	    	    $('#triglycerides_1').val('".$resultat['triglycerides_1']."');
-	    	    $('#triglycerides_2').val('".$resultat['triglycerides_2']."');
+		$resultat = $this->getResultatDemandeAnalyseTable()->getValeursTriglycerides($iddemande);
+		$html ="";
+		if($resultat){
+			$html .=
+			"<script>
+	        	$('.ER_".$iddemande." #type_materiel_triglycerides').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');
+	    	    $('.ER_".$iddemande." #triglycerides_1').val('".$resultat['triglycerides_1']."');
+	    	    $('.ER_".$iddemande." #triglycerides_2').val('".$resultat['triglycerides_2']."');
 	    	</script>";
-	    }
-	    return $html;
+		}
+		return $html;
 	}
 	
 	protected function getResultatsCholesterolHDL($iddemande){
-	    $resultat = $this->getResultatDemandeAnalyseTable()->getValeursCholesterolHDL($iddemande);
-	    $html ="";
-	    if($resultat){
-	        $html .=
-	        "<script>
-  	        	$('#type_materiel_cholesterol_HDL').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');	
-	    	    $('#cholesterol_HDL_1').val('".$resultat['cholesterol_HDL_1']."');
-	    	    $('#cholesterol_HDL_2').val('".$resultat['cholesterol_HDL_2']."');
+		$resultat = $this->getResultatDemandeAnalyseTable()->getValeursCholesterolHDL($iddemande);
+		$html ="";
+		if($resultat){
+			$html .=
+			"<script>
+	        	$('.ER_".$iddemande." #type_materiel_cholesterol_HDL').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');
+	    	    $('.ER_".$iddemande." #cholesterol_HDL_1').val('".$resultat['cholesterol_HDL_1']."');
+	    	    $('.ER_".$iddemande." #cholesterol_HDL_2').val('".$resultat['cholesterol_HDL_2']."');
 	    	</script>";
-	    }
-	    return $html;
+		}
+		return $html;
 	}
 	
 	protected function getResultatsCholesterolLDL($iddemande){
-	    $resultat = $this->getResultatDemandeAnalyseTable()->getValeursCholesterolLDL($iddemande);
-	    $html ="";
-	    if($resultat){
-	        $html .=
-	        "<script>
-            	$('#type_materiel_cholesterol_LDL').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');	
-	    	    $('#cholesterol_LDL_1').val('".$resultat['cholesterol_LDL_1']."');
-	    	    $('#cholesterol_LDL_2').val('".$resultat['cholesterol_LDL_2']."');
+		$resultat = $this->getResultatDemandeAnalyseTable()->getValeursCholesterolLDL($iddemande);
+		$html ="";
+		if($resultat){
+			$html .=
+			"<script>
+	        	$('.ER_".$iddemande." #type_materiel_cholesterol_LDL').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');
+	    	    $('.ER_".$iddemande." #cholesterol_LDL_1').val('".$resultat['cholesterol_LDL_1']."');
+	    	    $('.ER_".$iddemande." #cholesterol_LDL_2').val('".$resultat['cholesterol_LDL_2']."');
 	    	 </script>";
-	    }
-	    return $html;
+		}
+		return $html;
 	}
 	
 	protected function getResultatsIonogramme($iddemande){
@@ -1676,8 +1690,8 @@ class BiologisteController extends AbstractActionController {
 	    if($resultat){
 	        $html .=
 	        "<script>
-	            $('#type_materiel_tgo_asat').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');
-	    	    $('#tgo_asat').val('".$resultat['tgo_asat']."');
+	            $('.ER_".$iddemande." #type_materiel_tgo_asat').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');
+	    	    $('.ER_".$iddemande." #tgo_asat').val('".$resultat['tgo_asat']."');
 	    	 </script>";
 	    }
 	    return $html;
@@ -1689,8 +1703,8 @@ class BiologisteController extends AbstractActionController {
 	    if($resultat){
 	        $html .=
 	        "<script>
-	            $('#type_materiel_tgp_alat').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');
-	    	    $('#tgp_alat').val('".$resultat['tgp_alat']."');
+	            $('.ER_".$iddemande." #type_materiel_tgp_alat').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');
+	    	    $('.ER_".$iddemande." #tgp_alat').val('".$resultat['tgp_alat']."');
 	    	 </script>";
 	    }
 	    return $html;
@@ -2134,7 +2148,7 @@ class BiologisteController extends AbstractActionController {
 
 		$analyse = $this->getAnalyseTable()->getAnalysesDemandees($iddemande);
 		
-		$html  = "<table class='designEnTeteAnalyse' style='width: 100%;' > 
+		$html  = "<table class='designEnTeteAnalyse ER_".$iddemande."' style='width: 100%;' > 
 		           <input type='hidden' id='idanalyse' value='".$analyse['Idanalyse']."'>
 				   <tr style='width: 100%;' > <td class='enTete'>". $analyse['Libelle'] ."</td> </tr>
 				   <tr> <th class='enTitre'> <div>". $analyse['Designation'] ."</div> </th> </tr>";
@@ -2160,9 +2174,7 @@ class BiologisteController extends AbstractActionController {
 		if($analyse['Idanalyse'] == 17){ $html .= $this->temps_saignement_17(); $html .= $this->getResultatsTempsSaignement($iddemande); }
 		if($analyse['Idanalyse'] == 18){ $html .= $this->facteur_viii_18(); $html .= $this->getResultatsFacteur8($iddemande); }
 		if($analyse['Idanalyse'] == 19){ $html .= $this->facteur_ix_19(); $html .= $this->getResultatsFacteur9($iddemande);  }
-
-		   if($analyse['Idanalyse'] == 20){ $html .= $this->dimeres_20();      }
-		
+		if($analyse['Idanalyse'] == 20){ $html .= $this->dimeres_20(); $html .= $this->getResultatsDDimeres($iddemande); }
 		if($analyse['Idanalyse'] == 21){ $html .= $this->glycemie_21(); $html .= $this->getResultatsGlycemie($iddemande); }
 		if($analyse['Idanalyse'] == 22){ $html .= $this->creatininemie_22(); $html .= $this->getResultatsCreatininemie($iddemande); }
 		if($analyse['Idanalyse'] == 23){ $html .= $this->azotemie_23(); $html .= $this->getResultatsAzotemie($iddemande); }
@@ -2573,10 +2585,11 @@ class BiologisteController extends AbstractActionController {
 		$libelle = "";
 		$tabAnalyses = array();
 		$tabDemandes = array();
+		$tableauDemandes = array();
 		
 		foreach ($listeAnalyse as $liste) {
 
-			$html .="<table class='designEnTeteAnalyse' style='width: 100%;' >";
+			$html .="<table class='designEnTeteAnalyse  ER_".$liste['iddemande']."' style='width: 100%;' >";
 			
 			if($libelle != $liste['Libelle']){
 			    $html .="<tr style='width: 100%;' > <td class='enTete'>". $liste['Libelle'] ."</td> </tr>";
@@ -2584,6 +2597,8 @@ class BiologisteController extends AbstractActionController {
 			}
 			
 			$html .="<tr> <th class='enTitre'> <div>". $liste['Designation'] ."</div> </th> </tr>";
+			
+			$tableauDemandes[] = $liste['iddemande'];
 			
 			if($liste['Idanalyse'] ==  1){ $html .= $this->nfs_1(); $html .= $this->getResultatsNfs($liste['iddemande']); }
 			if($liste['Idanalyse'] ==  2){ $html .= $this->gsrh_groupage_2(); $html .= $this->getResultatsGsrhGroupage($liste['iddemande']); }
@@ -2606,8 +2621,7 @@ class BiologisteController extends AbstractActionController {
 			if($liste['Idanalyse'] == 17){ $html .= $this->temps_saignement_17(); $html .= $this->getResultatsTempsSaignement($liste['iddemande']); }
 	  	    if($liste['Idanalyse'] == 18){ $html .= $this->facteur_viii_18(); $html .= $this->getResultatsFacteur8($liste['iddemande']); }
 			if($liste['Idanalyse'] == 19){ $html .= $this->facteur_ix_19();  $html .= $this->getResultatsFacteur9($liste['iddemande']); }
-			   if($liste['Idanalyse'] == 20){ $html .= $this->dimeres_20();      }
-			
+			if($liste['Idanalyse'] == 20){ $html .= $this->dimeres_20(); $html .= $this->getResultatsDDimeres($liste['iddemande']);      }
 			if($liste['Idanalyse'] == 21){ $html .= $this->glycemie_21(); $html .= $this->getResultatsGlycemie($liste['iddemande']); }
 			if($liste['Idanalyse'] == 22){ $html .= $this->creatininemie_22(); $html .= $this->getResultatsCreatininemie($liste['iddemande']); }
 			if($liste['Idanalyse'] == 23){ $html .= $this->azotemie_23(); $html .= $this->getResultatsAzotemie($liste['iddemande']); }
@@ -2679,6 +2693,13 @@ class BiologisteController extends AbstractActionController {
 				      <div style='width: 100%; height: 20px;'> </div>";
 		}
 	
+		//Récupération de la liste des demandes, pour connaitre les demandes
+		$html .="<script> var listeDesDemandesSelect = []; </script>";
+		for($i = 0 ; $i < count($tableauDemandes) ; $i++){
+			$html .="<script> listeDesDemandesSelect[".$i."]=".$tableauDemandes[$i]."; </script>";
+		}
+		
+		
 		$donnees = array($html, $tabAnalyses, $tabDemandes);
 		$this->getResponse ()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html; charset=utf-8' );
 		return $this->getResponse ()->setContent ( Json::encode ( $donnees ) );

@@ -3162,6 +3162,19 @@ class TechnicienController extends AbstractActionController {
 		return $html;
 	}
 	
+	protected function getResultatsDDimeres($iddemande){
+		$resultat = $this->getResultatDemandeAnalyseTable()->getValeursDDimeres($iddemande);
+		$html ="";
+		if($resultat){
+			$html .=
+			"<script>
+	            $('#type_materiel_dimeres').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');
+	    	    $('#d_dimeres').val('".$resultat['d_dimeres']."');
+	    	 </script>";
+		}
+		return $html;
+	}
+	
 	protected function getResultatsGlycemie($iddemande){
 	    $resultat = $this->getResultatDemandeAnalyseTable()->getValeursGlycemie($iddemande);
 	    $html ="";
@@ -3331,8 +3344,8 @@ class TechnicienController extends AbstractActionController {
 	    if($resultat){
 	        $html .=
 	        "<script>
-	            $('#type_materiel_tgo_asat').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');
-	    	    $('#tgo_asat').val('".$resultat['tgo_asat']."');
+	            $('.ER_".$iddemande." #type_materiel_tgo_asat').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');
+	    	    $('.ER_".$iddemande." #tgo_asat').val('".$resultat['tgo_asat']."');
 	    	 </script>";
 	    }
 	    return $html;
@@ -3344,8 +3357,8 @@ class TechnicienController extends AbstractActionController {
 	    if($resultat){
 	        $html .=
 	        "<script>
-	            $('#type_materiel_tgp_alat').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');
-	    	    $('#tgp_alat').val('".$resultat['tgp_alat']."');
+	            $('.ER_".$iddemande." #type_materiel_tgp_alat').val('".str_replace( "'", "\'", $resultat['type_materiel'])."');
+	    	    $('.ER_".$iddemande." #tgp_alat').val('".$resultat['tgp_alat']."');
 	    	 </script>";
 	    }
 	    return $html;
@@ -3819,9 +3832,7 @@ class TechnicienController extends AbstractActionController {
 		if($analyse['Idanalyse'] == 17){ $html .= $this->temps_saignement_17(); $html .= $this->getResultatsTempsSaignement($iddemande); }
 		if($analyse['Idanalyse'] == 18){ $html .= $this->facteur_viii_18(); $html .= $this->getResultatsFacteur8($iddemande); }
 		if($analyse['Idanalyse'] == 19){ $html .= $this->facteur_ix_19(); $html .= $this->getResultatsFacteur9($iddemande);  }
-
-		   if($analyse['Idanalyse'] == 20){ $html .= $this->dimeres_20();      }
-		
+		if($analyse['Idanalyse'] == 20){ $html .= $this->dimeres_20();  $html .= $this->getResultatsDDimeres($iddemande);    }
 		if($analyse['Idanalyse'] == 21){ $html .= $this->glycemie_21(); $html .= $this->getResultatsGlycemie($iddemande); }
 		if($analyse['Idanalyse'] == 22){ $html .= $this->creatininemie_22(); $html .= $this->getResultatsCreatininemie($iddemande); }
 		if($analyse['Idanalyse'] == 23){ $html .= $this->azotemie_23(); $html .= $this->getResultatsAzotemie($iddemande); }
@@ -3989,7 +4000,11 @@ class TechnicienController extends AbstractActionController {
 	           	$this->getResultatDemandeAnalyseTable()->addResultatDemandeAnalyse($iddemande, $idemploye);
 	           	$donneesExiste = $this->getResultatDemandeAnalyseTable()->addValeursFacteur9($tab, $iddemande);
 	        }
-	    
+	    else 
+	    	if($idanalyse == 20){
+	    		$this->getResultatDemandeAnalyseTable()->addResultatDemandeAnalyse($iddemande, $idemploye);
+	    		$donneesExiste = $this->getResultatDemandeAnalyseTable()->addValeursDDimeres($tab, $iddemande);
+	    	}
 	    else
 	        if($idanalyse == 21){
 	            $this->getResultatDemandeAnalyseTable()->addResultatDemandeAnalyse($iddemande, $idemploye);
@@ -4274,11 +4289,9 @@ class TechnicienController extends AbstractActionController {
 			if($liste['Idanalyse'] == 15){ $html .= $this->tca_15(); $html .= $this->getResultatsTca($liste['iddemande']); }
 			if($liste['Idanalyse'] == 16){ $html .= $this->fibrinemie_16(); $html .= $this->getResultatsFibrinemie($liste['iddemande']); }
 			if($liste['Idanalyse'] == 17){ $html .= $this->temps_saignement_17(); $html .= $this->getResultatsTempsSaignement($liste['iddemande']); }
-			
 			if($liste['Idanalyse'] == 18){ $html .= $this->facteur_viii_18();  $html .= $this->getResultatsFacteur8($liste['iddemande']); }
 			if($liste['Idanalyse'] == 19){ $html .= $this->facteur_ix_19(); $html .= $this->getResultatsFacteur9($liste['iddemande']);  }
-			   if($liste['Idanalyse'] == 20){ $html .= $this->dimeres_20();      }
-			
+			if($liste['Idanalyse'] == 20){ $html .= $this->dimeres_20();  $html .= $this->getResultatsDDimeres($liste['iddemande']);    }
 			if($liste['Idanalyse'] == 21){ $html .= $this->glycemie_21(); $html .= $this->getResultatsGlycemie($liste['iddemande']); }
 			if($liste['Idanalyse'] == 22){ $html .= $this->creatininemie_22(); $html .= $this->getResultatsCreatininemie($liste['iddemande']); }
 			if($liste['Idanalyse'] == 23){ $html .= $this->azotemie_23(); $html .= $this->getResultatsAzotemie($liste['iddemande']); }
@@ -4472,9 +4485,12 @@ class TechnicienController extends AbstractActionController {
 	            	$this->getResultatDemandeAnalyseTable()->addResultatDemandeAnalyse($iddemande, $idemploye);
 	            	$donneesExiste = $this->getResultatDemandeAnalyseTable()->addValeursFacteur9($tab, $iddemande);
 	        }
-	        
-	        
-	        
+	        else 
+	        	if($idanalyse == 20){
+	        		$tab = $tableau[$idanalyse];
+	        		$this->getResultatDemandeAnalyseTable()->addResultatDemandeAnalyse($iddemande, $idemploye);
+	        		$donneesExiste = $this->getResultatDemandeAnalyseTable()->addValeursDDimeres($tab, $iddemande);
+	        }
 	        else
 	            if($idanalyse == 21){
 	                $tab = $tableau[$idanalyse];
