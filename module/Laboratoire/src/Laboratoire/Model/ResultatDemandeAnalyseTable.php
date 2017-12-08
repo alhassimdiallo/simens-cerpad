@@ -2293,11 +2293,11 @@ class ResultatDemandeAnalyseTable {
 		return $donnee;
 	}
 	
-	public function addTypagePatientDepister($idpatient, $typage, $typepatient){
+	public function addTypagePatientDepister($idpatient, $typage, $typepatient, $iddemande=null){
 	    $db = $this->tableGateway->getAdapter();
 	    $sql = new Sql($db);
 	    
-	    $sQuery = $sql->update() ->table('depistage') ->set( array('typage' => $typage, 'typepatient' => $typepatient ) ) 
+	    $sQuery = $sql->update() ->table('depistage') ->set( array('typage' => $typage, 'typepatient' => $typepatient, 'iddemande_analyse' => $iddemande ) ) 
 	    ->where(array('idpatient' => $idpatient));
 	    $sql->prepareStatementForSqlObject($sQuery)->execute();
 	}
@@ -2361,7 +2361,7 @@ class ResultatDemandeAnalyseTable {
 	            $this->setResultDemandeEffectuee($iddemande);
 	            
 	            //Ajout des résultats dans la table dépistage lorsqu'il s'agit d'un patient dépisté
-	            $this->addTypagePatientDepister($demande['idpatient'], $tab[2], $typepatient);
+	            $this->addTypagePatientDepister($demande['idpatient'], $tab[2], $typepatient, $iddemande);
 	        }
 	
 	    }
@@ -2383,7 +2383,7 @@ class ResultatDemandeAnalyseTable {
 	            $this->setResultDemandeEffectuee($iddemande);
 	            
 	            //Ajout des résultats dans la table dépistage lorsqu'il s'agit d'un patient dépisté
-	            $this->addTypagePatientDepister($demande['idpatient'], $tab[2], $typepatient);
+	            $this->addTypagePatientDepister($demande['idpatient'], $tab[2], $typepatient, $iddemande);
 	        }
 	
 	    }
