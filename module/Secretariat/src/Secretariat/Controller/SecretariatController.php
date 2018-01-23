@@ -1240,7 +1240,7 @@ class SecretariatController extends AbstractActionController {
 		
 		//Gestion des AGE
 		if($personne->age && !$personne->date_naissance){
-		    $html .="<div style=' left: 70px; top: 235px; font-family: time new romans; position: absolute; '> Age: <span style='font-size:19px; font-family: time new romans; color: green; font-weight: bold;'> HJGH".$personne->age." ans </span></div>";
+		    $html .="<div style=' left: 70px; top: 235px; font-family: time new romans; position: absolute; '> Age: <span style='font-size:19px; font-family: time new romans; color: green; font-weight: bold;'> ".$personne->age." ans </span></div>";
 		}else{
 		    $aujourdhui = (new \DateTime() ) ->format('Y-m-d');
 		    $age_jours = $this->nbJours($personne->date_naissance, $aujourdhui);

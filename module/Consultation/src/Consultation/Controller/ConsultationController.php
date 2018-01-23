@@ -364,6 +364,10 @@ class ConsultationController extends AbstractActionController {
 	
 	
 	public function consulterAction() {
+		//DEBUT --- DEBUT --- DEBUT
+		$timestart = microtime(true);
+		//-------------------------
+		
 		$this->layout ()->setTemplate ( 'layout/consultation' );
 	
 		$user = $this->layout()->user;
@@ -473,20 +477,6 @@ class ConsultationController extends AbstractActionController {
 		//---- FIN Gestion des AGE ----
 		//---- FIN Gestion des AGE ----
 		
-		
-// 		$listeMedicament = $this->getConsultationTable()->listeDeTousLesMedicaments();
-// 		$listeForme = $this->getConsultationTable()->formesMedicaments();
-// 		$listetypeQuantiteMedicament = $this->getConsultationTable()->typeQuantiteMedicaments();
-	
-		//$liste = $this->getConsultationTable ()->getInfoPatient ( $id_pat );
-		//$image = $this->getConsultationTable ()->getPhoto ( $id_pat );
-	
-		//RECUPERER TOUS LES PATIENTS AYANT UN RV aujourd'hui
-// 		$tabPatientRV = $this->getConsultationTable()->getPatientsRV($IdDuService);
-// 		$resultRV = null;
-// 		if(array_key_exists($id_pat, $tabPatientRV)){
-// 			$resultRV = $tabPatientRV[ $id_pat ];
-// 		}
 
 		$data = array(
 				'idpatient' => $idpatient,
@@ -494,27 +484,6 @@ class ConsultationController extends AbstractActionController {
 		);
 		
 		$consultation = $this->getConsultationTable()->getConsultation($idcons)->getArrayCopy();
-		
-// 		$pos = strpos($consultation['pression_arterielle'], '/') ;
-// 		$tensionmaximale = substr($consultation['pression_arterielle'], 0, $pos);
-// 		$tensionminimale = substr($consultation['pression_arterielle'], $pos+1);
-// 		$data ['tensionmaximale'] = $tensionmaximale;
-// 		$data ['tensionminimale'] = $tensionminimale;
-		
-		
-		//POUR LES MOTIFS D'ADMISSION
-		//POUR LES MOTIFS D'ADMISSION
-		//POUR LES MOTIFS D'ADMISSION
-		// instancier le motif d'admission et recupï¿½rer l'enregistrement
-		//$motif_admission = $this->getMotifAdmissionTable ()->getMotifAdmission ( $idcons );
-		//$nbMotif = $this->getMotifAdmissionTable ()->nbMotifs ( $idcons );
-		
-		//POUR LES MOTIFS D'ADMISSION
-		//$k = 1;
-		//foreach ( $motif_admission as $Motifs ) {
-		//	$data ['motif_admission' . $k] = $Motifs ['Libelle_motif'];
-		//	$k++;
-		//}
 		
 		//==================================================================================
 		//==================================================================================
@@ -527,46 +496,41 @@ class ConsultationController extends AbstractActionController {
 		$mDouleur = array(1 => 0,2 => 0,3 => 0,4 => 0);
 		//POUR LES MOTIFS D'ADMISSION
 		$k = 1;
-		foreach ( $motif_admission as $Motifs ) {
-			$le_motif_admission = $this->getMotifAdmissionTable ()->getNomMotifConsultation($Motifs ['idlistemotif'])['libelle'];
-			$data ['motif_admission' . $k] = $le_motif_admission;
-				
+	    foreach ( $motif_admission as $Motifs ) {
+			$data ['motif_admission' . $k] = $Motifs ['idlistemotif'];
+			
 			//Recuperation des infos supplémentaires du motif douleur
 			if($Motifs ['idlistemotif'] == 2){
 				$mDouleur[1] = 1;
 				$mDouleur[2] = $k;
 			}
-				
+			
 			$k ++;
 		}
-		
-		//var_dump($mDouleur); exit();
 		
 		//Siege --- Siege --- Siege
 		$motif_douleur_precision = $this->getMotifAdmissionTable ()->getMotifDouleurPrecision ( $idcons );
 		if($motif_douleur_precision){
-			$siege_motif_douleur = $this->getMotifAdmissionTable ()->getSiegeMotifDouleur($motif_douleur_precision['siege']);
-			$mDouleur[3] = $siege_motif_douleur['libelle'];
+			$mDouleur[3] = $motif_douleur_precision['siege'];
 			$mDouleur[4] = $motif_douleur_precision['intensite'];
 		}
 		
+		//==================================================================================
+		//==================================================================================
+		//==================================================================================
 		$form = new ConsultationForm();
 		$form->populateValues($data);
 		$form->populateValues($consultation);
 		
-		$listeMotifConsultation = $this->getMotifAdmissionTable() ->getListeMotifConsultation();
-		$listeSiege = $this->getMotifAdmissionTable() ->getListeSiege();
+		$listeMotifConsultation = $this->getMotifAdmissionTable() ->getListeSelectMotifConsultation();
+		$form->get('motif_admission1')->setvalueOptions($listeMotifConsultation);
+		$form->get('motif_admission2')->setvalueOptions($listeMotifConsultation);
+		$form->get('motif_admission3')->setvalueOptions($listeMotifConsultation);
+		$form->get('motif_admission4')->setvalueOptions($listeMotifConsultation);
+		$form->get('motif_admission5')->setvalueOptions($listeMotifConsultation);
 		
-		//==================================================================================
-		//==================================================================================
-		//==================================================================================
-		
-		
-		
-		$form = new ConsultationForm();
-		$form->populateValues($data);
-		$form->populateValues($consultation);
-		
+		$listeSiege = $this->getMotifAdmissionTable() ->getListeSelectSiege();
+		$form->get('siege')->setvalueOptions($listeSiege);
 		
 		//RECUPERER LA LISTE DES VOIES ADMINISTRATION DES MEDICAMENTS
 		$listeVoieAdministration = $this->getConsultationTable()->getVoieAdministration($idcons);
@@ -574,9 +538,16 @@ class ConsultationController extends AbstractActionController {
 		//RECUPERER LA LISTE DES ACTES
 		$listeActes = $this->getConsultationTable()->getListeDesActes();
 		
-		//var_dump($listeActes); exit();
 		
 		
+		//FIN --- FIN --- FIN
+		$timeend = microtime(true);
+		$time = $timeend-$timestart;
+		
+		//var_dump(number_format($time,3)); exit();
+		
+		
+		//var_dump($listeMotifConsultation); exit();
 		return array(
 				
 				'idcons' => $idcons,
@@ -589,11 +560,12 @@ class ConsultationController extends AbstractActionController {
 				'form' => $form,
 				'patient' => $patient,
 				
-				'listeMotifConsultation' => $listeMotifConsultation,
-				'listeSiege' => $listeSiege,
 				'mDouleur' => $mDouleur,
 				'listeVoieAdministration' => $listeVoieAdministration,
 				'listeActesCons' => $listeActes,
+				'listeMotifConsultation' => $listeMotifConsultation,
+				
+				
 
 				'liste_med' => null, //$listeMedicament,
 				'temoin' => 0, //$bandelettes['temoin'],

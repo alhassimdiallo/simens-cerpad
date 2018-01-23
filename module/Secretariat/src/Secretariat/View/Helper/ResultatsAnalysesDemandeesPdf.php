@@ -36,6 +36,7 @@ class ResultatsAnalysesDemandeesPdf
 	protected $_analysesHemostase;
 	protected $_analysesBilanHepatique;
 	protected $_analysesBilanRenal;
+	protected $_analysesSerologie;
 	
 	public function __construct()
 	{
@@ -293,6 +294,10 @@ class ResultatsAnalysesDemandeesPdf
 		$this->_analysesBilanRenal = $analysesBilanRenal;
 	}
 	
+	public function setAnalysesSerologie($analysesSerologie){
+		$this->_analysesSerologie = $analysesSerologie;
+	}
+	
 	protected  function getNoteInformations(){
 		$Control = new DateHelper();
 		
@@ -422,7 +427,7 @@ class ResultatsAnalysesDemandeesPdf
     			$this->_pageWidth -
     			$this->_leftMargin,
     			$this->_yPosition-10);
-    	$this->_yPosition -= $noteLineHeight;
+    	$this->_yPosition -= $noteLineHeight-20;
     	
     	
 		//-----------------------------------------------------------------------
@@ -487,7 +492,7 @@ class ResultatsAnalysesDemandeesPdf
 			//-----------------------------------------------------------------
 			//-----------------------------------------------------------------
 			
-			
+			$this->_yPosition -= $noteLineHeight-50;
 			//Liste des analyses pour la CYTOLOGIE
 			//Liste des analyses pour la CYTOLOGIE
 			$idanalysesCytologie = $this->_analysesCytologie;
@@ -507,7 +512,7 @@ class ResultatsAnalysesDemandeesPdf
 			//-----------------------------------------------------------------
 			//-----------------------------------------------------------------
 			
-			
+			$this->_yPosition -= $noteLineHeight-43;
 			//Liste des analyses pour l'HEMOSTASE 
 			//Liste des analyses pour l'HEMOSTASE
 			$idanalysesHemostase = $this->_analysesHemostase;
@@ -564,6 +569,26 @@ class ResultatsAnalysesDemandeesPdf
 			//-----------------------------------------------------------------
 			//-----------------------------------------------------------------
  		
+			$this->_yPosition -= $noteLineHeight-123;
+			//Liste des analyses pour la serologie
+			//Liste des analyses pour la serologie
+			$idanalysesSerologie = $this->_analysesSerologie;
+				
+			//Affichage des analyses concernant la Serologie
+			if(array_intersect(array(53, 55, 60, 61), $idanalysesSerologie)){
+				$this->_page = $this->getSerologie($noteLineHeight, $infosAnalyseDemande, $value, $idanalysesSerologie);
+			}
+			//=========================================
+			//=========================================
+				
+			//-----------------------------------------------------------------
+			//-----------------------------------------------------------------
+			//-----------------------------------------------------------------
+			//-----------------------------------------------------------------
+			//-----------------------------------------------------------------
+			//-----------------------------------------------------------------
+			
+			
 			
 			//analyse pour le DEPISTAGE
 			//analyse pour le DEPISTAGE
@@ -585,7 +610,7 @@ class ResultatsAnalysesDemandeesPdf
 			$this->_yPosition -= $noteLineHeight;
 		
 		
-	} 
+	}
 	
 	public function getPiedPage(){
 		
@@ -931,31 +956,6 @@ class ResultatsAnalysesDemandeesPdf
 		$tabAnalyses = array_intersect(array(14,15,16,17,18,19), $idanalysesHemostase);
 		$tabAnalyses= array_reverse($tabAnalyses);
 		
-		//-----------------------------------------------
-		  //$this->_yPosition -= 15;
-		//----------------------------------------------
-		  //$this->_page->setFont($this->_newTimeGras, 9);
-		  //$this->_page->drawText('ETHNIE :',
-			//	$this->_leftMargin+161,
-			//	$this->_yPosition);
-		  //$this->_page->setFont($this->_newTime, 10);
-		  //$this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' , $this->_depistage->current()['ethnie']),
-			//	$this->_leftMargin+210,
-			//	$this->_yPosition);
-		 
-		//-----------------------------------------------
-		  //$this->_yPosition -= 15;
-		//----------------------------------------------
-		  //$this->_page->setFont($this->_newTimeGras, 9);
-		  //$this->_page->drawText('TELEPHONE :',
-			//	$this->_leftMargin+140,
-			//	$this->_yPosition);
-		  //$this->_page->setFont($this->_newTime, 10);
-		  //$this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' , $value->telephone),
-			//	$this->_leftMargin+210,
-			//	$this->_yPosition);
-		 
-		
 		//-------------PLACER LES LIGNES DES EXAMENS A AFFICHER ---------
 		//-------------PLACER LES LIGNES DES EXAMENS A AFFICHER ---------
 		//-------------PLACER LES LIGNES DES EXAMENS A AFFICHER ---------
@@ -991,49 +991,20 @@ class ResultatsAnalysesDemandeesPdf
 	
 		$resultats = $this->_resultatsAnalysesDemandees;
 		
-// 		$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES), 8);
-// 		$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', 'Enregistre le: '),
-// 				$this->_leftMargin+5,
-// 				$this->_yPosition+10);
-	
-// 		$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES), 8.5);
-//  		$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', $control->convertDateTime( $infosAnalyseDemande[$tabAnalyses[0]]['DateEnregistrementResultat'] )),
-//  				$this->_leftMargin+50,
-//  				$this->_yPosition+10);
-	
-// 		$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES), 8);
-// 		$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', 'validÃ© par: '),
-// 				$this->_leftMargin+135,
-// 				$this->_yPosition+10);
-	
-// 		$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES), 9);
-//  		$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', ''. $infosAnalyseDemande[$tabAnalyses[0]]['Prenom'] .' '.$infosAnalyseDemande[$tabAnalyses[0]]['Nom']),
-//  				$this->_leftMargin+173,
-//  				$this->_yPosition+10);
-	
  		$this->_yPosition -= $noteLineHeight-20; //Allez à la ligne
 	
 		$this->_page->setLineColor(new ZendPdf\Color\Html('#999999'));
 		$this->_page->setLineWidth(1);
 		$this->_page->drawLine($this->_leftMargin+210,
-				$this->_yPosition -3,
-				$this->_pageWidth -
-				$this->_leftMargin-224,
-				$this->_yPosition -3);
-	
-		$this->_page->setLineColor(new ZendPdf\Color\Html('#ffffff'));
-		$this->_page->setLineWidth(0.5);
-	
-		$this->_page->drawLine($this->_leftMargin,
 				$this->_yPosition -2,
 				$this->_pageWidth -
-				$this->_leftMargin,
+				$this->_leftMargin-224,
 				$this->_yPosition -2);
 	
 		$this->getNewTime();
 		$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', 'HEMOSTASE' ),
 				$this->_leftMargin+210,
-				$this->_yPosition);
+				$this->_yPosition+1);
 	
 		$this->_yPosition -= $noteLineHeight;    //aller a la ligne suivante
 	
@@ -1184,6 +1155,28 @@ class ResultatsAnalysesDemandeesPdf
 					$this->_leftMargin+100,
 					$this->_yPosition+5);
 		
+			$this->_yPosition -= $noteLineHeight-12; //aller a la ligne suivante
+		
+		}
+		
+		//D-DIMERES  ---  D-DIMERES  ---  D-DIMERES  ---  D-DIMERES
+		//D-DIMERES  ---  D-DIMERES  ---  D-DIMERES  ---  D-DIMERES
+		if(in_array(20, $idanalysesHemostase)){
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES), 10);
+			$this->_page->drawText("D-DIMERES : ",
+					$this->_leftMargin+5,
+					$this->_yPosition+5);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText($resultats[20]['d_dimeres'],
+					$this->_leftMargin+100,
+					$this->_yPosition+5);
+			
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 8);
+			$this->_page->drawText("ug/ml ",
+					$this->_leftMargin+120,
+					$this->_yPosition+5);
+			
 			$this->_yPosition -= $noteLineHeight-12; //aller a la ligne suivante
 		
 		}
@@ -1414,6 +1407,134 @@ class ResultatsAnalysesDemandeesPdf
 			$j +=1;
 		}
 
+		return $this->_page;
+	}
+	
+	public function getSerologie($noteLineHeight, $infosAnalyseDemande, $value, $idanalysesSerologie){
+		$tabAnalyses = array_intersect(array(53,55,60,61), $idanalysesSerologie);
+		$tabAnalyses= array_reverse($tabAnalyses);
+	
+		$this->_yPosition -= $noteLineHeight+50;
+		$this->_page->setLineColor(new ZendPdf\Color\Html('#999999'));
+		$this->_page->setLineWidth(1);
+		$this->_page->drawLine($this->_leftMargin+210,
+				$this->_yPosition -18,
+				$this->_pageWidth -
+				$this->_leftMargin-229,
+				$this->_yPosition -18);
+	
+		$this->getNewTime();
+		$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', 'SEROLOGIE' ),
+				$this->_leftMargin+210,
+				$this->_yPosition- 15);
+	
+		//-------------PLACER LES LIGNES DES EXAMENS A AFFICHER ---------
+		//-------------PLACER LES LIGNES DES EXAMENS A AFFICHER ---------
+		//-------------PLACER LES LIGNES DES EXAMENS A AFFICHER ---------
+		$j = 36;
+	
+		for($i = 0 ; $i < count($idanalysesSerologie) ; $i++){
+	
+			if($i%2 == 0){
+				$this->_page->setLineColor(new ZendPdf\Color\Html('#e1e1e1'));
+				$this->_page->setLineWidth(17);
+				$this->_page->drawLine($this->_leftMargin,
+						$this->_yPosition -$j,
+						$this->_pageWidth -
+						$this->_leftMargin,
+						$this->_yPosition -$j);
+			}else{
+				$this->_page->setLineColor(new ZendPdf\Color\Html('#f1f1f1'));
+				$this->_page->setLineWidth(17);
+				$this->_page->drawLine($this->_leftMargin,
+						$this->_yPosition -$j,
+						$this->_pageWidth -
+						$this->_leftMargin,
+						$this->_yPosition -$j);
+			}
+	
+			$j += 19;
+		}
+	
+		$j = 40;
+	
+		$resultats = $this->_resultatsAnalysesDemandees;
+	
+		if(in_array(53, $idanalysesSerologie)){
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES), 10);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "CRP : " ),
+					$this->_leftMargin+5,
+					$this->_yPosition-$j);
+	
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', $resultats[53]['crp'] ),
+					$this->_leftMargin+80,
+					$this->_yPosition-$j);
+	
+			$this->_yPosition -= $noteLineHeight-12; //aller a la ligne suivante
+			$j +=1;
+		}
+		
+		if(in_array(55, $idanalysesSerologie)){
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES), 10);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "RF WAALER ROSE : " ),
+					$this->_leftMargin+5,
+					$this->_yPosition-$j);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', $resultats[55]['rf_waaler_rose'] ),
+					$this->_leftMargin+130,
+					$this->_yPosition-$j);
+		
+			$this->_yPosition -= $noteLineHeight-12; //aller a la ligne suivante
+			$j +=1;
+		}
+	
+		if(in_array(60, $idanalysesSerologie)){
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES), 10);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "SEROLOGIE SYPHILITIQUE BW : " ),
+					$this->_leftMargin+5,
+					$this->_yPosition-$j);
+	
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 8);
+			$this->_page->drawText("TPHA ",
+					$this->_leftMargin+180,
+					$this->_yPosition-$j);
+			
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', $resultats[60]['serologie_syphilitique'] ),
+					$this->_leftMargin+215,
+					$this->_yPosition-$j);
+			
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 8);
+			$this->_page->drawText("RPR ",
+					$this->_leftMargin+300,
+					$this->_yPosition-$j);
+			
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', $resultats[60]['serologie_syphilitique'] ),
+					$this->_leftMargin+335,
+					$this->_yPosition-$j);
+	
+			$this->_yPosition -= $noteLineHeight-12; //aller a la ligne suivante
+			$j +=1;
+		}
+		
+		if(in_array(61, $idanalysesSerologie)){
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES), 10);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "ASLO : " ),
+					$this->_leftMargin+5,
+					$this->_yPosition-$j);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', $resultats[61]['aslo'] ),
+					$this->_leftMargin+80,
+					$this->_yPosition-$j);
+		
+			$this->_yPosition -= $noteLineHeight-12; //aller a la ligne suivante
+			$j +=1;
+		}
+	
 		return $this->_page;
 	}
 	

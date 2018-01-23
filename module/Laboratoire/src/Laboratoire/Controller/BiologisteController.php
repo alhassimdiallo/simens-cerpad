@@ -6343,6 +6343,7 @@ class BiologisteController extends AbstractActionController {
 		$analysesHemostase = array();
 		$analysesBilanHepatique = array();
 		$analysesBilanRenal = array();
+		$analysesSerologie = array();
 		$analysesTypageHemoglobine = array();
 		
 		$resultatsAnalysesDemandees = array();
@@ -6472,6 +6473,13 @@ class BiologisteController extends AbstractActionController {
 				$analysesHemostase [] = 19;
 				$resultatsAnalysesDemandees[19] = $this->getResultatDemandeAnalyseTable()->getValeursFacteur9($iddemande);
 			}
+			
+			elseif($idanalyse == 20){ //D-DIMERES
+				$analysesDemandees  [$j++] = $listeResultats[$i];
+				$analysesHemostase [] = 20;
+				$resultatsAnalysesDemandees[20] = $this->getResultatDemandeAnalyseTable()->getValeursDDimeres($iddemande);
+			}
+			
 			//=========================================================
 			//=========================================================
 			
@@ -6524,13 +6532,9 @@ class BiologisteController extends AbstractActionController {
 				$resultatsAnalysesDemandees[46] = $this->getResultatDemandeAnalyseTable()->getValeursAlbuminemie($iddemande);
 			}
 			
-			elseif($idanalyse == 46){ //ALBUMINEMIE
-				$analysesDemandees  [$j++] = $listeResultats[$i];
-				$analysesBilanRenal  [] = 46;
-				$resultatsAnalysesDemandees[46] = $this->getResultatDemandeAnalyseTable()->getValeursAlbuminemie($iddemande);
-			}
 			//=========================================================
 			//=========================================================
+			
 			
 			
 			elseif($idanalyse == 30){ //LIPIDES - TOTAUX
@@ -6547,6 +6551,37 @@ class BiologisteController extends AbstractActionController {
 				$analysesDemandees  [$j++] = $listeResultats[$i];
 				$resultatsAnalysesDemandees[57] = $this->getResultatDemandeAnalyseTable()->getValeursRubeole($iddemande);
 			}
+			//=========================================================
+			//=========================================================
+			
+			
+			//SEROLOGIE  ---  SEROLOGIE  ---  SEROLOGIE
+			//SEROLOGIE  ---  SEROLOGIE  ---  SEROLOGIE
+			//SEROLOGIE  ---  SEROLOGIE  ---  SEROLOGIE
+			elseif($idanalyse == 53){ //CRP
+				$analysesDemandees  [$j++] = $listeResultats[$i];
+				$analysesSerologie  [] = 53;
+				$resultatsAnalysesDemandees[53] = $this->getResultatDemandeAnalyseTable()->getValeursCrp($iddemande);
+			}
+			
+			elseif($idanalyse == 55){ //RF Waaler Rose
+				$analysesDemandees  [$j++] = $listeResultats[$i];
+				$analysesSerologie  [] = 55;
+				$resultatsAnalysesDemandees[55] = $this->getResultatDemandeAnalyseTable()->getValeursRfWaalerRose($iddemande);
+			}
+			
+			elseif($idanalyse == 60){ //Serologie Syphilitique
+				$analysesDemandees  [$j++] = $listeResultats[$i];
+				$analysesSerologie  [] = 60;
+				$resultatsAnalysesDemandees[60] = $this->getResultatDemandeAnalyseTable()->getValeursSerologieSyphilitique($iddemande);
+			}
+			
+			elseif($idanalyse == 61){ //ASLO
+				$analysesDemandees  [$j++] = $listeResultats[$i];
+				$analysesSerologie  [] = 61;
+				$resultatsAnalysesDemandees[61] = $this->getResultatDemandeAnalyseTable()->getValeursAslo($iddemande);
+			}
+			
 			//=========================================================
 			//=========================================================
 			
@@ -6601,7 +6636,7 @@ class BiologisteController extends AbstractActionController {
 		//========= Créaton de la page 2 ========
 		
 		if($analysesImmunoHemato || $analysesCytologie || $analysesHemostase || 
-		   $analysesBilanHepatique || $analysesBilanRenal ){
+		   $analysesBilanHepatique || $analysesBilanRenal || $analysesSerologie ){
 			
 			$page2 = new ResultatsAnalysesDemandeesPdf();
 			
@@ -6633,6 +6668,11 @@ class BiologisteController extends AbstractActionController {
 			//GESTION DES ANALYSES DU BILAN RENAL
 			//GESTION DES ANALYSES DU BILAN RENAL
 			$page2->setAnalysesBilanRenal($analysesBilanRenal);
+			
+			//GESTION DES ANALYSES DE SEROLOGIE
+			//GESTION DES ANALYSES DE SEROLOGIE
+			$page2->setAnalysesSerologie($analysesSerologie);
+			
 			
 			//Ajouter une note à la page
 			$page2->addNote();

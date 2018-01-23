@@ -61,11 +61,11 @@ function initialisationScript(agePatient) {
 		
 		//Affichage du pop-pup des médicaments lors d'une douleur
 		//Affichage du pop-pup des médicaments lors d'une douleur
-		if($('#motif_admission1').val() == 'Douleur' || 
-	       $('#motif_admission2').val() == 'Douleur' ||
-	       $('#motif_admission3').val() == 'Douleur' ||
-	       $('#motif_admission4').val() == 'Douleur' ||
-	       $('#motif_admission5').val() == 'Douleur'
+		if($('#motif_admission1').val() == 2 || 
+	       $('#motif_admission2').val() == 2 ||
+	       $('#motif_admission3').val() == 2 ||
+	       $('#motif_admission4').val() == 2 ||
+	       $('#motif_admission5').val() == 2
 	      ){
 			
 			if($('#intensite').val() > 3 && entrePriseEnCharge == 0){ 
@@ -75,9 +75,9 @@ function initialisationScript(agePatient) {
 	    	
 		}
 
-		//Affichage du pop-pup des médicaments lors d'une fièvre (température 37.5)
-		//Affichage du pop-pup des médicaments lors d'une fièvre (température 37.5)
-		if($('#temperatureFievre').val() >= 37.5 || $('#temperature').val() >= 37.5){
+		//Affichage du pop-pup des médicaments lors d'une fièvre (température 38.5)
+		//Affichage du pop-pup des médicaments lors d'une fièvre (température 38.5)
+		if($('#temperatureFievre').val() >= 38.5 || $('#temperature').val() >= 38.5){
 			
 			if(entrePriseEnChargeFievre == 0){
 				popListeMedicamentsFievre();
@@ -211,10 +211,8 @@ function initialisationScript(agePatient) {
 	var poidsPatient = 0;
 	
 	
-	$('#poidsP1 input').change(function(){ 
-		var palier1 = 15 * $(this).val();
-		$('.poidsP1').html(palier1+" <span style='font-size: 13px;'> mg/j </span>");
-		
+	$('#poidsP1 input').change(function(){
+		poidsPatient = $(this).val();
 		if($(this).val()){
     		$('#poids').val($(this).val()).attr('readonly', true);
     		
@@ -233,13 +231,32 @@ function initialisationScript(agePatient) {
 	    
 		//Affichage des posologies pour les médicaments
 		//Affichage des posologies pour les médicaments
+		var palier1 = 15 * $(this).val();
+		$('.poidsP1').html(palier1+" <span style='font-size: 13px;'> mg/j </span>");
+		
 		var palier2 = 30 * $(this).val();
 		$('.poidsP2').html(palier2+" <span style='font-size: 13px;'> mg/j </span>");
+		
+		var palier2a = 1 * $(this).val();
+		$('.poidsP2a').html(palier2a+" <span style='font-size: 13px;'> mg/j </span>");
+		
+		var palier2b = 2 * $(this).val();
+		$('.poidsP2b').html(palier2b+" <span style='font-size: 13px;'> mg/j </span>");
+		
+		/*Palier 3 deux cas possibles*/
+		var voieAdminM5 = $('#voieAdminM5').val();
+		if(voieAdminM5 == 1){
+			$('#MorphineDosageInfos').html(" (0,1mg/kg)");
+    		var palier3 = 0.1 * $(this).val();
+    		$('.poidsP3').html(palier3.toFixed(1)+" <span style='font-size: 13px;'> mg/j </span>");
+		}else if(voieAdminM5 == 2){
+			$('#MorphineDosageInfos').html(" (15ug/kg)");
+    		var palier3 = 15 * $(this).val();
+    		$('.poidsP3').html(palier3+" <span style='font-size: 13px;'> ug/j </span>");
+		}
 	    
 	}).keyup(function(){
-		var palier1 = 15 * $(this).val();
-		$('.poidsP1').html(palier1+" <span style='font-size: 13px;'> mg/j </span>");
-		
+		poidsPatient = $(this).val();
 		if($(this).val()){
     		$('#poids').val($(this).val()).attr('readonly', true);
     		
@@ -258,10 +275,63 @@ function initialisationScript(agePatient) {
 	
 		//Affichage des posologies pour les médicaments
 		//Affichage des posologies pour les médicaments
+		var palier1 = 15 * $(this).val();
+		$('.poidsP1').html(palier1+" <span style='font-size: 13px;'> mg/j </span>");
+		
 		var palier2 = 30 * $(this).val();
 		$('.poidsP2').html(palier2+" <span style='font-size: 13px;'> mg/j </span>");
-	
+		
+		var palier2a = 1 * $(this).val();
+		$('.poidsP2a').html(palier2a+" <span style='font-size: 13px;'> mg/j </span>");
+		
+		var palier2b = 2 * $(this).val();
+		$('.poidsP2b').html(palier2b+" <span style='font-size: 13px;'> mg/j </span>");
+		
+		/*Palier 3 deux cas possibles*/
+		var voieAdminM5 = $('#voieAdminM5').val();
+		if(voieAdminM5 == 1){
+			$('#MorphineDosageInfos').html(" (0,1mg/kg)");
+    		var palier3 = 0.1 * $(this).val();
+    		$('.poidsP3').html(palier3.toFixed(1)+" <span style='font-size: 13px;'> mg/j </span>");
+		}else if(voieAdminM5 == 2){
+			$('#MorphineDosageInfos').html(" (15ug/kg)");
+    		var palier3 = 15 * $(this).val();
+    		$('.poidsP3').html(palier3+" <span style='font-size: 13px;'> ug/j </span>");
+		}
 	});
+	
+	
+	$('#voieAdminM5').change(function(){
+		var voieAdminM5 = $(this).val();
+		if(voieAdminM5 == 1){
+			$('#MorphineDosageInfos').html(" (0,1mg/kg)");
+			if(poidsPatient != 0){
+        		var palier3 = 0.1 * poidsPatient;
+        		$('.poidsP3').html(palier3.toFixed(1)+" <span style='font-size: 13px;'> mg/j </span>");
+			}
+		}else if(voieAdminM5 == 2){
+			$('#MorphineDosageInfos').html(" (15ug/kg)");
+			if(poidsPatient != 0){
+        		var palier3 = 15 * poidsPatient;
+        		$('.poidsP3').html(palier3+" <span style='font-size: 13px;'> ug/j </span>");
+			}
+		}else if(voieAdminM5 == 0){
+			$('#MorphineDosageInfos').html("");
+			$('.poidsP3').html("");
+		}
+		
+	});
+	
+	
+	$('#voieAdminM2').change(function(){
+		$('#voieAdminM3').val(0);
+	});
+	
+	$('#voieAdminM3').change(function(){
+		$('#voieAdminM2').val(0);
+	});
+	
+	
 	
 	//APPLICATION DE LA POSOLOGIE AUTOMATIQUEMENT POUR LE CAS "FIEVRE"
 	//APPLICATION DE LA POSOLOGIE AUTOMATIQUEMENT POUR LE CAS "FIEVRE"
@@ -293,6 +363,8 @@ function initialisationScript(agePatient) {
 
 		}
 	    	    
+		$('#poidsP1 input').trigger('keyup');
+		
 	}).keyup(function(){
 		var palier1 = 15 * $(this).val();
 		$('.poidsP1Fievre').html(palier1+" <span style='font-size: 13px;'> mg/j </span>");
@@ -321,6 +393,7 @@ function initialisationScript(agePatient) {
 
 		}
 		
+		$('#poidsP1 input').trigger('keyup');
 	});
 	
 	//Lors de la saisie de la température au pop-pup
@@ -329,7 +402,7 @@ function initialisationScript(agePatient) {
 		var valeur = $(this).val();
 		$("#temperature").val(valeur);
 		
-		if( valeur >= 37.5 ){
+		if( valeur >= 38.5 ){
 			$('#infoPriseEnChargeFievre').toggle(true);
 		}else{
 			$('#infoPriseEnChargeFievre').toggle(false);
@@ -342,7 +415,7 @@ function initialisationScript(agePatient) {
 	$('#temperature').change(function(){
 		var valeur = $(this).val();
 		
-		if( valeur >= 37.5 ){
+		if( valeur >= 38.5 ){
 			
 			$('#infoTemperatureFievre input').val(valeur);
 			popListeMedicamentsFievre();
@@ -351,20 +424,115 @@ function initialisationScript(agePatient) {
 			var existeFievre = 0;
 			for(var ind = 1 ; ind <= nbChampMotif ; ind++){
 				var val = $("#motif_admission"+ind).val();
-				if(val == 'FiÃ¨vre'){ existeFievre = 1; break;}
+				if(val == 1){ existeFievre = 1; break;}
 			}
 			if(existeFievre == 0){
 				if(nbChampMotif == 1 && $('#motif_admission'+(nbChampMotif)).val()=="" || nbChampMotif == 5){
-					$('#motif_admission'+(nbChampMotif)).val('FiÃ¨vre');
+					$('#motif_admission'+(nbChampMotif)).val(1);
 				}else{
 					$('#ajouter_motif_img').trigger('click'); 
-					$('#motif_admission'+(nbChampMotif)).val('FiÃ¨vre');    
+					$('#motif_admission'+(nbChampMotif)).val(1);    
 				}
 			}
 			
 		}else{
 			$('#infoPriseEnChargeFievre').toggle(false);
 			$('#infoTemperatureFievre input').val(valeur);
+			
+			//Vérifier s'il y a un motif_admission 'Fievre' et l'enlever
+			for(var ind = 1 ; ind <= 5 ; ind++){
+				var val = $("#motif_admission"+ind).val();
+				if(val == 1){
+					if(ind==1){
+    					$("#motif_admission"+ind).val(0);
+					}else{
+    					$(".supprimerMotif"+ind).trigger('click');
+					}
+				}
+			}
+		}
+		
+	}).click(function(){
+		 
+		var valeur = $(this).val();
+		
+		if( valeur >= 38.5 ){
+			
+			$('#infoTemperatureFievre input').val(valeur);
+			popListeMedicamentsFievre();
+			$('#infoPriseEnChargeFievre').toggle(true);
+			
+			var existeFievre = 0;
+			for(var ind = 1 ; ind <= nbChampMotif ; ind++){
+				var val = $("#motif_admission"+ind).val();
+				if(val == 1){ existeFievre = 1; break;} //1 == 'FiÃ¨vre'
+			}
+			
+			if(existeFievre == 0){
+				if(nbChampMotif == 1 && $('#motif_admission'+(nbChampMotif)).val()==0 || nbChampMotif == 5){
+					$('#motif_admission'+(nbChampMotif)).val(1);
+				}else{
+					$('#ajouter_motif_img').trigger('click'); 
+					$('#motif_admission'+(nbChampMotif)).val(1);    
+				}
+			}
+			
+		}else{
+			$('#infoPriseEnChargeFievre').toggle(false);
+			$('#infoTemperatureFievre input').val(valeur);
+			
+			//Vérifier s'il y a un motif_admission 'Fievre' et l'enlever
+			for(var ind = 1 ; ind <= 5 ; ind++){
+				var val = $("#motif_admission"+ind).val();
+				if(val == 1){
+					if(ind==1){
+    					$("#motif_admission"+ind).val(0);
+					}else{
+    					$(".supprimerMotif"+ind).trigger('click');
+					}
+				}
+			}
+		}
+	
+	});
+	
+	
+	$('#temperatureFievre').change(function(){ 
+		
+		var valeur = $(this).val();
+		if( valeur < 38.5 ){
+			//Vérifier s'il y a un motif_admission 'Fievre' et l'enlever
+			for(var ind = 1 ; ind <= 5 ; ind++){
+				var val = $("#motif_admission"+ind).val();
+				if(val == 1){
+					if(ind==1){
+    					$("#motif_admission"+ind).val(0);
+					}else{
+    					$(".supprimerMotif"+ind).trigger('click');
+					}
+				}
+			}
+		}else{
+			$('#temperature').trigger('click');
+		}
+		
+	}).keyup(function(){
+		
+		var valeur = $(this).val();
+		if( valeur < 38.5 ){
+			//Vérifier s'il y a un motif_admission 'Fievre' et l'enlever
+			for(var ind = 1 ; ind <= 5 ; ind++){
+				var val = $("#motif_admission"+ind).val();
+				if(val == 1){
+					if(ind==1){
+    					$("#motif_admission"+ind).val(0);
+					}else{
+    					$(".supprimerMotif"+ind).trigger('click');
+					}
+				}
+			}
+		}else{
+			$('#temperature').trigger('click');
 		}
 		
 	});
@@ -378,6 +546,72 @@ function initialisationScript(agePatient) {
 	$("#voieAdminM5").change(function(){ $("#voie_med_5").val($(this).val()); });
 	$("#voieAdminM6").change(function(){ $("#voie_med_6").val($(this).val()); });
 	
+	
+	
+	//Gestion de l'interface de la consultation du jour
+	//Gestion de l'interface de la consultation du jour
+	$(".titreInterrogatoireStyle .designHistoireMaladie, .titreInterrogatoireStyle label").toggle(false);
+
+	for(var i=1 ; i<=nbChampMotif ; i++){
+		//Augmenter la hauteur de l'espace en fonction des motifs 
+		if(i == 1){ $(".ligneInterLigne1").toggle(true); $(".titreInterrogatoireStyle").css('height','45px'); }
+		if(i == 3){ $(".ligneInterLigne2").toggle(true); $(".titreInterrogatoireStyle").css('height','90px'); }
+		if(i == 5){ $(".ligneInterLigne3").toggle(true); $(".titreInterrogatoireStyle").css('height','135px'); }
+		
+		//Afficher le motif
+		var motif = $('#motif_admission'+i).val();
+		$("#interrogatoireDescSympMotif"+i).toggle(true);
+		var leMotif = listeMotifsAdmission[motif];
+		$("#interrogatoireDescSympMotif"+i+" span").html(leMotif);
+		
+		//Si c'est un des motifs suivant augmenter la largeur des champs de saisi
+		if(leMotif=='FiÃ¨vre' || leMotif=='Douleur' || leMotif=='Priapisme'){
+			$("#motif_interrogatoire_"+i).css('width','80%');
+		}
+	}
+	
 }
 
+$("#labelSuiviDesTraitementsPre, #labelMisesAJourDesVaccinsPre, .hospitalisationClassHM, .hospitalisationNombreClassHM").toggle(false);
+function getSuiviDesTraitements(id){
 
+	if(id == 2 || id == 3){
+		$("#labelSuiviDesTraitementsPre").fadeIn();
+	}else if(id == 1 || id == ''){
+		$("#labelSuiviDesTraitementsPre").fadeOut(false);
+	}
+
+}
+
+function getMisesAJourDesVaccins(id){
+
+	if(id == 1){
+		$("#labelMisesAJourDesVaccinsPre").fadeIn();
+	}else if(id == 2 || id == ''){
+		$("#labelMisesAJourDesVaccinsPre").fadeOut(false);
+	}
+
+}
+
+function getHospitalisationHM(id){
+	
+	if(id == 1){
+		$(".titreHistoireMaladieStyle").css({'height':'180px'});
+		$(".hospitalisationClassHM").fadeIn();
+	}else if(id == 0 || id == ''){
+		$(".hospitalisationClassHM").fadeOut(function(){
+			$(".titreHistoireMaladieStyle").css({'height':'135px'});
+		});
+	}
+	
+}
+
+function getPriseEnChargeHospitalisationHM(id){
+	
+	if(id == 1){
+		$(".hospitalisationNombreClassHM").fadeIn();
+	}else {
+		$(".hospitalisationNombreClassHM").fadeOut(false);
+	}
+	
+}

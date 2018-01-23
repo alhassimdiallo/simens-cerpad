@@ -122,7 +122,7 @@ class TechnicienController extends AbstractActionController {
 	
 	public function moisEnLettre($mois){
 		$lesMois = array('','Janvier','Fevrier','Mars','Avril',
-				'Mais','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre');
+				'Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre');
 		return $lesMois[$mois];
 	}
 	
@@ -8631,8 +8631,6 @@ class TechnicienController extends AbstractActionController {
 			$infosStatistique = $this->infosStatistiquesParametreesAction($typeInfos, $date_debut, $date_fin);
 		}
 	
-		//var_dump($infosStatistique); exit();
-		
 		$pdf = new infosStatistiquePdf();
 		$pdf->SetMargins(13.5,13.5,13.5);
 		$pdf->setTabInformations($infosStatistique);

@@ -76,63 +76,73 @@ class ConsultationForm extends Form {
 		 */
 		$this->add ( array (
 				'name' => 'motif_admission1',
-				'type' => 'Text',
+				'type' => 'Select',
 				'options' => array (
 						'label' => 'motif 1'
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
-						'id' => 'motif_admission1'
+						'id' => 'motif_admission1',
+						'class' => 'motif_admission_liste_fixe',
+						'onchange' => 'getMotifAdmissionDouleurFievre(this.value)',
 				)
 		) );
 		$this->add ( array (
 				'name' => 'motif_admission2',
-				'type' => 'Text',
+				'type' => 'Select',
 				'options' => array (
 						'label' => 'motif 2'
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
-						'id' => 'motif_admission2'
+						'id' => 'motif_admission2',
+						'class' => 'motif_admission_liste_fixe',
+						'onchange' => 'getMotifAdmissionDouleurFievre(this.value)',
 				)
 		) );
 		$this->add ( array (
 				'name' => 'motif_admission3',
-				'type' => 'Text',
+				'type' => 'Select',
 				'options' => array (
 						'label' => 'motif 3'
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
-						'id' => 'motif_admission3'
+						'id' => 'motif_admission3',
+						'class' => 'motif_admission_liste_fixe',
+						'onchange' => 'getMotifAdmissionDouleurFievre(this.value)',
 				)
 		) );
 		$this->add ( array (
 				'name' => 'motif_admission4',
-				'type' => 'Text',
+				'type' => 'Select',
 				'options' => array (
 						'label' => 'motif 4'
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
-						'id' => 'motif_admission4'
+						'id' => 'motif_admission4',
+						'class' => 'motif_admission_liste_fixe',
+						'onchange' => 'getMotifAdmissionDouleurFievre(this.value)',
 				)
 		) );
 		$this->add ( array (
 				'name' => 'motif_admission5',
-				'type' => 'Text',
+				'type' => 'Select',
 				'options' => array (
 						'label' => 'motif 5'
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
-						'id' => 'motif_admission5'
+						'id' => 'motif_admission5',
+						'class' => 'motif_admission_liste_fixe',
+						'onchange' => 'getMotifAdmissionDouleurFievre(this.value)',
 				)
 		) );
 		
 		$this->add ( array (
 				'name' => 'siege',
-				'type' => 'Text',
+				'type' => 'Select',
 				'options' => array (
 						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Siège')
 				),
@@ -140,15 +150,15 @@ class ConsultationForm extends Form {
 						'id' => 'siege'
 				)
 		) );
-		
 		$this->add ( array (
 				'name' => 'intensite',
 				'type' => 'number',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Intensité'),
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Intensité échelle (EVA)'),
 				),
 				'attributes' => array (
 						'id' => 'intensite',
+						'class' => 'intensiteClassStyle',
 						'max' => 10,
 						'min' => 1,
 						'step' => 'any',
@@ -185,8 +195,8 @@ class ConsultationForm extends Form {
 						'label' => 'Taille (cm)'
 				),
 				'attributes' => array (
-						'max' => 300,
-						'min' => 50,
+						'max' => 200,
+						'min' => 45,
 						'id' => 'taille',
 						'required' => true,
 				)
@@ -213,6 +223,8 @@ class ConsultationForm extends Form {
 						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Perimètre cranien (cm)'),
 				),
 				'attributes' => array (
+						'min' => 30,
+						'max' => 55,
 						'id' => 'perimetre_cranien',
 				)
 		) );
@@ -340,11 +352,476 @@ class ConsultationForm extends Form {
 		) );
 		
 		
+		//ANTECEDENTS FAMILIAUX --- ANTECEDENTS FAMILIAUX --- ANTECEDENTS FAMILIAUX
+		//ANTECEDENTS FAMILIAUX --- ANTECEDENTS FAMILIAUX --- ANTECEDENTS FAMILIAUX
+		//CONSANGUINITE
+		//CONSANGUINITE
+		//CONSANGUINITE
+		$this->add ( array (
+				'name' => 'consanguiniteAF',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								0 => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								1 => iconv ( 'ISO-8859-1', 'UTF-8', 'OUI' ),
+								2 => iconv ( 'ISO-8859-1', 'UTF-8', 'NON' )
+						)
+				),
+				'attributes' => array (
+						'id' => 'consanguiniteAF'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'degreAF',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								0 => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								1 => iconv ( 'ISO-8859-1', 'UTF-8', '1' ),
+								2 => iconv ( 'ISO-8859-1', 'UTF-8', '2' ),
+								3 => iconv ( 'ISO-8859-1', 'UTF-8', '3' ),
+								4 => iconv ( 'ISO-8859-1', 'UTF-8', 'Sup' ),
+						)
+				),
+				'attributes' => array (
+						'id' => 'degreAF'
+				)
+		) );
+		
+		//STATUT DREPANOCYTOSE PARENTS
+		//STATUT DREPANOCYTOSE PARENTS
+		//STATUT DREPANOCYTOSE PARENTS
+		$this->add ( array (
+				'name' => 'statutDrepanocytoseMereAF',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'AS' => iconv ( 'ISO-8859-1', 'UTF-8', 'AS' ),
+								'AC' => iconv ( 'ISO-8859-1', 'UTF-8', 'AC' ),
+								'A-Bth' => iconv ( 'ISO-8859-1', 'UTF-8', 'A-Bth' ),
+								'SS' => iconv ( 'ISO-8859-1', 'UTF-8', 'SS' ),
+								'SC' => iconv ( 'ISO-8859-1', 'UTF-8', 'SC' ),
+								'S-Bth' => iconv ( 'ISO-8859-1', 'UTF-8', 'S-Bth' ),
+								'Autres' => iconv ( 'ISO-8859-1', 'UTF-8', 'Autres ...' ),
+								'Inconnu' => iconv ( 'ISO-8859-1', 'UTF-8', 'Inconnu' ),
+						)
+				),
+				'attributes' => array (
+						'id' => 'statutDrepanocytoseMereAF'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'statutDrepanocytosePereAF',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'AS' => iconv ( 'ISO-8859-1', 'UTF-8', 'AS' ),
+								'AC' => iconv ( 'ISO-8859-1', 'UTF-8', 'AC' ),
+								'A-Bth' => iconv ( 'ISO-8859-1', 'UTF-8', 'A-Bth' ),
+								'SS' => iconv ( 'ISO-8859-1', 'UTF-8', 'SS' ),
+								'SC' => iconv ( 'ISO-8859-1', 'UTF-8', 'SC' ),
+								'S-Bth' => iconv ( 'ISO-8859-1', 'UTF-8', 'S-Bth' ),
+								'Autres' => iconv ( 'ISO-8859-1', 'UTF-8', 'Autres ...' ),
+								'Inconnu' => iconv ( 'ISO-8859-1', 'UTF-8', 'Inconnu' ),
+						)
+				),
+				'attributes' => array (
+						'id' => 'statutDrepanocytosePereAF'
+				)
+		) );
+		
+		//FRATRIE
+		//FRATRIE
+		//FRATRIE
+		$this->add ( array (
+				'name' => 'fratrieTailleAF',
+				'type' => 'number',
+				'attributes' => array (
+						'id' => 'fratrieTailleAF',
+						'min' => 1,
+						'max' =>  15,
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'fratrieTailleFilleAF',
+				'type' => 'number',
+				'attributes' => array (
+						'id' => 'fratrieTailleFilleAF',
+						'min' => 0,
+						'max' =>  15,
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'fratrieTailleGarconAF',
+				'type' => 'number',
+				'attributes' => array (
+						'id' => 'fratrieTailleGarconAF',
+						'min' => 0,
+						'max' =>  15,
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'fratrieRangAF',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1er' => iconv ( 'ISO-8859-1', 'UTF-8', '1er' ),
+								'2eme' => iconv ( 'ISO-8859-1', 'UTF-8', '2ème' ),
+								'3eme' => iconv ( 'ISO-8859-1', 'UTF-8', '3ème' ),
+						)
+				),
+				'attributes' => array (
+						'id' => 'fratrieRangAF',
+						'min' => 1,
+						'max' =>  15,
+				)
+		) );
+		
+		//AUTRES MALADIES FAMILIALES
+		//AUTRES MALADIES FAMILIALES
+		//AUTRES MALADIES FAMILIALES
+		
+		/**Allergies**/
+		$this->add ( array (
+				'name' => 'AllergiesAF',
+				'type' => 'checkbox',
+				'attributes' => array (
+						'id' => 'AllergiesAF',
+				)
+		) );
+		
+		/**Asthme**/
+		$this->add ( array (
+				'name' => 'AsthmeAF',
+				'type' => 'checkbox',
+				'attributes' => array (
+						'id' => 'AsthmeAF'
+				)
+		) );
+		
+		/**Diabete**/
+		$this->add ( array (
+				'name' => 'DiabeteAF',
+				'type' => 'checkbox',
+				'attributes' => array (
+						'id' => 'DiabeteAF'
+				)
+		) );
+		
+		/**HTA**/
+		$this->add ( array (
+				'name' => 'HtaAF',
+				'type' => 'checkbox',
+				'attributes' => array (
+						'id' => 'HtaAF'
+				)
+		) );
+		
+		/*Autres*/
+		$this->add ( array (
+				'name' => 'AutresAF',
+				'type' => 'checkbox',
+				'attributes' => array (
+						'id' => 'AutresAF'
+				)
+		) );
 		
 		
+		//CONSULTATION DU JOUR --- CONSULTATION DU JOUR --- CONSULTATION DU JOUR --- CONSULTATION DU JOUR
+		//CONSULTATION DU JOUR --- CONSULTATION DU JOUR --- CONSULTATION DU JOUR --- CONSULTATION DU JOUR
+
+		/**** HISTOIRE DE LA MALADIE ****/
+		/**** HISTOIRE DE LA MALADIE ****/
+		$this->add ( array (
+				'name' => 'criseHM',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Oui' ),
+								'0' => iconv ( 'ISO-8859-1', 'UTF-8', 'Non' ),
+						)
+				),
+				'attributes' => array (
+						'onchange' => 'getInfoCrise(this.value)',
+						'id' => 'criseHM',
+						'style' => 'float:right'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'nombre_criseHM',
+				'type' => 'Number',
+				'options' => array (
+				),
+				'attributes' => array (
+						'id' => 'nombre_criseHM',
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'dureeHM',
+				'type' => 'Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'< 24h' => iconv ( 'ISO-8859-1', 'UTF-8', '< 24h' ),
+								'24h a 48h' => iconv ( 'ISO-8859-1', 'UTF-8', '24h à 48h' ),
+								'>= 72h' => iconv ( 'ISO-8859-1', 'UTF-8', '>= 72h' ),
+								'72h a 7j' => iconv ( 'ISO-8859-1', 'UTF-8', '72h à 7j' ),
+								'> 7j' => iconv ( 'ISO-8859-1', 'UTF-8', '> 7j' ),
+						)
+				),
+				'attributes' => array (
+						'id' => 'dureeHM',
+						'style' => 'width:120px',
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'facteur_declenchantHM',
+				'type' => 'Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'fievre' => iconv ( 'ISO-8859-1', 'UTF-8', 'Fièvre' ),
+								'refroidissement' => iconv ( 'ISO-8859-1', 'UTF-8', 'Refroidissement' ),
+								'activite_intense' => iconv ( 'ISO-8859-1', 'UTF-8', 'Activité intense' ),
+								'Neant' => iconv ( 'ISO-8859-1', 'UTF-8', 'Néant' ),
+								'Autre' => iconv ( 'ISO-8859-1', 'UTF-8', 'Autre' ),
+						)
+				),
+				'attributes' => array (
+						'id' => 'facteur_declenchantHM',
+						'style' => 'width:170px;font-size: 16px;',
+				)
+		) );
 		
 		
+		$this->add ( array (
+				'name' => 'episodeFievreHM',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Oui' ),
+								'0' => iconv ( 'ISO-8859-1', 'UTF-8', 'Non' ),
+						)
+				),
+				'attributes' => array (
+						'onchange' => 'getInfoEpisodeFievre(this.value)',
+						'id' => 'episodeFievreHM',
+						'style' => 'float:right'
+				)
+		) );
 		
+		$this->add ( array (
+				'name' => 'episodeFievreSiOuiHM',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Signe respiratoire et/ou ORL' ),
+								'2' => iconv ( 'ISO-8859-1', 'UTF-8', 'Diarrhée et/ou vomissements' ),
+								'3' => iconv ( 'ISO-8859-1', 'UTF-8', 'Autre..' ),
+						)
+				),
+				'attributes' => array (
+						'id' => 'episodeFievreSiOuiHM',
+						'style' => 'float:right'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'hospitalisationHM',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Oui' ),
+								'0' => iconv ( 'ISO-8859-1', 'UTF-8', 'Non' ),
+						)
+				),
+				'attributes' => array (
+						'onchange' => 'getHospitalisationHM(this.value)',
+						'id' => 'hospitalisationHM',
+						'style' => 'float:right'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'dateHospitalisationHM',
+				'type' => 'Date',
+				'attributes' => array (
+						'id' => 'dateHospitalisationHM',
+						'style' => 'float:right;width: 75%;'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'dureeHospitalisationHM',
+				'type' => 'Number',
+				'attributes' => array (
+						'id' => 'dureeHospitalisationHM',
+						'style' => 'float:right;width: 40%;'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'motifHospitalisationHM',
+				'type' => 'Text',
+				'attributes' => array (
+						'id' => 'motifHospitalisationHM',
+						'style' => 'float:right;width: 75%;'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'priseEnChargeHospitalisationHM',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Transfusion' ),
+								'2' => iconv ( 'ISO-8859-1', 'UTF-8', 'Perfusion' ),
+								'3' => iconv ( 'ISO-8859-1', 'UTF-8', 'Antibiotique' ),
+								'4' => iconv ( 'ISO-8859-1', 'UTF-8', 'Autre..' ),
+						)
+				),
+				'attributes' => array (
+						'onchange' => 'getPriseEnChargeHospitalisationHM(this.value)',
+						'id' => 'priseEnChargeHospitalisationHM',
+						'style' => 'float:right;width: 50%;'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'nombreHospitalisationHM',
+				'type' => 'Number',
+				'attributes' => array (
+						'id' => 'nombreHospitalisationHM',
+						'style' => 'float:right;width: 40%;'
+				)
+		) );
+		/*** Interrogatoire (description des symptômes) ***/
+		/*** Interrogatoire (description des symptômes) ***/
+		
+		$this->add ( array (
+				'name' => 'motif_interrogatoire_1',
+				'type' => 'Text',
+				'attributes' => array (
+						'id' => 'motif_interrogatoire_1',
+						'style' => 'float:right;width: 60%;'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'motif_interrogatoire_2',
+				'type' => 'Text',
+				'attributes' => array (
+						'id' => 'motif_interrogatoire_2',
+						'style' => 'float:right;width: 60%;'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'motif_interrogatoire_3',
+				'type' => 'Text',
+				'attributes' => array (
+						'id' => 'motif_interrogatoire_3',
+						'style' => 'float:right;width: 60%;'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'motif_interrogatoire_4',
+				'type' => 'Text',
+				'attributes' => array (
+						'id' => 'motif_interrogatoire_4',
+						'style' => 'float:right;width: 60%;'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'motif_interrogatoire_5',
+				'type' => 'Text',
+				'attributes' => array (
+						'id' => 'motif_interrogatoire_5',
+						'style' => 'float:right;width: 60%;'
+				)
+		) );
+		
+		
+		/*** Suivi des traitements ***/
+		/*** Suivi des traitements ***/
+		
+		$this->add ( array (
+				'name' => 'suiviDesTraitements',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Bien suivi' ),
+								'2' => iconv ( 'ISO-8859-1', 'UTF-8', 'Mal suivi' ),
+								'3' => iconv ( 'ISO-8859-1', 'UTF-8', 'Non suivi' ),
+						)
+				),
+				'attributes' => array (
+						'onchange' => 'getSuiviDesTraitements(this.value)',
+						'id' => 'suiviDesTraitements',
+						'style' => 'float:right'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'suiviDesTraitementsPrecision',
+				'type' => 'Text',
+				'options' => array (
+				),
+				'attributes' => array (
+						'id' => 'suiviDesTraitementsPrecision',
+						'style' => 'float:right;width: 90%;',
+				)
+		) );
+		
+		/*** Mise à jour des vaccins ***/
+		/*** Mise à jour des vaccins ***/
+		
+		$this->add ( array (
+				'name' => 'misesAJourDesVaccins',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Oui' ),
+								'2' => iconv ( 'ISO-8859-1', 'UTF-8', 'Non' ),
+						)
+				),
+				'attributes' => array (
+						'onchange' => 'getMisesAJourDesVaccins(this.value)',
+						'id' => 'misesAJourDesVaccins',
+						'style' => 'float:right'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'misesAJourDesVaccinsPrecision',
+				'type' => 'Text',
+				'options' => array (
+				),
+				'attributes' => array (
+						'id' => 'misesAJourDesVaccinsPrecision',
+						'style' => 'float:right;width: 90%;',
+				)
+		) );
 		
 		
 		
@@ -391,6 +868,7 @@ class ConsultationForm extends Form {
 		/**
 		 * ********DONNEES DE L EXAMEN PHYSIQUE***********
 		 */
+		/*
 		$this->add ( array (
 				'name' => 'examen_donnee1',
 				'type' => 'Text',
@@ -446,7 +924,7 @@ class ConsultationForm extends Form {
 						'id'  => 'examen_donnee5'
 				)
 		) );
-		
+		*/
 		/**
 		 * ********** EXAMENS COMPLEMENTAIRES (EXAMENS ET ANALYSE) *************
 		 */
@@ -1587,76 +2065,6 @@ class ConsultationForm extends Form {
 						'id' => 'NoteAutresGO'
 				)
 		) );
-		/**** ANTECEDENTS FAMILIAUX ****/
-		/**** ANTECEDENTS FAMILIAUX ****/
-		
-		/*Diabete*/
-		$this->add ( array (
-				'name' => 'DiabeteAF',
-				'type' => 'checkbox',
-				'attributes' => array (
-						'id' => 'DiabeteAF'
-				)
-		) );
-		/*Note Diabete*/
-		$this->add ( array (
-				'name' => 'NoteDiabeteAF',
-				'type' => 'text',
-				'attributes' => array (
-						'id' => 'NoteDiabeteAF'
-				)
-		) );
-		
-		/*Drepanocytose*/
-		$this->add ( array (
-				'name' => 'DrepanocytoseAF',
-				'type' => 'checkbox',
-				'attributes' => array (
-						'id' => 'DrepanocytoseAF'
-				)
-		) );
-		/*Note Drepanocytose*/
-		$this->add ( array (
-				'name' => 'NoteDrepanocytoseAF',
-				'type' => 'text',
-				'attributes' => array (
-						'id' => 'NoteDrepanocytoseAF'
-				)
-		) );
-		
-		/*HTA*/
-		$this->add ( array (
-				'name' => 'htaAF',
-				'type' => 'checkbox',
-				'attributes' => array (
-						'id' => 'htaAF'
-				)
-		) );
-		/*Note HTA*/
-		$this->add ( array (
-				'name' => 'NoteHtaAF',
-				'type' => 'text',
-				'attributes' => array (
-						'id' => 'NoteHtaAF'
-				)
-		) );
-		
-		/*Autres*/
-		$this->add ( array (
-				'name' => 'autresAF',
-				'type' => 'checkbox',
-				'attributes' => array (
-						'id' => 'autresAF'
-				)
-		) );
-		/*Note Autres*/
-		$this->add ( array (
-				'name' => 'NoteAutresAF',
-				'type' => 'text',
-				'attributes' => array (
-						'id' => 'NoteAutresAF'
-				)
-		) );
 		
 		/**** TRAITEMENTS CHIRURGICAUX ****/
 		/**** TRAITEMENTS CHIRURCICAUX ****/
@@ -1705,101 +2113,6 @@ class ConsultationForm extends Form {
 		) );
 		
 		
-		/**** HISTOIRE DE LA MALADIE ****/
-		/**** HISTOIRE DE LA MALADIE ****/
-		$this->add ( array (
-				'name' => 'criseHM',
-				'type' => 'Zend\Form\Element\Select',
-				'options' => array (
-						'value_options' => array (
-								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
-								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Oui' ),
-								'0' => iconv ( 'ISO-8859-1', 'UTF-8', 'Non' ),
-						)
-				),
-				'attributes' => array (
-						'onchange' => 'getInfoCrise(this.value)',
-						'id' => 'criseHM',
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'dureeHM',
-				'type' => 'Number',
-				'options' => array (
-				),
-				'attributes' => array (
-						'id' => 'dureeHM',
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'intensiteHM',
-				'type' => 'Number',
-				'options' => array (
-				),
-				'attributes' => array (
-						'id' => 'intensiteHM',
-				)
-		) );
-		
-		
-		$this->add ( array (
-				'name' => 'nombre_criseHM',
-				'type' => 'Number',
-				'options' => array (
-				),
-				'attributes' => array (
-						'id' => 'nombre_criseHM',
-				)
-		) );
-		
-		
-		$this->add ( array (
-				'name' => 'facteur_declenchantHM',
-				'type' => 'Text',
-				'options' => array (
-				),
-				'attributes' => array (
-						'id' => 'facteur_declenchantHM',
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'autres_evenementsHM',
-				'type' => 'Zend\Form\Element\Select',
-				'options' => array (
-						'value_options' => array (
-								'0' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
-								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Hospitalisation' ),
-								'2' => iconv ( 'ISO-8859-1', 'UTF-8', 'Transfusion' ),
-						)
-				),
-				'attributes' => array (
-						'onchange' => 'getInfoAutresEvenements(this.value)',
-						'id' => 'autres_evenementsHM',
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'motif_autresHM',
-				'type' => 'TextArea',
-				'options' => array (
-				),
-				'attributes' => array (
-						'id' => 'motif_autresHM',
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'prise_en_chargeHM',
-				'type' => 'TextArea',
-				'options' => array (
-				),
-				'attributes' => array (
-						'id' => 'prise_en_chargeHM',
-				)
-		) );
 		
 		
 		
