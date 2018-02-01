@@ -562,7 +562,7 @@ function initialisationScript(agePatient) {
 		var motif = $('#motif_admission'+i).val();
 		$("#interrogatoireDescSympMotif"+i).toggle(true);
 		var leMotif = listeMotifsAdmission[motif];
-		$("#interrogatoireDescSympMotif"+i+" span").html(leMotif);
+		$("#interrogatoireDescSympMotif"+i+" span").html("<span style='font-size: 12px;'>&#11166; </span>"+leMotif);
 		
 		//Si c'est un des motifs suivant augmenter la largeur des champs de saisi
 		if(leMotif=='FiÃ¨vre' || leMotif=='Douleur' || leMotif=='Priapisme'){
@@ -570,9 +570,41 @@ function initialisationScript(agePatient) {
 		}
 	}
 	
+	
+	/*** Données de l'examen ***/
+	$('#donneesExamenOrlCheckbox input[name=orlObstructionNasaleDonneesExamen]').click(function(){ 
+		var boutons = $('#donneesExamenOrlCheckbox input[name=orlObstructionNasaleDonneesExamen]');
+		if( boutons[1].checked){ $("#obstructionNasaleDE").html('<span style="color: green;">&#10003;</span> Obstruction nasale').css({'color':'black', 'font-weight':'bold'}); }
+		if(!boutons[1].checked){ $("#obstructionNasaleDE").html('Obstruction nasale').css({'color':'black', 'font-weight':'normal'}); }
+	});
+	
+	$('#donneesExamenOrlCheckbox input[name=orlRhiniteDonneesExamen]').click(function(){ 
+		var boutons = $('#donneesExamenOrlCheckbox input[name=orlRhiniteDonneesExamen]');
+		if( boutons[1].checked){ $("#rhiniteDE").html('<span style="color: green;">&#10003;</span> Rhinite').css({'color':'black', 'font-weight':'bold'}); }
+		if(!boutons[1].checked){ $("#rhiniteDE").html('Rhinite').css({'color':'black', 'font-weight':'normal'}); }
+	});
+	
+	$('#donneesExamenOrlCheckbox input[name=orlHypertrophieAmygdalesDonneesExamen]').click(function(){ 
+		var boutons = $('#donneesExamenOrlCheckbox input[name=orlHypertrophieAmygdalesDonneesExamen]');
+		if( boutons[1].checked){ $("#hypertrophieAmygdalesDE").html('<span style="color: green;">&#10003;</span> Hypertrophie des amygdales').css({'color':'black', 'font-weight':'bold'}); }
+		if(!boutons[1].checked){ $("#hypertrophieAmygdalesDE").html('Hypertrophie des amygdales').css({'color':'black', 'font-weight':'normal'}); }
+	});
+	
+	$('#donneesExamenOrlCheckbox input[name=orlAngineDonneesExamen]').click(function(){ 
+		var boutons = $('#donneesExamenOrlCheckbox input[name=orlAngineDonneesExamen]');
+		if( boutons[1].checked){ $("#angineDE").html('<span style="color: green;">&#10003;</span> Angine').css({'color':'black', 'font-weight':'bold'}); }
+		if(!boutons[1].checked){ $("#angineDE").html('Angine').css({'color':'black', 'font-weight':'normal'}); }
+	});
+	
+	$('#donneesExamenOrlCheckbox input[name=orlOtiteDonneesExamen]').click(function(){ 
+		var boutons = $('#donneesExamenOrlCheckbox input[name=orlOtiteDonneesExamen]');
+		if( boutons[1].checked){ $("#otiteDE").html('<span style="color: green;">&#10003;</span> Otite').css({'color':'black', 'font-weight':'bold'}); }
+		if(!boutons[1].checked){ $("#otiteDE").html('Otite').css({'color':'black', 'font-weight':'normal'}); }
+	});
+	
 }
 
-$("#labelSuiviDesTraitementsPre, #labelMisesAJourDesVaccinsPre, .hospitalisationClassHM, .hospitalisationNombreClassHM").toggle(false);
+$("#labelSuiviDesTraitementsPre, #labelMisesAJourDesVaccinsPre, .hospitalisationClassHM, .hospitalisationNombreClassHM, #labelDonneesExamenTaille, #labelPrecisionExamenDesPoumonsDE, #labelPrecisionExamenDuCoeurDE").toggle(false);
 function getSuiviDesTraitements(id){
 
 	if(id == 2 || id == 3){
@@ -614,4 +646,189 @@ function getPriseEnChargeHospitalisationHM(id){
 		$(".hospitalisationNombreClassHM").fadeOut(false);
 	}
 	
+}
+
+function getSplenomegalieDonneesExamen(id){
+	
+	if(id == 1){
+		$("#labelDonneesExamenTaille").fadeIn();
+	}else {
+		$("#labelDonneesExamenTaille").fadeOut(false);
+	}
+	
+}
+
+function getExamenDesPoumonsDonneesExamen(id){
+
+	if(id == -1){
+		$("#labelPrecisionExamenDesPoumonsDE").fadeIn();
+	}else{
+		$("#labelPrecisionExamenDesPoumonsDE").fadeOut(false);
+	}
+
+}
+
+function getExamenDuCoeurDonneesExamen(id){
+	
+	if(id == -1){
+		$("#labelPrecisionExamenDuCoeurDE").fadeIn();
+	}else{
+		$("#labelPrecisionExamenDuCoeurDE").fadeOut(false);
+	}
+	
+}
+
+
+
+
+
+/*
+ * GESTION Des Examens complémentaires --- GESTION Des Examens complémentaires
+ * GESTION Des Examens complémentaires --- GESTION Des Examens complémentaires
+ * GESTION Des Examens complémentaires --- GESTION Des Examens complémentaires
+ */
+
+$('.designLabelExamenComplementaire').toggle(false);
+
+function getExamensEffecutesDansExamComp(nbExamensEffectues,tabIndexAnalyses,tabAnalyses){
+	//Ajout de l'interface d'affichage des analyses effectuées
+	//Ajout de l'interface d'affichage des analyses effectuées
+	var nbLigneAAfficher = parseInt(nbExamensEffectues/3);
+	if((nbExamensEffectues%3) != 0){ nbLigneAAfficher += 1; }
+	
+	for(var i = 1 ; i <= nbLigneAAfficher ; i++){
+		var hauteur = 45*i;  
+		$('.contenuExamensEffectuesStyle').css('height',hauteur+'px');
+	}
+
+	//Placer les analyses déjà effectuées
+	//Placer les analyses déjà effectuées
+	if(tabAnalyses.length == 0){
+		$('.contenuExamensEffectuesStyle table').html("<tr style='width: 100%'><td style='width: 100%; color: red; padding-top: 7px; text-align: center; font-family: times new roman;'>Aucun examen effectu&eacute;</td></tr>");
+	}else{
+		for(var i = 1 ; i < tabAnalyses.length ; i++){
+			$('#idAnalyseExamComp'+i).html("<label style='width: 100%; height:30px; text-align:left;'>" +
+					                       " <span style='font-size: 12px;'>&#11166; </span>" +
+					                       " <span style='font-size: 13px;'>"+tabAnalyses[i]+"</span>" +
+					                       " <span style='color: green;'>&#10003;</span>" +
+					                       " <span style='color: green; font-family: Tempus Sans ITC; float: right;'> "+tabIndexAnalyses[i]+" </span>" +
+					                       "</label>");
+		}
+	}
+
+	//Affichage des labels
+	//Affichage des labels
+	setTimeout(function(){
+		for(var i = 1 ; i <= nbLigneAAfficher ; i++){
+			$('#examensEffectuesECLigne'+i).toggle(true);
+		}
+	},2000);
+	
+}
+
+function getExamensNonFaitsDansExamComp(nbExamensNonFaits,tabIndexAnalysesNonFaits,tabAnalysesNonFaits){
+	//Ajout de l'interface d'affichage des analyses effectuées
+	//Ajout de l'interface d'affichage des analyses effectuées
+	var nbLigneAAfficher = parseInt(nbExamensNonFaits/3);
+	if((nbExamensNonFaits%3) != 0){ nbLigneAAfficher += 1; }
+	
+	for(var i = 1 ; i <= nbLigneAAfficher ; i++){
+		var hauteur = 45*i;  
+		$('.contenuExamensAFaireStyle').css('height',hauteur+'px');
+	}
+
+	//Placer les analyses déjà effectuées
+	//Placer les analyses déjà effectuées
+	for(var i = 1 ; i < tabAnalysesNonFaits.length ; i++){
+		$('#idAnalyseAFExamComp'+i).html("<label style='width: 100%; height:30px; text-align:left;'> <span style='font-size: 12px;'>&#11166; </span> <span style='font-size: 13px;'>"+tabAnalysesNonFaits[i]+"</span> <span style='color: red;'>&#x2717;</span></label>");
+	}
+
+	//Affichage des labels
+	//Affichage des labels
+	setTimeout(function(){
+		for(var i = 1 ; i <= nbLigneAAfficher ; i++){
+			$('#examensAFaireECLigne'+i).toggle(true);
+		}
+	},2000);
+	
+}
+
+//DIAGNOSTIC --- COMPLICATIONS AIGUES & COMPLICATIONS CHRONIQUES
+//DIAGNOSTIC --- COMPLICATIONS AIGUES & COMPLICATIONS CHRONIQUES
+/**
+ * Complications aigues
+ */
+$("#enleverComplicationAigueBouton").toggle(false);
+function ajouterComplicationAigue(){
+	var i = nbChampDiagComplicationsAigues +=1;
+	
+	$("#diagnosticComplicationsAiguesChamp_"+i).html("<label style='width: 100%; height:30px; text-align:left;'>" +
+			                                          " " +
+			                                          "<select name='diagnosticComplicationsChroniquesChamp_"+i+"' style='font-size: 14.5px; width: 95%; margin-left: 5px;'>" +
+			                     					  "<option value=''></option>" +
+			                     					  "<option value='1'>An&eacute;mie aigue</option>" +
+			                     					  "<option value='2'>Pneumonie</option>" +
+			                     					  "<option value='3'>M&eacute;ningite</option>" +
+			                     					  "<option value='4'>Septic&eacute;mie</option>" +
+			                     					  "<option value='5'>Infection ost&eacute;o-articulaire</option>" +
+			                     					  "<option value='6'>Syndrome thoracique aigu</option>" +
+			                     					  "<option value='7'>Priapisme</option>" +
+			                     					  "<option value='8'>Vasculopathie C&eacute;r&eacute;brale</option>" +
+			                     					  "</select>" +
+			                                         "</label>");
+	if(i==9){ $("#ajouterComplicationAigueBouton").toggle(false); }
+	if(i==2){ $("#enleverComplicationAigueBouton").toggle(true); }
+	//Ajustement de l'interface d'affichage des champs
+	if(i==4){ $(".contenuComplicationsAiguesStyle").css({'height':'120px'});  }
+	if(i==7){ $(".contenuComplicationsAiguesStyle").css({'height':'165px'});  }
+}
+
+function enleverComplicationAigue(){
+	var i = nbChampDiagComplicationsAigues--;
+	$("#diagnosticComplicationsAiguesChamp_"+i).html("");
+	
+	if(i==2){ $("#enleverComplicationAigueBouton").toggle(false); }
+	if(i==9){ $("#ajouterComplicationAigueBouton").toggle(true); }
+	//Ajustement de l'interface d'affichage des champs
+	if(i==4){ $(".contenuComplicationsAiguesStyle").css({'height':'75px'});  }
+	if(i==7){ $(".contenuComplicationsAiguesStyle").css({'height':'120px'});  }
+}
+
+/**
+ * Complications chroniques
+ */
+
+$("#enleverComplicationChroniqueBouton").toggle(false);
+function ajouterComplicationChronique(){
+	var i = nbChampDiagComplicationsChroniques +=1;
+	
+	$("#diagnosticComplicationsChroniquesChamp_"+i).html("<label style='width: 100%; height:30px; text-align:left;'>" +
+			                                          " " +
+			                                          "<select name='diagnosticComplicationsChroniquesChamp_"+i+"' style='font-size: 15px; width: 95%; margin-left: 5px;'>" +
+			                     					  "<option value=''></option>" +
+			                     					  "<option value='1'>Lithiase biliaire</option>" +
+			                     					  "<option value='2'>Ost&eacute;o-n&eacute;crose hanche</option>" +
+			                     					  "<option value='3'>Ost&eacute;o-n&eacute;crose &eacute;paule</option>" +
+			                     					  "<option value='4'>R&eacute;tinopathie</option>" +
+			                     					  "<option value='5'>Nephropathie</option>" +
+			                     					  "<option value='6'>Cardiomyopathie</option>" +
+			                     					  "<option value='7'>HTAP</option>" +
+			                     					  "</select>" +
+			                                         "</label>");
+	if(i==9){ $("#ajouterComplicationChroniqueBouton").toggle(false); }
+	if(i==2){ $("#enleverComplicationChroniqueBouton").toggle(true); }
+	//Ajustement de l'interface d'affichage des champs
+	if(i==4){ $(".contenuComplicationsChroniquesStyle").css({'height':'120px'});  }
+	if(i==7){ $(".contenuComplicationsChroniquesStyle").css({'height':'165px'});  }
+}
+
+function enleverComplicationChronique(){
+	var i = nbChampDiagComplicationsChroniques--;
+	$("#diagnosticComplicationsChroniquesChamp_"+i).html("");
+	
+	if(i==2){ $("#enleverComplicationChroniqueBouton").toggle(false); }
+	if(i==9){ $("#ajouterComplicationChroniqueBouton").toggle(true); }
+	//Ajustement de l'interface d'affichage des champs
+	if(i==4){ $(".contenuComplicationsChroniquesStyle").css({'height':'75px'});  }
+	if(i==7){ $(".contenuComplicationsChroniquesStyle").css({'height':'120px'});  }
 }

@@ -15,7 +15,8 @@ class ConsultationController extends AbstractActionController {
 	protected $patientTable;
 	protected $motifAdmissionTable;
 	protected $depistageTable;
-	
+	protected $analyseAFaireTable;
+	protected $analyseTable;
 	
 	public function getConsultationTable() {
 		if (! $this->consultation) {
@@ -56,6 +57,23 @@ class ConsultationController extends AbstractActionController {
 		}
 		return $this->depistageTable;
 	}
+	
+	public function getAnalyseAFaireTable() {
+		if (! $this->analyseAFaireTable) {
+			$sm = $this->getServiceLocator ();
+			$this->analyseAFaireTable = $sm->get ( 'Consultation\Model\AnalyseTable' );
+		}
+		return $this->analyseAFaireTable;
+	}
+	
+	public function getAnalyseTable() {
+		if (! $this->analyseTable) {
+			$sm = $this->getServiceLocator ();
+			$this->analyseTable = $sm->get ( 'Secretariat\Model\AnalyseTable' );
+		}
+		return $this->analyseTable;
+	}
+	
 	//=============================================================================================
 	//---------------------------------------------------------------------------------------------
 	//=============================================================================================
@@ -364,9 +382,9 @@ class ConsultationController extends AbstractActionController {
 	
 	
 	public function consulterAction() {
-		//DEBUT --- DEBUT --- DEBUT
-		$timestart = microtime(true);
-		//-------------------------
+		  //DEBUT --- DEBUT --- DEBUT
+		  $timestart = microtime(true);
+		  //-------------------------
 		
 		$this->layout ()->setTemplate ( 'layout/consultation' );
 	
@@ -538,16 +556,23 @@ class ConsultationController extends AbstractActionController {
 		//RECUPERER LA LISTE DES ACTES
 		$listeActes = $this->getConsultationTable()->getListeDesActes();
 		
+		//RECUPERER LES ANALYSES EFFECTUEES PAR LE PATIENT FAISANT PARTIE DES ANALYSES OBLIGATOIRES A FAIRE 
+		$donneesExamensEffectues = $this->getAnalyseAFaireTable()->getAnalyseEffectuees($idpatient);
+
 		
 		
-		//FIN --- FIN --- FIN
-		$timeend = microtime(true);
-		$time = $timeend-$timestart;
 		
+		
+		
+		
+		
+		//FIN --- FIN --- FIN --- FIN --- FIN --- FIN --- FIN
+		//$timeend = microtime(true);
+		//$time = $timeend-$timestart;
 		//var_dump(number_format($time,3)); exit();
+		//---------------------------------------------------
 		
 		
-		//var_dump($listeMotifConsultation); exit();
 		return array(
 				
 				'idcons' => $idcons,
@@ -559,6 +584,7 @@ class ConsultationController extends AbstractActionController {
 				'nbMotifs' => $nbMotif,
 				'form' => $form,
 				'patient' => $patient,
+				'donneesExamensEffectues' => $donneesExamensEffectues,
 				
 				'mDouleur' => $mDouleur,
 				'listeVoieAdministration' => $listeVoieAdministration,
@@ -567,6 +593,8 @@ class ConsultationController extends AbstractActionController {
 				
 				
 
+				
+				
 				'liste_med' => null, //$listeMedicament,
 				'temoin' => 0, //$bandelettes['temoin'],
 				// 				'listeForme' => $listeForme,
@@ -582,11 +610,88 @@ class ConsultationController extends AbstractActionController {
 				'antMedPat' => null, //$antMedPat,
 				'nbAntMedPat' => 0, //$antMedPat->count(),
 				'listeActes' => null, //$listeActes,
-				
 		);
 
 	}
 	
+	public function demandesAnalysesVueAction() {
+	
+		$id = ( int ) $this->params ()->fromPost ( 'id', 0 );
+	
+		/*----------------------------------------------------*/
+		/*----------------------------------------------------*/
+		$existeADA = 0; //Existance d'Analyses Demandées Aujourdhui
+		$listeAnalysesDemandees = $this->getAnalyseTable()->getListeAnalysesDemandeesDP($id);
+		if($listeAnalysesDemandees){ $existeADA = 1; }
+	
+		/*----------------------------------------------------*/
+		$listeTypesAnalyses = $this->getPatientTable()->getListeDesTypesAnalyses();
+		$tabTypesAnalyses = array(0 => '');
+		foreach ($listeTypesAnalyses as $listeTA){
+			$tabTypesAnalyses[$listeTA['idtype']] =  $listeTA['libelle'];
+		}
+		/*--Ajout du dernier type 'Imagerie'--*/
+		$tabTypesAnalyses[6] = 'IMAGERIE';
+	
+		/*----------------------------------------------------*/
+		$tabListeAnalysesParType = array();
+		for($i = 1 ; $i<=5 ; $i++){ // 5 est le nombre de type d'analyse
+			$tabListeAnalysesParType[$i] = $this->getListeAnalysesParType($i);
+		}
+	
+		/*----------------------------------------------------*/
+		/*----------------------------------------------------*/
+		$verifTypageHemo = $this->getAnalyseTable()->getAnalyseTypageHemoglobineDemande($id);
+	
+		/*----------------------------------------------------*/
+		/*----------------------------------------------------*/
+		/*----------------------------------------------------*/
+	
+		$donnees = array('', $existeADA, $listeAnalysesDemandees, $tabTypesAnalyses, $tabListeAnalysesParType, $verifTypageHemo);
+	
+		$this->getResponse ()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html; charset=utf-8' );
+		return $this->getResponse ()->setContent ( Json::encode ( $donnees ) );
+	}
+	
+	public function getListeAnalysesParType($type)
+	{
+		$liste_select = "";
+		foreach($this->getPatientTable()->getListeDesAnalyses($type) as $listeAnalyses){
+			$liste_select.= "<option value=".$listeAnalyses['idanalyse'].">".$listeAnalyses['designation']."</option>";
+		}
+		return $liste_select;
+	}
+	
+	public function getListeAnalysesAction()
+	{
+		$id = (int)$this->params()->fromPost ('id');
+		$liste_select = "";
+		if($id == 6){
+			foreach($this->getPatientTable()->getListeDesExamenImagerie() as $listeExamens){
+				$liste_select.= "<option value='0,".$listeExamens['idexamen']."'>".$listeExamens['designation']."</option>";
+			}
+		}else{
+			foreach($this->getPatientTable()->getListeDesAnalyses($id) as $listeAnalyses){
+				$liste_select.= "<option value='".$listeAnalyses['idanalyse']."'>".$listeAnalyses['designation']."</option>";
+			}
+		}
+		$this->getResponse()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html' );
+		return $this->getResponse ()->setContent(Json::encode ( $liste_select));
+	}
+	
+	public function getTarifAnalyseAction()
+	{
+		$id = (int)$this->params()->fromPost ('id');
+	
+		$tarif = $this->getPatientTable()->getTarifAnalyse($id);
+		$tarifString = $this->prixMill( $tarif );
+	
+		$html = array((int)$tarif, $tarifString);
+	
+		$this->getResponse()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html' );
+		return $this->getResponse ()->setContent(Json::encode ( $html));
+		
+	}
 	
 	public function modifierConsultationAction() {
 		

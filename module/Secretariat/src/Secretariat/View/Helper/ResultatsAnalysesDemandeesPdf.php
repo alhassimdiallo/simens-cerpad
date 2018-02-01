@@ -34,9 +34,12 @@ class ResultatsAnalysesDemandeesPdf
 	protected $_analysesImmunoHemato;
 	protected $_analysesCytologie;
 	protected $_analysesHemostase;
+	protected $_analysesMetabolismeGlucidique;
+	protected $_analysesBilanLipidique;
 	protected $_analysesBilanHepatique;
 	protected $_analysesBilanRenal;
 	protected $_analysesSerologie;
+	protected $_analysesTypageHemoProteine;
 	
 	public function __construct()
 	{
@@ -286,6 +289,18 @@ class ResultatsAnalysesDemandeesPdf
 		$this->_analysesHemostase = $analysesHemostase;
 	}
 	
+	public function setAnalysesTypageHemoProteine($analysesTypageHemoProteine){
+		$this->_analysesTypageHemoProteine = $analysesTypageHemoProteine;
+	}
+	
+	public function setAnalysesMetabolismeGlucidique($analysesMetabolismeGlucidique){
+		$this->_analysesMetabolismeGlucidique = $analysesMetabolismeGlucidique;
+	}
+	
+	public function setAnalysesBilanLipidique($analysesBilanLipidique){
+		$this->_analysesBilanLipidique = $analysesBilanLipidique;
+	}
+	
 	public function setAnalysesBilanHepatique($analysesBilanHepatique){
 		$this->_analysesBilanHepatique = $analysesBilanHepatique;
 	}
@@ -427,7 +442,7 @@ class ResultatsAnalysesDemandeesPdf
     			$this->_pageWidth -
     			$this->_leftMargin,
     			$this->_yPosition-10);
-    	$this->_yPosition -= $noteLineHeight-20;
+    	$this->_yPosition -= $noteLineHeight-10;
     	
     	
 		//-----------------------------------------------------------------------
@@ -441,6 +456,7 @@ class ResultatsAnalysesDemandeesPdf
 			
 		$listeAnalysesDemandees = $this->_analysesDemandees;
 		
+		/*
 		for($i = 0 ; $i < count($listeAnalysesDemandees) ; $i++){
 		    $idanalyse = $listeAnalysesDemandees[$i]['idanalyse'];
 		    
@@ -449,22 +465,7 @@ class ResultatsAnalysesDemandeesPdf
 		    $typesAnalyses[$idanalyse]       = $listeAnalysesDemandees[$i]['Libelle'];
 		    $infosAnalyseDemande[$idanalyse] = $listeAnalysesDemandees[$i];
 		}
-			
-		
-// 			for ($i = 1 ; $i <= count($analyses) ; $i++){
-			    
-// 				if(in_array(1, $idAnalyses)){
-// 					$this->_page = $this->getNfs($noteLineHeight, $analyses[1], $infosAnalyseDemande);
-// 			    }
-			    
-// 				else
-// 				if($i == 14 && in_array(14, $idAnalyses)){
-// 					$this->_page = $this->getTpinr($noteLineHeight, $infosAnalyseDemande, $value);
-// 				}
-
-// 			}
-
-			
+		*/
 			//-----------------------------------------------------------------
 			//-----------------------------------------------------------------
 			//-----------------------------------------------------------------
@@ -492,7 +493,6 @@ class ResultatsAnalysesDemandeesPdf
 			//-----------------------------------------------------------------
 			//-----------------------------------------------------------------
 			
-			$this->_yPosition -= $noteLineHeight-50;
 			//Liste des analyses pour la CYTOLOGIE
 			//Liste des analyses pour la CYTOLOGIE
 			$idanalysesCytologie = $this->_analysesCytologie;
@@ -512,7 +512,6 @@ class ResultatsAnalysesDemandeesPdf
 			//-----------------------------------------------------------------
 			//-----------------------------------------------------------------
 			
-			$this->_yPosition -= $noteLineHeight-43;
 			//Liste des analyses pour l'HEMOSTASE 
 			//Liste des analyses pour l'HEMOSTASE
 			$idanalysesHemostase = $this->_analysesHemostase;
@@ -531,7 +530,6 @@ class ResultatsAnalysesDemandeesPdf
 			//-----------------------------------------------------------------
 			//-----------------------------------------------------------------
 			//-----------------------------------------------------------------
-			
 			
 			//Liste des analyses pour le BILAN HEPATIQUE
 			//Liste des analyses pour le BILAN HEPATIQUE
@@ -555,7 +553,7 @@ class ResultatsAnalysesDemandeesPdf
 			//Liste des analyses pour le BILAN RENAL
 			$idanalysesBilanRenal = $this->_analysesBilanRenal;
 			
-			//Affichage des analyses concernant le BILAN HEPATIQUE
+			//Affichage des analyses concernant le BILAN RENAL
 			if(array_intersect(array(23,46), $idanalysesBilanRenal)){
 				$this->_page = $this->getBilanRenal($noteLineHeight, $infosAnalyseDemande, $value, $idanalysesBilanRenal);
 			}
@@ -569,7 +567,7 @@ class ResultatsAnalysesDemandeesPdf
 			//-----------------------------------------------------------------
 			//-----------------------------------------------------------------
  		
-			$this->_yPosition -= $noteLineHeight-123;
+			
 			//Liste des analyses pour la serologie
 			//Liste des analyses pour la serologie
 			$idanalysesSerologie = $this->_analysesSerologie;
@@ -580,6 +578,44 @@ class ResultatsAnalysesDemandeesPdf
 			}
 			//=========================================
 			//=========================================
+			
+			//-----------------------------------------------------------------
+			//-----------------------------------------------------------------
+			//-----------------------------------------------------------------
+			//-----------------------------------------------------------------
+			//-----------------------------------------------------------------
+			//-----------------------------------------------------------------
+			
+			//Liste des analyses pour le TYPAGE ELETROPHORESE DE HEMO-PROTEINE
+			//Liste des analyses pour le TYPAGE ELETROPHORESE DE HEMO-PROTEINE
+			$idanalysesTypageHemoProteine = $this->_analysesTypageHemoProteine;
+				
+			//Affichage des analyses concernant le METABOLISME GLUCIDIQUE
+			if(array_intersect(array(44,45), $idanalysesTypageHemoProteine)){
+				$this->_page = $this->getTypageHemoProteine($noteLineHeight, $infosAnalyseDemande, $value, $idanalysesTypageHemoProteine);
+			}
+			//===================================
+			//===================================
+				
+			
+			//-----------------------------------------------------------------
+			//-----------------------------------------------------------------
+			//-----------------------------------------------------------------
+			//-----------------------------------------------------------------
+			//-----------------------------------------------------------------
+			//-----------------------------------------------------------------
+			
+			//Liste des analyses pour le METABOLISME GLUCIDIQUE
+			//Liste des analyses pour le METABOLISME GLUCIDIQUE
+			$idanalysesMetabolismeGlucidique = $this->_analysesMetabolismeGlucidique;
+			
+			//Affichage des analyses concernant le METABOLISME GLUCIDIQUE
+			if(array_intersect(array(21,43), $idanalysesMetabolismeGlucidique)){
+				$this->_page = $this->getMetabolismeGlucidique($noteLineHeight, $infosAnalyseDemande, $value, $idanalysesMetabolismeGlucidique);
+			}
+			//===================================
+			//===================================
+			
 				
 			//-----------------------------------------------------------------
 			//-----------------------------------------------------------------
@@ -587,29 +623,28 @@ class ResultatsAnalysesDemandeesPdf
 			//-----------------------------------------------------------------
 			//-----------------------------------------------------------------
 			//-----------------------------------------------------------------
-			
-			
-			
-			//analyse pour le DEPISTAGE
-			//analyse pour le DEPISTAGE
-			
-			if(in_array('DEPISTAGE', $typesAnalyses)){
-				// $this->_page = $this->typage_hemoglobine($noteLineHeight, $analyses[68], $infosAnalyseDemande, $value);
+						
+			//Liste des analyses pour le BILAN LIPIDIQUE
+			//Liste des analyses pour le BILAN LIPIDIQUE
+			$idanalysesBilanLipidique = $this->_analysesBilanLipidique;
+				
+			//Affichage des analyses concernant le BILAN LIPIDIQUE
+			if(array_intersect(array(25,26,27,28,29), $idanalysesBilanLipidique)){
+				$this->_page = $this->getBilanLipidique($noteLineHeight, $infosAnalyseDemande, $value, $idanalysesBilanLipidique);
 			}
-			//=========================================
-			//=========================================
- 		    
+			//===================================
+			//===================================
+				
+			
 			//-----------------------------------------------------------------
 			//-----------------------------------------------------------------
 			//-----------------------------------------------------------------
 			//-----------------------------------------------------------------
 			//-----------------------------------------------------------------
 			//-----------------------------------------------------------------
- 		
+			
 		
 			$this->_yPosition -= $noteLineHeight;
-		
-		
 	}
 	
 	public function getPiedPage(){
@@ -841,6 +876,8 @@ class ResultatsAnalysesDemandeesPdf
 		$tabAnalyses = array_intersect(array(8,50), $idanalysesCytologie);
 		$tabAnalyses = array_reverse($tabAnalyses);
 		
+		$this->_yPosition -= $noteLineHeight-45; //Allez à la ligne
+		
 		$this->_page->setLineColor(new ZendPdf\Color\Html('#999999'));
 		$this->_page->setLineWidth(1);
 		$this->_page->drawLine($this->_leftMargin+210,
@@ -948,7 +985,7 @@ class ResultatsAnalysesDemandeesPdf
 			$j += 1;
 		}
 		
-		$this->_yPosition -= $noteLineHeight+20;
+		$this->_yPosition -= $noteLineHeight+10;
 		return $this->_page;
 	}
 	
@@ -1181,6 +1218,502 @@ class ResultatsAnalysesDemandeesPdf
 		
 		}
 		 
+		return $this->_page;
+	}
+	
+	public function getTypageHemoProteine($noteLineHeight, $infosAnalyseDemande, $value, $idanalysesTypageHemoProteine){
+		$tabAnalyses = array_intersect(array(44,45), $idanalysesTypageHemoProteine);
+		$tabAnalyses= array_reverse($tabAnalyses);
+		
+		//-------------PLACER LES LIGNES DES EXAMENS A AFFICHER ---------
+		//-------------PLACER LES LIGNES DES EXAMENS A AFFICHER ---------
+		//-------------PLACER LES LIGNES DES EXAMENS A AFFICHER ---------
+		$j = 28;
+		for($i = 0 ; $i < count($idanalysesTypageHemoProteine) ; $i++){
+		
+			if($i%2 == 0){
+				$this->_page->setLineColor(new ZendPdf\Color\Html('#e1e1e1'));
+				$this->_page->setLineWidth(17);
+				$this->_page->drawLine($this->_leftMargin,
+						$this->_yPosition -$j,
+						$this->_pageWidth -
+						$this->_leftMargin,
+						$this->_yPosition -$j);
+			}else{
+				$this->_page->setLineColor(new ZendPdf\Color\Html('#f1f1f1'));
+				$this->_page->setLineWidth(17);
+				$this->_page->drawLine($this->_leftMargin,
+						$this->_yPosition -$j,
+						$this->_pageWidth -
+						$this->_leftMargin,
+						$this->_yPosition -$j);
+			}
+		
+			$j += 19;
+		}
+			
+		//-----------------------------------------------------------------------
+		//-----------------------------------------------------------------------
+		//-----------------------------------------------------------------------
+		
+		$control = new DateHelper();
+		
+		$resultats = $this->_resultatsAnalysesDemandees;
+		
+		$this->_yPosition -= $noteLineHeight-20; //Allez à la ligne
+		
+		$this->_page->setLineColor(new ZendPdf\Color\Html('#999999'));
+		$this->_page->setLineWidth(1);
+		$this->_page->drawLine($this->_leftMargin+175,
+				$this->_yPosition -2,
+				$this->_pageWidth -
+				$this->_leftMargin-183,
+				$this->_yPosition -2);
+		
+		$this->getNewTime();
+		$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "TYPAGE DE L'HEMOGLOBINE" ),
+				$this->_leftMargin+175,
+				$this->_yPosition+1);
+		
+		$this->_yPosition -= $noteLineHeight;    //aller a la ligne suivante
+		
+		$this->_yPosition -= $noteLineHeight; //aller a la ligne suivante
+		return $this->_page;
+	}
+	
+	
+	public function getMetabolismeGlucidique($noteLineHeight, $infosAnalyseDemande, $value, $idanalysesMetabolismeGlucidique){
+		$tabAnalyses = array_intersect(array(21,43), $idanalysesMetabolismeGlucidique);
+		$tabAnalyses= array_reverse($tabAnalyses);
+		
+		//-------------PLACER LES LIGNES DES EXAMENS A AFFICHER ---------
+		//-------------PLACER LES LIGNES DES EXAMENS A AFFICHER ---------
+		//-------------PLACER LES LIGNES DES EXAMENS A AFFICHER ---------
+		$j = 28;
+		for($i = 0 ; $i < count($idanalysesMetabolismeGlucidique) ; $i++){
+				
+			if($i%2 == 0){
+				$this->_page->setLineColor(new ZendPdf\Color\Html('#e1e1e1'));
+				$this->_page->setLineWidth(17);
+				$this->_page->drawLine($this->_leftMargin,
+						$this->_yPosition -$j,
+						$this->_pageWidth -
+						$this->_leftMargin,
+						$this->_yPosition -$j);
+			}else{
+				$this->_page->setLineColor(new ZendPdf\Color\Html('#f1f1f1'));
+				$this->_page->setLineWidth(17);
+				$this->_page->drawLine($this->_leftMargin,
+						$this->_yPosition -$j,
+						$this->_pageWidth -
+						$this->_leftMargin,
+						$this->_yPosition -$j);
+			}
+		
+			$j += 19;
+		}
+			
+		//-----------------------------------------------------------------------
+		//-----------------------------------------------------------------------
+		//-----------------------------------------------------------------------
+		
+		$control = new DateHelper();
+		
+		$resultats = $this->_resultatsAnalysesDemandees;
+		
+		$this->_yPosition -= $noteLineHeight-20; //Allez à la ligne
+		
+		$this->_page->setLineColor(new ZendPdf\Color\Html('#999999'));
+		$this->_page->setLineWidth(1);
+		$this->_page->drawLine($this->_leftMargin+175,
+				$this->_yPosition -2,
+				$this->_pageWidth -
+				$this->_leftMargin-183,
+				$this->_yPosition -2);
+		
+		$this->getNewTime();
+		$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', 'METABOLISME GLUCIDIQUE' ),
+				$this->_leftMargin+175,
+				$this->_yPosition+1);
+		
+		$this->_yPosition -= $noteLineHeight;    //aller a la ligne suivante
+		
+		//--- GLYCEMIE  --- GLYCEMIE --- GLYCEMIE --- GLYCEMIE ---
+		//--- GLYCEMIE  --- GLYCEMIE --- GLYCEMIE --- GLYCEMIE ---
+		if(in_array(21, $idanalysesMetabolismeGlucidique)){
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES), 10);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "GLYCEMIE : " ),
+					$this->_leftMargin+5,
+					$this->_yPosition+9);
+				
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', $resultats[21]['glycemie_1'] ),
+					$this->_leftMargin+110,
+					$this->_yPosition+9);
+			
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 9);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "g/l " ),
+					$this->_leftMargin+145,
+					$this->_yPosition+9);
+				
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', $resultats[21]['glycemie_2'] ),
+					$this->_leftMargin+200,
+					$this->_yPosition+9);
+				
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 9);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "mmol/l " ),
+					$this->_leftMargin+235,
+					$this->_yPosition+9);
+			
+			$this->_yPosition -= $noteLineHeight-12; //aller a la ligne suivante
+		}
+		
+		//--- Hemoglobine glyquee  --- Hemoglobine glyquee --- Hemoglobine glyquee
+		//--- Hemoglobine glyquee  --- Hemoglobine glyquee --- Hemoglobine glyquee
+		if(in_array(43, $idanalysesMetabolismeGlucidique)){
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES), 10);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "HEMOGLOBINE GLYQUEE HbA1c : " ),
+					$this->_leftMargin+5,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', $resultats[43]['hemoglobine_glyquee_hbac'] ),
+					$this->_leftMargin+200,
+					$this->_yPosition+9);
+				
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 9);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "% " ),
+					$this->_leftMargin+220,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', $resultats[43]['hemoglobine_glyquee_hbac_mmol'] ),
+					$this->_leftMargin+290,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 9);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "mmol " ),
+					$this->_leftMargin+315,
+					$this->_yPosition+9);
+				
+			$this->_yPosition -= $noteLineHeight-12; //aller a la ligne suivante
+		}
+		
+		
+		return $this->_page;
+	}
+	
+	public function getBilanLipidique($noteLineHeight, $infosAnalyseDemande, $value, $idanalysesBilanLipidique){
+
+		$tabAnalyses = array_intersect(array(25,26,27,28,29), $idanalysesBilanLipidique);
+		$tabAnalyses= array_reverse($tabAnalyses);
+		
+		//-------------PLACER LES LIGNES DES EXAMENS A AFFICHER ---------
+		//-------------PLACER LES LIGNES DES EXAMENS A AFFICHER ---------
+		//-------------PLACER LES LIGNES DES EXAMENS A AFFICHER ---------
+		$j = 30;
+		for($i = 0 ; $i < count($idanalysesBilanLipidique) ; $i++){
+		
+			if($i%2 == 0){
+				$this->_page->setLineColor(new ZendPdf\Color\Html('#e1e1e1'));
+				$this->_page->setLineWidth(30);
+				$this->_page->drawLine($this->_leftMargin,
+						$this->_yPosition -$j,
+						$this->_pageWidth -
+						$this->_leftMargin,
+						$this->_yPosition -$j);
+			}else{
+				$this->_page->setLineColor(new ZendPdf\Color\Html('#f1f1f1'));
+				$this->_page->setLineWidth(30);
+				$this->_page->drawLine($this->_leftMargin,
+						$this->_yPosition -$j,
+						$this->_pageWidth -
+						$this->_leftMargin,
+						$this->_yPosition -$j);
+			}
+		
+			$j += 32;
+		}
+			
+		//--- CHOLESTEROL TOTAL & HDL  --- CHOLESTEROL TOTAL & HDL --- CHOLESTEROL TOTAL & HDL
+		//--- CHOLESTEROL TOTAL & HDL  --- CHOLESTEROL TOTAL & HDL --- CHOLESTEROL TOTAL & HDL
+		if(in_array(25, $idanalysesBilanLipidique) && in_array(27, $idanalysesBilanLipidique)){
+			$j -= 6;
+			if($i%2 == 0){
+				$this->_page->setLineColor(new ZendPdf\Color\Html('#e1e1e1'));
+				$this->_page->setLineWidth(17);
+				$this->_page->drawLine($this->_leftMargin,
+						$this->_yPosition -$j,
+						$this->_pageWidth -
+						$this->_leftMargin,
+						$this->_yPosition -$j);
+			}else{
+				$this->_page->setLineColor(new ZendPdf\Color\Html('#f1f1f1'));
+				$this->_page->setLineWidth(17);
+				$this->_page->drawLine($this->_leftMargin,
+						$this->_yPosition -$j,
+						$this->_pageWidth -
+						$this->_leftMargin,
+						$this->_yPosition -$j);
+			}
+		}
+		
+		//-----------------------------------------------------------------------
+		//-----------------------------------------------------------------------
+		//-----------------------------------------------------------------------
+		
+		$control = new DateHelper();
+		
+		$resultats = $this->_resultatsAnalysesDemandees;
+		
+		$this->_yPosition -= $noteLineHeight-25; //Allez à la ligne
+		
+		$this->_page->setLineColor(new ZendPdf\Color\Html('#999999'));
+		$this->_page->setLineWidth(1);
+		$this->_page->drawLine($this->_leftMargin+202,
+				$this->_yPosition -2,
+				$this->_pageWidth -
+				$this->_leftMargin-210,
+				$this->_yPosition -2);
+		
+		$this->getNewTime();
+		$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', 'BILAN LIPIDIQUE' ),
+				$this->_leftMargin+202,
+				$this->_yPosition+1);
+		
+		$this->_yPosition -= $noteLineHeight+5;    //aller a la ligne suivante
+		
+		//--- CHOLESTEROL TOTAL  --- CHOLESTEROL TOTAL --- CHOLESTEROL TOTAL
+		//--- CHOLESTEROL TOTAL  --- CHOLESTEROL TOTAL --- CHOLESTEROL TOTAL
+		if(in_array(25, $idanalysesBilanLipidique)){
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES), 10);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "CHOLESTEROL TOTAL : " ),
+					$this->_leftMargin+5,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', $resultats[25]['cholesterol_total_1'] ),
+					$this->_leftMargin+130,
+					$this->_yPosition+9);
+				
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 9);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "g/l " ),
+					$this->_leftMargin+160,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', $resultats[25]['cholesterol_total_2'] ),
+					$this->_leftMargin+195,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 9);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "mmol/l " ),
+					$this->_leftMargin+225,
+					$this->_yPosition+9);
+				
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 7.2);
+			$this->_page->drawText("Moins de 30 ans <1, 80 (4, 7 mmol/l) - Plus de 30 ans < 2, 00 (< 5, 2mmol/l) ",
+					$this->_leftMargin+270,
+					$this->_yPosition+17);
+			$this->_page->drawText( "Interprétation clinique : suspect supérieur à 2, 20 (5, 7 mmol/l) ",
+					$this->_leftMargin+270,
+					$this->_yPosition+8);
+			$this->_page->drawText( "Risque élevé supérieur à 2, 60 (6, 7 mmol/l) ",
+					$this->_leftMargin+270,
+					$this->_yPosition-1);
+			
+			
+			
+			$this->_yPosition -= $noteLineHeight+2; //aller a la ligne suivante
+		}
+		
+		//--- CHOLESTEROL HDL  --- CHOLESTEROL HDL --- CHOLESTEROL HDL
+		//--- CHOLESTEROL HDL  --- CHOLESTEROL HDL --- CHOLESTEROL HDL
+		if(in_array(27, $idanalysesBilanLipidique)){
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES), 10);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "CHOLESTEROL HDL : " ),
+					$this->_leftMargin+5,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', $resultats[27]['cholesterol_HDL_1'] ),
+					$this->_leftMargin+130,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 9);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "g/l " ),
+					$this->_leftMargin+160,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', $resultats[27]['cholesterol_HDL_2'] ),
+					$this->_leftMargin+195,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 9);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "mmol/l " ),
+					$this->_leftMargin+225,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 7.2);
+			$this->_page->drawText("N: < 0, 35 ( < 0, 9 mmol/l) facteur de risque pour coronaropathies ",
+					$this->_leftMargin+270,
+					$this->_yPosition+16);
+			$this->_page->drawText( "N: > 0, 60 ( > 1, 5 mmol/l) risque réduit pour coronaropathies ",
+					$this->_leftMargin+270,
+					$this->_yPosition+6);
+			
+			$this->_yPosition -= $noteLineHeight+2; //aller a la ligne suivante
+		}
+		
+		//--- CHOLESTEROL LDL  --- CHOLESTEROL LDL --- CHOLESTEROL LDL
+		//--- CHOLESTEROL LDL  --- CHOLESTEROL LDL --- CHOLESTEROL LDL
+		if(in_array(28, $idanalysesBilanLipidique)){
+			$this->_yPosition -= 2;
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES), 10);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "CHOLESTEROL LDL : " ),
+					$this->_leftMargin+5,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', $resultats[28]['cholesterol_LDL_1'] ),
+					$this->_leftMargin+130,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 9);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "g/l " ),
+					$this->_leftMargin+160,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', $resultats[28]['cholesterol_LDL_2'] ),
+					$this->_leftMargin+195,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 9);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "mmol/l " ),
+					$this->_leftMargin+225,
+					$this->_yPosition+9);
+			
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 7.2);
+			$this->_page->drawText("N: H < 0,50 (< 1,3 mmol/l); F: < 0,63 (< 1,6 mmol/l) risque réduit pour cor.. ",
+					$this->_leftMargin+270,
+					$this->_yPosition+18);
+			$this->_page->drawText("N: H > 1,72 (> 4,5 mmol/l); F: > 1,67 (4,3 mmol/l) risque accru pour cor.. ",
+					$this->_leftMargin+270,
+					$this->_yPosition+8);
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD_ITALIC), 7.2);
+			$this->_page->drawText("(cor = coronaropathies) ",
+					$this->_leftMargin+270,
+					$this->_yPosition);
+		
+			$this->_yPosition -= $noteLineHeight+2; //aller a la ligne suivante
+		}
+		
+		//--- TRIGLYCERIDES  --- TRIGLYCERIDES --- TRIGLYCERIDES
+		//--- TRIGLYCERIDES  --- TRIGLYCERIDES --- TRIGLYCERIDES
+		if(in_array(26, $idanalysesBilanLipidique)){
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES), 10);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "TRIGLYCERIDES : " ),
+					$this->_leftMargin+5,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', $resultats[26]['triglycerides_1'] ),
+					$this->_leftMargin+130,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 9);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "g/l " ),
+					$this->_leftMargin+160,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', $resultats[26]['triglycerides_2'] ),
+					$this->_leftMargin+195,
+					$this->_yPosition+9);
+		
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 9);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "mmol/l " ),
+					$this->_leftMargin+225,
+					$this->_yPosition+9);
+			
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 7.2);
+			$this->_page->drawText("Suspect supérieur à 1,50 (1,71 mmol/l) ",
+					$this->_leftMargin+270,
+					$this->_yPosition+18);
+			$this->_page->setLineColor(new ZendPdf\Color\Html('#000000'));
+			$this->_page->setLineWidth(0.5);
+			$this->_page->drawLine($this->_leftMargin+270,
+					$this->_yPosition +17,
+					$this->_pageWidth -
+					$this->_leftMargin-107,
+					$this->_yPosition +17);
+			
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 7.2);
+			$this->_page->drawText("Interprétation clinique pour risque d'athéroclérose ",
+					$this->_leftMargin+270,
+					$this->_yPosition+8);
+			$this->_page->drawText("Risque accru supérieur à 2,00 (2,28 mmol/l)",
+					$this->_leftMargin+270,
+					$this->_yPosition);
+		
+			$this->_yPosition -= $noteLineHeight-4; //aller a la ligne suivante
+		}
+		
+		//--- CHOLESTEROL TOTAL & HDL  --- CHOLESTEROL TOTAL & HDL --- CHOLESTEROL TOTAL & HDL
+		//--- CHOLESTEROL TOTAL & HDL  --- CHOLESTEROL TOTAL & HDL --- CHOLESTEROL TOTAL & HDL
+		if(in_array(25, $idanalysesBilanLipidique) && in_array(27, $idanalysesBilanLipidique)){
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES), 10);
+			$this->_page->drawText("» Rapport: CHOL/HDL : ",
+					$this->_leftMargin+5,
+					$this->_yPosition+9);
+			
+			$rapportCHOL = $resultats[25]['cholesterol_total_1']/$resultats[27]['cholesterol_HDL_1'];
+			
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText(number_format($rapportCHOL,2),
+					$this->_leftMargin+130,
+					$this->_yPosition+9);
+			
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_ITALIC), 9);
+			$this->_page->drawText(iconv ( 'UTF-8', 'ISO-8859-1', "N:< 4,5" ),
+					$this->_leftMargin+195,
+					$this->_yPosition+9);
+			
+			//Affichage de la conclusion du rapport
+			if($rapportCHOL >= 4.5 && $rapportCHOL <= 5){
+				$conclusion_rapport_chol_hdl = "Risque d'athérogène faible";
+			}else if($rapportCHOL > 5 && $rapportCHOL <= 6.5){
+				$conclusion_rapport_chol_hdl = "Risque d'athérogène modéré";
+			}else if($rapportCHOL > 6.5){
+				$conclusion_rapport_chol_hdl = "Risque d'athérogène élevé";
+			}else{
+				$conclusion_rapport_chol_hdl = "RAS";
+			}
+			
+			
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 9);
+			$this->_page->drawText("Conclusion :",
+					$this->_leftMargin+270,
+					$this->_yPosition+9);
+			$this->_page->setLineColor(new ZendPdf\Color\Html('#000000'));
+			$this->_page->setLineWidth(0.5);
+			$this->_page->drawLine($this->_leftMargin+270,
+					$this->_yPosition +8,
+					$this->_pageWidth -
+					$this->_leftMargin-177,
+					$this->_yPosition +8);
+			
+			$this->_page->setFont(Font::fontWithName(ZendPdf\Font::FONT_TIMES_BOLD), 11);
+			$this->_page->drawText($conclusion_rapport_chol_hdl,
+					$this->_leftMargin+330,
+					$this->_yPosition+8);
+			
+			$this->_yPosition -= $noteLineHeight+2; //aller a la ligne suivante
+		}
+		
 		return $this->_page;
 	}
 	

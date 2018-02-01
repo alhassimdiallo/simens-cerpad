@@ -823,773 +823,336 @@ class ConsultationForm extends Form {
 				)
 		) );
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/**
-		 * ********DONNEES DE L EXAMEN PHYSIQUE***********
-		 */
-		/**
-		 * ********DONNEES DE L EXAMEN PHYSIQUE***********
-		 */
-		/*
-		$this->add ( array (
-				'name' => 'examen_donnee1',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','donnée 1') 
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-				'id'  => 'examen_donnee1'
-				)
-		) );
-		$this->add ( array (
-				'name' => 'examen_donnee2',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','donnée 2') 
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'examen_donnee2'
-				)
-		) );
-		$this->add ( array (
-				'name' => 'examen_donnee3',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','donnée 3') 
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'examen_donnee3'
-				)
-		) );
-		$this->add ( array (
-				'name' => 'examen_donnee4',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','donnée 4') 
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'examen_donnee4'
-				)
-		) );
-		$this->add ( array (
-				'name' => 'examen_donnee5',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','donnée 5') 
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'examen_donnee5'
-				)
-		) );
-		*/
-		/**
-		 * ********** EXAMENS COMPLEMENTAIRES (EXAMENS ET ANALYSE) *************
-		 */
-		/**
-		 * ********** EXAMENS COMPLEMENTAIRES (EXAMENS ET ANALYSE) *************
-		 */
-		
-		/* C)))*********ACTES******** */
-		$this->add ( array (
-				'name' => 'doppler_couleur_pulse',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Doppler couleur, pulsé, continu, tissulaire:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'doppler_couleur_pulse'
-				)
-		) );
+		/*** Données de l'examen ***/
+		/*** Données de l'examen ***/
 		
 		$this->add ( array (
-				'name' => 'echographie_de_stress',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Echographie de stress:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'echographie_de_stress'
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'holter_ecg',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Holter ECG:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'holter_ecg'
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'holter_tensionnel',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Holter tensionnel:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'holter_tensionnel'
-				)
-		) );
-		$this->add ( array (
-				'name' => 'fibroscopie_bronchique',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Fibroscopie bronchique:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'fibroscopie_bronchique'
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'fibroscopie_gastrique',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Fibroscopie gastrique:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'fibroscopie_gastrique'
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'colposcopie',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Colposcopie:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'colposcopie'
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'echographie_gynecologique',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Echographie gynécologique:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'echographie_gynecologique'
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'echographie_obstetrique',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Echographie obstétrique:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'echographie_obstetrique'
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'cpn',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'CPN:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'cpn'
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'consultation_senologie',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Consultation sénologie:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'consultation_senologie'
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'plannification_familiale',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Plannification familiale:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'plannification_familiale'
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'ecg',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'ECG:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'ecg'
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'eeg',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'EEG:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'eeg'
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'efr',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'EFR:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'efr'
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'emg',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'EMG:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'emg'
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'circoncision',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Circoncision:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'circoncision'
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'vaccination',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Vaccination:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'vaccination'
-				)
-		) );
-		
-		$this->add ( array (
-				'name' => 'soins_infirmiers',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Soins infirmiers:')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'soins_infirmiers'
-				)
-		) );
-
-		/* A)))*********ANALYSE BIOLOGIQUE******** */
-		$this->add ( array (
-				'name' => 'groupe_sanguin',
-				'type' => 'Text',
-				'options' => array (
-						'label' => 'Groupe Sanguin: '
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'groupe_sanguin'
-				)
-		) );
-		$this->add ( array (
-				'name' => 'hemogramme_sanguin',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Hemogramme sanguin' )
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'hemogramme_sanguin'
-				)
-		) );
-		$this->add ( array (
-				'name' => 'bilan_hemolyse',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Bilan de l\'hémostase:' )
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'bilan_hemolyse'
-				)
-		) );
-		$this->add ( array (
-				'name' => 'bilan_hepatique',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Bilan hépatique:' )
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'bilan_hepatique'
-				)
-		) );
-		$this->add ( array (
-				'name' => 'bilan_renal',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Bilan rénal:' )
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'bilan_renal'
-				)
-		) );
-		$this->add ( array (
-				'name' => 'bilan_inflammatoire',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Bilan inflammatoire:' )
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id'  => 'bilan_inflammatoire'
-				)
-		) );
-		/* B)))*********EXAMEN MORPHOLOGIQUE******** */
-		/**
-		 * * Les balises images dans cette partie ne sont pas utilisï¿½es**
-		 */
-		$this->add ( array (
-				'name' => 'radio',
-				'type' => 'Textarea',
-				'options' => array (
-						'label' => 'Radio:'
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id' => 'radio'
-				)
-		) );
-		/**
-		 * *** image de la radio ****
-		 */
-		$this->add ( array (
-				'name' => 'radio_image',
-				'type' => 'Image'
-		) );
-		/* --->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
-		$this->add ( array (
-				'name' => 'ecographie',
-				'type' => 'Textarea',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Echographie: ' )
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id' => 'ecographie'
-				)
-		) );
-		/**
-		 * *** image de l'ecographie ****
-		 */
-		$this->add ( array (
-				'name' => 'ecographie_image',
-				'type' => 'Image'
-		) );
-		/* --->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
-		$this->add ( array (
-				'name' => 'fibrocospie',
-				'type' => 'Textarea',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Fibroscopie: ' )
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id' => 'fibrocospie'
-				)
-		) );
-		/**
-		 * *** image de la fibroscopie ****
-		 */
-		$this->add ( array (
-				'name' => 'fibroscopie_image',
-				'type' => 'Image'
-		) );
-		/* --->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
-		$this->add ( array (
-				'name' => 'scanner',
-				'type' => 'Textarea',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Scanner: ' )
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id' => 'scanner'
-				)
-		) );
-		/**
-		 * *** image du scanner ****
-		 */
-		$this->add ( array (
-				'name' => 'scanner_image',
-				'type' => 'Image'
-		) );
-		/* --->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
-		$this->add ( array (
-				'name' => 'irm',
-				'type' => 'Textarea',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'IRM: ' )
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id' => 'irm'
-				)
-		) );
-		/**
-		 * *** image de l'irm ****
-		 */
-		$this->add ( array (
-				'name' => '$irm_image',
-				'type' => 'Image'
-		) );
-		/* --->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
-
-		/**
-		 * ********************************* DIAGNOSTICS *******************************
-		 */
-		/**
-		 * ********************************* DIAGNOSTICS *******************************
-		 */
-		$this->add ( array (
-				'name' => 'diagnostic1',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Diagnostic 1: ' )
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id' => 'diagnostic1'
-				)
-		) );
-		$this->add ( array (
-				'name' => 'diagnostic2',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Diagnostic 2: ' )
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id' => 'diagnostic2'
-				)
-		) );
-		$this->add ( array (
-				'name' => 'diagnostic3',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Diagnostic 3: ' )
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id' => 'diagnostic3'
-				)
-		) );
-		$this->add ( array (
-				'name' => 'diagnostic4',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Diagnostic 4: ' )
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id' => 'diagnostic4'
-				)
-		) );
-		
-		
-		/*** LES TYPES DE BANDELETTES URINAIRES ***/
-		/*** LES TYPES DE BANDELETTES URINAIRES ***/
-		/*** LES TYPES DE BANDELETTES URINAIRES ***/
-		$this->add ( array (
-				'name' => 'albumine',
-				'type' => 'radio',
-				'options' => array (
-						'value_options' => array (
-								'0' => 'â€“',
-								'1' => '+',
-						)
-				),
-				'attributes' => array (
-						'id' => 'albumine',
-						
-				)
-		) );
-		$this->add ( array (
-				'name' => 'croixalbumine',
-				'type' => 'radio',
-				'options' => array (
-						'value_options' => array (
-								'1' => '1',
-								'2' => '2',
-								'3' => '3',
-								'4' => '4',
-						)
-				),
-				'attributes' => array (
-						'id' => 'croixalbumine',
-		
-				)
-		) );
-		
-		
-		$this->add ( array (
-				'name' => 'sucre',
-				'type' => 'radio',
-				'options' => array (
-						'value_options' => array (
-								'0' => 'â€“',
-								'1' => '+',
-						)
-				),
-				'attributes' => array (
-						'id' => 'sucre',
-		
-				)
-		) );
-		$this->add ( array (
-				'name' => 'croixsucre',
-				'type' => 'radio',
-				'options' => array (
-						'value_options' => array (
-								'1' => '1',
-								'2' => '2',
-								'3' => '3',
-								'4' => '4',
-						)
-				),
-				'attributes' => array (
-						'id' => 'croixsucre',
-		
-				)
-		) );
-		
-		
-		
-		$this->add ( array (
-				'name' => 'corpscetonique',
-				'type' => 'radio',
-				'options' => array (
-						'value_options' => array (
-								'0' => 'â€“',
-								'1' => '+',
-						)
-				),
-				'attributes' => array (
-						'id' => 'corpscetonique',
-		
-				)
-		) );
-		$this->add ( array (
-				'name' => 'croixcorpscetonique',
-				'type' => 'radio',
-				'options' => array (
-						'value_options' => array (
-								'1' => '1',
-								'2' => '2',
-								'3' => '3',
-								'4' => '4',
-						)
-				),
-				'attributes' => array (
-						'id' => 'croixcorpscetonique',
-						'class' => 'croixcorpscetonique',
-		
-				)
-		) );
-		/*** FIN LES TYPES DE BANDELETTES URINAIRES ***/
-		/*** FIN LES TYPES DE BANDELETTES URINAIRES ***/
-		
-		
-		$this->add ( array (
-				'name' => 'observation',
-				'type' => 'Textarea',
-				'options' => array (
-						'label' => 'Observations'
-				),
-				'attributes' => array (
-						'rows' => 1,
-						'cols' => 180
-				)
-		) );
-		$this->add ( array (
-				'name' => 'submit',
-				'type' => 'Submit',
-				'options' => array (
-						'label' => 'Valider'
-				)
-		) );
-		// ************** TRAITEMENTS *************
-		// ************** TRAITEMENTS *************
-		// ************** TRAITEMENTS *************
-		/**
-		 * ************* traitement chirurgicaux ************
-		 */
-		/**
-		 * ************* traitement chirurgicaux ************
-		 */
-		$this->add ( array (
-				'name' => 'diagnostic_traitement_chirurgical',
-				'type' => 'Textarea',
-				'options' => array (
-						'label' => 'Diagnostic :'
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id' => 'diagnostic_traitement_chirurgical'
-				)
-		) );
-		$this->add ( array (
-				'name' => 'type_anesthesie_demande',
+				'name' => 'paleurDonneesExamen',
 				'type' => 'Zend\Form\Element\Select',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Type d\'anesthésie :' ),
 						'value_options' => array (
-								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Anesthésie1' ),
-								'2' => iconv ( 'ISO-8859-1', 'UTF-8', 'Anesthésie2' ),
-								'3' => iconv ( 'ISO-8859-1', 'UTF-8', 'Anesthésie3' )
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Absente' ),
+								'2' => iconv ( 'ISO-8859-1', 'UTF-8', 'Légère' ),
+								'3' => iconv ( 'ISO-8859-1', 'UTF-8', 'Modérée' ),
+								'4' => iconv ( 'ISO-8859-1', 'UTF-8', 'Sévère' ),
 						)
 				),
 				'attributes' => array (
-						'readonly' => 'readonly',
-						'id' => 'type_anesthesie_demande'
-				)
-		) );
-		$this->add ( array (
-				'name' => 'intervention_prevue',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Intervention Prévue :')
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id' => 'intervention_prevue'
-				)
-		) );
-		$this->add ( array (
-				'name' => 'numero_vpa',
-				'type' => 'Text',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'VPA Numéro:' )
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id' => 'numero_vpa'
-				)
-		) );
-		$this->add ( array (
-				'name' => 'observation',
-				'type' => 'Textarea',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Observation :' )
-				),
-				'attributes' => array (
-						'readonly' => 'readonly',
-						'id' => 'observation'
-				)
-		) );
-		$this->add ( array (
-				'name' => 'note_compte_rendu_operatoire',
-				'type' => 'Textarea',
-				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Protocole opératoire' )
-				),
-				'attributes' => array (
-						'id' => 'note_compte_rendu_operatoire'
+						'id' => 'paleurDonneesExamen',
+						'style' => 'float:right'
 				)
 		) );
 		
 		$this->add ( array (
-				'name' => 'note_compte_rendu_operatoire_instrumental',
-				'type' => 'Textarea',
+				'name' => 'ictereDonneesExamen',
+				'type' => 'Zend\Form\Element\Select',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Note :' )
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Absent' ),
+								'2' => iconv ( 'ISO-8859-1', 'UTF-8', 'Subictère' ),
+								'3' => iconv ( 'ISO-8859-1', 'UTF-8', 'Ictère franc' ),
+						)
 				),
 				'attributes' => array (
-						'id' => 'note_compte_rendu_operatoire_instrumental'
+						'id' => 'ictereDonneesExamen',
+						'style' => 'float:right'
 				)
 		) );
+		
+		$this->add ( array (
+				'name' => 'splenomegalieDonneesExamen',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Oui' ),
+								'0' => iconv ( 'ISO-8859-1', 'UTF-8', 'Non' ),
+						)
+				),
+				'attributes' => array (
+						'onchange' => 'getSplenomegalieDonneesExamen(this.value)',
+						'id' => 'splenomegalieDonneesExamen',
+						'style' => 'float:right'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'tailleDonneesExamen',
+				'type' => 'Number',
+				'attributes' => array (
+						'id' => 'tailleDonneesExamen',
+						'style' => 'float:right;width: 35%;',
+						'max' => 10,
+						'min' => 1,
+				)
+		) );
+		
+		/**ORL**/
+		$this->add ( array (
+				'name' => 'orlObstructionNasaleDonneesExamen',
+				'type' => 'checkbox',
+				'attributes' => array (
+						'id' => 'orlObstructionNasaleDonneesExamen',
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'orlRhiniteDonneesExamen',
+				'type' => 'checkbox',
+				'attributes' => array (
+						'id' => 'orlRhiniteDonneesExamen',
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'orlHypertrophieAmygdalesDonneesExamen',
+				'type' => 'checkbox',
+				'attributes' => array (
+						'id' => 'orlHypertrophieAmygdalesDonneesExamen',
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'orlAngineDonneesExamen',
+				'type' => 'checkbox',
+				'attributes' => array (
+						'id' => 'orlAngineDonneesExamen',
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'orlOtiteDonneesExamen',
+				'type' => 'checkbox',
+				'attributes' => array (
+						'id' => 'orlOtiteDonneesExamen',
+				)
+		) );
+		
+		/**Examen des poumons**/
+		$this->add ( array (
+				'name' => 'examenDesPoumonsDonneesExamen',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Normal' ),
+								'-1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Anormal' ),
+						)
+				),
+				'attributes' => array (
+						'onchange' => 'getExamenDesPoumonsDonneesExamen(this.value)',
+						'id' => 'examenDesPoumonsDonneesExamen',
+						'style' => 'float:right'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'precisionExamenDesPoumonsDonneesExamen',
+				'type' => 'Zend\Form\Element\Text',
+				'attributes' => array (
+						'id' => 'precisionExamenDesPoumonsDonneesExamen',
+						'style' => 'float:right;width:85%;'
+				)
+		) );
+		
+		/**Examen du coeur**/
+		$this->add ( array (
+				'name' => 'examenDuCoeurDonneesExamen',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Normal' ),
+								'-1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Anormal' ),
+						)
+				),
+				'attributes' => array (
+						'onchange' => 'getExamenDuCoeurDonneesExamen(this.value)',
+						'id' => 'examenDuCoeurDonneesExamen',
+						'style' => 'float:right'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'precisionExamenDuCoeurDonneesExamen',
+				'type' => 'Zend\Form\Element\Text',
+				'attributes' => array (
+						'id' => 'precisionExamenDuCoeurDonneesExamen',
+						'style' => 'float:right;width:85%;'
+				)
+		) );
+		
+		/**Examen du foie et voie biliaire**/
+		$this->add ( array (
+				'name' => 'examenDuFoieVoieBiliaireDonneesExamen',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Normal' ),
+								'2' => iconv ( 'ISO-8859-1', 'UTF-8', "Douleur de l'HCD" ),
+						)
+				),
+				'attributes' => array (
+						'id' => 'examenDuFoieVoieBiliaireDonneesExamen',
+						'style' => 'float:right'
+				)
+		) );
+		
+		/**Hanche**/
+		$this->add ( array (
+				'name' => 'examenHancheDonneesExamen',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Normal' ),
+								'2' => iconv ( 'ISO-8859-1', 'UTF-8', "Douleur" ),
+						)
+				),
+				'attributes' => array (
+						'id' => 'examenHancheDonneesExamen',
+						'style' => 'float:right'
+				)
+		) );
+		
+		/**Epaule**/
+		$this->add ( array (
+				'name' => 'examenEpauleDonneesExamen',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Normal' ),
+								'2' => iconv ( 'ISO-8859-1', 'UTF-8', "Douleur" ),
+						)
+				),
+				'attributes' => array (
+						'id' => 'examenEpauleDonneesExamen',
+						'style' => 'float:right'
+				)
+		) );
+		
+		/**Jambe**/
+		$this->add ( array (
+				'name' => 'examenJambeDonneesExamen',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Normal' ),
+								'2' => iconv ( 'ISO-8859-1', 'UTF-8', "Ulcère" ),
+						)
+				),
+				'attributes' => array (
+						'id' => 'examenJambeDonneesExamen',
+						'style' => 'float:right'
+				)
+		) );
+		
+		/**Autres données d'examen**/
+		$this->add ( array (
+				'name' => 'autresDonneesExamen',
+				'type' => 'Zend\Form\Element\Text',
+				'attributes' => array (
+						'id' => 'autresDonneesExamen',
+						'style' => 'float:right;width:78%;'
+				)
+		) );
+		
+		/**Synth&eagrave;se de la consultation du jour**/
+		$this->add ( array (
+				'name' => 'syntheseConsultationDuJourDonneesExamen',
+				'type' => 'Zend\Form\Element\Textarea',
+				'attributes' => array (
+						'id' => 'syntheseConsultationDuJourDonneesExamen',
+						'style' => 'float:right; width:85%; min-width:85%; max-width:85%; height: 100%; min-height: 100%; max-height: 100%;'
+				)
+		) );
+		
+		/**Diagnostic --- Diagnostic --- Diagnostic **/
+		/**Diagnostic --- Diagnostic --- Diagnostic **/
+		$this->add ( array (
+				'name' => 'diagnosticDuJourConsultation',
+				'type' => 'Zend\Form\Element\Textarea',
+				'attributes' => array (
+						'id' => 'diagnosticDuJourConsultation',
+						'style' => 'float:right; width: 305px; min-width:305px; max-width:305px; height: 205px; min-height: 205px; max-height: 205px;'
+				)
+		) );
+		
+		
+		/**Complications aigues --- Complications aigues **/
+		/**Complications aigues --- Complications aigues **/
+		$this->add ( array (
+				'name' => 'diagnosticComplicationsAigues',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Anémie aigue' ),
+								'2' => iconv ( 'ISO-8859-1', 'UTF-8', "Pneumonie" ),
+						)
+				),
+				'attributes' => array (
+						'id' => 'diagnosticComplicationsAigues',
+						'style' => 'float:left; width: 98%'
+				)
+		) );
+		
+		/**Complications chroniques --- Complications chroniques **/
+		/**Complications chroniques --- Complications chroniques **/
+		$this->add ( array (
+				'name' => 'diagnosticComplicationsChroniques',
+				'type' => 'Zend\Form\Element\Select',
+				'options' => array (
+						'value_options' => array (
+								'' => iconv ( 'ISO-8859-1', 'UTF-8', '' ),
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Anémie aigue' ),
+								'2' => iconv ( 'ISO-8859-1', 'UTF-8', "Pneumonie" ),
+						)
+				),
+				'attributes' => array (
+						'id' => 'diagnosticComplicationsChroniques',
+						'style' => 'float:left; width: 98%;'
+				)
+		) );
+		
+		
+		
+		
+		
+		
+		
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		/**
 		 * ************* Autres (Transfert / hospitalisation / Rendez-vous! ************
 		 */
