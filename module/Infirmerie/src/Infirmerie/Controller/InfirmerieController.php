@@ -988,8 +988,30 @@ class InfirmerieController extends AbstractActionController {
 	
 		$this->layout ()->setTemplate ( 'layout/infirmerie' );
 	
+		//$timestart = microtime(true);
+
+		//$output = $this->getPatientTable ()->getListeBilansPrelevement();
+		
+		//$timeend = microtime(true);
+		//$time = $timeend-$timestart;
+		
+		//var_dump(number_format($time,3)); exit();
+		
+		
+		
+		
 		return  array ();
 	}
+	
+	public function supprimerUnBilanAction() {
+		$idbilan = ( int ) $this->params ()->fromPost ( 'idbilan', 0 );
+		
+		$result = $this->getBilanPrelevementTable()->deleteBilanPrelevement($idbilan);
+		
+		$this->getResponse ()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html; charset=utf-8' );
+		return $this->getResponse ()->setContent ( Json::encode ( $result ) );
+	}
+	
 	
 	public function codesPrelevements($codage, $Prelevements) {
 	
@@ -2406,8 +2428,205 @@ class InfirmerieController extends AbstractActionController {
 	} 
 	
 	
+	public function listePatientsConsultesAjaxAction() {
+		$output = $this->getPatientTable ()->getListeHistoriquesConsultations();
+		return $this->getResponse ()->setContent ( Json::encode ( $output, array ( 'enableJsonExprFinder' => true ) ) );
+	}
 	
+	public function listePatientsConsultesAction() {
+		$this->layout ()->setTemplate ( 'layout/infirmerie' );
+		
+	}
 	
+	public function visualiserHistoriqueConsultationAction(){
+
+
+		$this->layout ()->setTemplate ( 'layout/infirmerie' );
+		$idpatient = $this->params ()->fromQuery ( 'idpatient' , 0);
+		$idcons = $this->params ()->fromQuery ( 'idcons' , 0);
+		$patient = $this->getPatientTable()->getPatient($idpatient);
+		$informations_parentales = $this->getPersonneTable()->getInfosParentales($idpatient);
+		
+		//---- GESTION DU TYPE DE PATIENT ----
+		//---- GESTION DU TYPE DE PATIENT ----
+		//---- GESTION DU TYPE DE PATIENT ----
+		$depistage = $this->getPatientTable()->getDepistagePatient($idpatient);
+		$depister = 0;
+		$type = "Externe";
+		$typage = "";
+		
+		if($depistage->current()){
+			$depister = 1;
+			if($depistage->current()['valide'] == 1){
+				$idTypage = $depistage->current()['typage'];
+				$typageHemoglobine = $this->getPatientTable()->getTypageHemoglobine($idTypage);
+					
+				if($depistage->current()['typepatient'] == 1){
+					$type = "Interne";
+					$typage = "(<span style='color: red;'>".$typageHemoglobine['designation']."</span>)" ;
+				}else{
+					$typage = "(".$typageHemoglobine['designation'].")" ;
+				}
+			}
+		}
+		//---- FIN GESTION DU TYPE DE PATIENT ----
+		
+		$personne = $this->getPersonneTable()->getPersonne($idpatient);
+		//---- Gestion des AGE ----
+		if($personne->age && !$personne->date_naissance){
+			$age = $personne->age." ans ";
+		}else{
+				
+			$aujourdhui = (new \DateTime() ) ->format('Y-m-d');
+			$age_jours = $this->nbJours($personne->date_naissance, $aujourdhui);
+			$age_annees = (int)($age_jours/365);
+				
+			if($age_annees == 0){
+					
+				if($age_jours < 31){
+					$age ="<span style='font-size:19px; font-family: time new romans; color: green; font-weight: bold;'> ".$age_jours." jours </span>";
+				}else if($age_jours >= 31) {
+		
+					$nb_mois = (int)($age_jours/31);
+					$nb_jours = $age_jours - ($nb_mois*31);
+					if($nb_jours == 0){
+						$age ="<span style='font-size:19px; font-family: time new romans; color: green; font-weight: bold;'> ".$nb_mois."m </span>";
+					}else{
+						$age ="<span style='font-size:19px; font-family: time new romans; color: green; font-weight: bold;'> ".$nb_mois."m ".$nb_jours."j </span>";
+					}
+						
+				}
+					
+			}else{
+				$age_jours = $age_jours - ($age_annees*365);
+					
+				if($age_jours < 31){
+						
+					if($age_annees == 1){
+						if($age_jours == 0){
+							$age ="<span style='font-size:19px; font-family: time new romans; color: green; font-weight: bold;'> ".$age_annees."an </span>";
+						}else{
+							$age ="<span style='font-size:19px; font-family: time new romans; color: green; font-weight: bold;'> ".$age_annees."an ".$age_jours." j </span>";
+						}
+					}else{
+						if($age_jours == 0){
+							$age ="<span style='font-size:19px; font-family: time new romans; color: green; font-weight: bold;'> ".$age_annees."ans </span>";
+						}else{
+							$age ="<span style='font-size:19px; font-family: time new romans; color: green; font-weight: bold;'> ".$age_annees."ans ".$age_jours."j </span>";
+						}
+					}
+		
+				}else if($age_jours >= 31) {
+		
+					$nb_mois = (int)($age_jours/31);
+					$nb_jours = $age_jours - ($nb_mois*31);
+						
+					if($age_annees == 1){
+						if($nb_jours == 0){
+							$age ="<span style='font-size:18px; font-family: time new romans; color: green; font-weight: bold;'> ".$age_annees."an ".$nb_mois."m </span>";
+						}else{
+							$html .="<span style='font-size:17px; font-family: time new romans; color: green; font-weight: bold;'> ".$age_annees."an ".$nb_mois."m ".$nb_jours."j </span>";
+						}
+							
+					}else{
+						if($nb_jours == 0){
+							$age ="<span style='font-size:18px; font-family: time new romans; color: green; font-weight: bold;'> ".$age_annees."ans ".$nb_mois."m </span>";
+						}else{
+							$age ="<span style='font-size:17px; font-family: time new romans; color: green; font-weight: bold;'> ".$age_annees."ans ".$nb_mois."m ".$nb_jours."j </span>";
+						}
+					}
+						
+				}
+					
+			}
+		}
+		//---- FIN GESTION DU TYPE DE PATIENT ----
+		//---- FIN GESTION DU TYPE DE PATIENT ----
+		//---- FIN GESTION DU TYPE DE PATIENT ----
+		
+		$consultation = $this->getConsultationTable()->getConsultation($idcons)->getArrayCopy();
+		
+		/* COMMENTER POUR LE MOMENT JUSQU'A SON UTILISATION
+		 *
+		$pos = strpos($consultation['pression_arterielle'], '/') ;
+		$tensionmaximale = substr($consultation['pression_arterielle'], 0, $pos);
+		$tensionminimale = substr($consultation['pression_arterielle'], $pos+1);
+		$data = array (
+				'tensionmaximale' => $tensionmaximale,
+				'tensionminimale' => $tensionminimale,
+		);
+		*/
+		
+		//POUR LES MOTIFS D'ADMISSION
+		//POUR LES MOTIFS D'ADMISSION
+		//POUR LES MOTIFS D'ADMISSION
+		// instancier le motif d'admission et recupï¿½rer l'enregistrement
+		$motif_admission = $this->getMotifAdmissionTable ()->getMotifAdmission ( $idcons );
+		$nbMotif = $this->getMotifAdmissionTable ()->nbMotifs ( $idcons );
+		
+		$data = array();
+		$mDouleur = array(1 => 0,2 => 0,3 => 0,4 => 0);
+		//POUR LES MOTIFS D'ADMISSION
+		$k = 1;
+		foreach ( $motif_admission as $Motifs ) {
+			$data ['motif_admission' . $k] = $Motifs ['idlistemotif'];
+				
+			//Recuperation des infos supplémentaires du motif douleur
+			if($Motifs ['idlistemotif'] == 2){
+				$mDouleur[1] = 1;
+				$mDouleur[2] = $k;
+			}
+				
+			$k ++;
+		}
+		
+		//Siege --- Siege --- Siege
+		$motif_douleur_precision = $this->getMotifAdmissionTable ()->getMotifDouleurPrecision ( $idcons );
+		if($motif_douleur_precision){
+			$mDouleur[3] = $motif_douleur_precision['siege'];
+			$mDouleur[4] = $motif_douleur_precision['intensite'];
+		}
+		
+		
+		$form = new ConsultationForm();
+		$form->populateValues($data);
+		$form->populateValues($consultation);
+		
+		$listeMotifConsultation = $this->getMotifAdmissionTable() ->getListeSelectMotifConsultation();
+		$form->get('motif_admission1')->setvalueOptions($listeMotifConsultation);
+		$form->get('motif_admission2')->setvalueOptions($listeMotifConsultation);
+		$form->get('motif_admission3')->setvalueOptions($listeMotifConsultation);
+		$form->get('motif_admission4')->setvalueOptions($listeMotifConsultation);
+		$form->get('motif_admission5')->setvalueOptions($listeMotifConsultation);
+		
+		$listeSiege = $this->getMotifAdmissionTable() ->getListeSelectSiege();
+		$form->get('siege')->setvalueOptions($listeSiege);
+		
+		
+		//$listeMotifConsultation = $this->getMotifAdmissionTable() ->getListeMotifConsultation();
+		//$listeSiege = $this->getMotifAdmissionTable() ->getListeSiege();
+		
+		
+		//RECUPERER LA LISTE DES VOIES ADMINISTRATION DES MEDICAMENTS
+		$listeVoieAdministration = $this->getConsultationTable()->getVoieAdministration($idcons);
+		
+		
+		return array(
+				'idcons' => $idcons,
+				'lesdetails' => $personne,
+				'consultation' => $consultation,
+				'nbMotifs' => $nbMotif,
+				'age' => $age,
+				'typage' => $type.' '.$typage,
+				'form' => $form,
+				'patient' => $patient,
+		
+				'mDouleur' => $mDouleur,
+				'listeVoieAdministration' => $listeVoieAdministration,
+				'informations_parentales' => $informations_parentales,
+		);
+		
+	}
 	
 	
 	

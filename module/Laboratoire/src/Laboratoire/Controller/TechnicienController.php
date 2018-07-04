@@ -121,8 +121,8 @@ class TechnicienController extends AbstractActionController {
 	}
 	
 	public function moisEnLettre($mois){
-		$lesMois = array('','Janvier','Fevrier','Mars','Avril',
-				'Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre');
+		$lesMois = array('','Janvier','F&eacute;vrier','Mars','Avril',
+				'Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','D&eacute;cembre');
 		return $lesMois[$mois];
 	}
 	
@@ -613,9 +613,15 @@ class TechnicienController extends AbstractActionController {
 	    <div style='width: 100%;' align='center' >   		
 	    <div style='width: 94%; margin-bottom: 30px; margin-top: 30px;'>
 	    <div id='accordions' align='left' >
-	    <div style='font-family: police2; font-size: 18px; font-weight: bold; background: #efefef;'>Liste des analyses &agrave; trier </div>
-	       <div style='min-height: 300px; border-top: 1px solid #cccccc;' id='listeAnalysesPreleveesTableau'>
-	       <form  id='formEnregistrementTri'  method='post' action='../technicien/enregistrer-tri-prelevement'>";		
+	    <div style='font-family: police2; font-size: 18px; font-weight: bold; background: #efefef;'>Liste des analyses &agrave; trier
+
+	       <div style='float: right;'>
+		     <img id='iconeValidTriPrevAnalyse' onclick='triSelectValeurToutConforme();' style='margin-right: 25px;  width:16px; height:16px;' src='../../public/images_icons/valider_tout.png' title='Tous conformes'>	
+		   </div>
+	    		
+	    </div>
+	    <div style='min-height: 300px; border-top: 1px solid #cccccc;' id='listeAnalysesPreleveesTableau'>
+	    <form  id='formEnregistrementTri'  method='post' action='../technicien/enregistrer-tri-prelevement'>";		
 
 	    		
 	    		
@@ -661,7 +667,7 @@ class TechnicienController extends AbstractActionController {
 	    
 	    	$html .="<input type='hidden' name='demande_".$i."'  value='".$listeAnalysesDemandees[$i]['iddemande']."'>";
 	    	$html .="<input type='hidden' name='analyse_".$i."'  value='".$listeAnalysesDemandees[$i]['idanalyse']."'>";
-	    	$html .="<td id='conformiteA' style='font-size: 10px;'> <div class='conformitePrelevement'  id='conformitePrelevement_".$listeAnalysesDemandees[$i]['idanalyse']."' > <select name='conformite_".$listeAnalysesDemandees[$i]['idanalyse']."' id='conformite' required=true onchange='getConformite(this.value,".$listeAnalysesDemandees[$i]['idanalyse'].")'> <option>  </option> <option value='1' >Conforme</option> <option value='0' style='font-size: 10px; color: red;' >Non conforme</option>  </select> </div> </td>";
+	    	$html .="<td id='conformiteA' style='font-size: 10px;'> <div class='conformitePrelevement'  id='conformitePrelevement_".$listeAnalysesDemandees[$i]['idanalyse']."' > <select name='conformite_".$listeAnalysesDemandees[$i]['idanalyse']."' id='conformite' required=true onchange='getConformite(this.value,".$listeAnalysesDemandees[$i]['idanalyse'].")' class='conformitePrelevTousConforme'> <option>  </option> <option value='1' >Conforme</option> <option value='0' style='font-size: 10px; color: red;' >Non conforme</option>  </select> </div> </td>";
 	    	$html .="<td id='noteConformiteA' style='font-size: 12px;'> <div  id='noteConformite_".$listeAnalysesDemandees[$i]['idanalyse']."' >  </div> </td>";
 	    	
 	    	
@@ -756,6 +762,18 @@ class TechnicienController extends AbstractActionController {
 	public function listeBilansTriesAction(){
 
 		$this->layout ()->setTemplate ( 'layout/technicien' );
+		
+		/*
+		$timestart = microtime(true);
+		
+		$output = $this->getBilanPrelevementTable() ->getListeBilansPrelevementTries();
+		
+		$timeend = microtime(true);
+		$time = $timeend-$timestart;
+		
+		var_dump(number_format($time,3)); exit();
+		*/
+		
 		return new ViewModel ( );
 	}
 	
@@ -862,8 +880,14 @@ class TechnicienController extends AbstractActionController {
 	    <div style='width: 100%;' align='center' >
 	    <div style='width: 94%; margin-bottom: 30px; margin-top: 30px;'>
 	    <div id='accordions' align='left' >
-	    <div style='font-family: police2; font-size: 18px; font-weight: bold; background: #efefef;'>Liste des analyses &agrave; trier </div>
-	       <div style='min-height: 300px; border-top: 1px solid #cccccc;' id='listeAnalysesPreleveesTableau'>
+	    <div style='font-family: police2; font-size: 18px; font-weight: bold; background: #efefef;'>Liste des analyses &agrave; trier   
+
+		   <div style='float: right;'>
+			 <img id='iconeSuppTriPrevAnalyse'  onclick='supprimerTriDesPrelevementsDesAnalyses(".$bilanPrelevement->idbilan.");' style='margin-left: -10px; margin-right: 25px; width:16px; height:16px;' src='../../public/images_icons/suppTri.png' title='Annuler le tri'>
+		   </div>
+		   		
+	    </div>
+	    <div style='min-height: 300px; border-top: 1px solid #cccccc;' id='listeAnalysesPreleveesTableau'>
 	       <form  id='formEnregistrementTri'  method='post' action='../technicien/modifier-tri-prelevement'>";
 	
 		 
@@ -965,14 +989,17 @@ class TechnicienController extends AbstractActionController {
 				$html .="
 				<script> 
 					$('#conformite_".$idanalyse."').val('".$conformite."').attr('disabled', true);
+					$('#iconeSuppTriPrevAnalyse').toggle(false);
 				</script>
 				";
+				
 			}else {
 				$html .="
 				<script> 
 					$('#conformite_".$idanalyse."').val('".$conformite."');
 				</script>
 				";
+			
 			}
 			
 			
@@ -1012,6 +1039,7 @@ class TechnicienController extends AbstractActionController {
 			
 		}
 		
+		
 		$html .="
 				<script>
 				  $('a,img,span,div').tooltip({ animation: true, html: true, placement: 'bottom', show: { effect: 'slideDown', delay: 250 } });
@@ -1023,6 +1051,22 @@ class TechnicienController extends AbstractActionController {
 		return $this->getResponse ()->setContent ( Json::encode ( $html ) );
 	}
 	
+	public function supprimerUnTriAction(){
+
+		$idbilan = ( int ) $this->params ()->fromPost ( 'idbilan', 0 );
+		
+		$tabAnalysesAyantResultats = $this->getBilanPrelevementTable() ->getListeAnalysesTrieesDuBilanAyantResultats($idbilan);
+		
+		$result = 0;
+		if(!$tabAnalysesAyantResultats){
+			$this->getTriPrelevementTable()->deleteTriPrelevement($idbilan);
+			$result = 1;
+		}
+		
+		$this->getResponse ()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html; charset=utf-8' );
+		return $this->getResponse ()->setContent ( Json::encode ( $result ) );
+		
+	}
 	
 	public function modifierTriPrelevementAction(){
 	
@@ -8496,7 +8540,14 @@ class TechnicienController extends AbstractActionController {
 	function item_percentage($item, $total){
 	
 		if($total){
-			return number_format(($item * 100 / $total), 1);
+			
+			$valeur = ($item * 100 / $total);
+			if(fmod($valeur, 1) !== 0.00){$valeur = number_format($valeur, 2, ',', ' ');}
+				
+			return $valeur;
+			
+			//return number_format(($item * 100 / $total), 1, ',', ' ');
+			
 		}else{
 			return 0;
 		}
@@ -8506,7 +8557,7 @@ class TechnicienController extends AbstractActionController {
 	function item_percentage_virgule_unchiffre($item, $total){
 	
 		if($total){
-			return number_format(($item * 100 / $total), 1);
+			return number_format(($item * 100 / $total), 1, ',', ' ');
 		}else{
 			return 0;
 		}
@@ -9003,7 +9054,7 @@ class TechnicienController extends AbstractActionController {
 		}
 		sort($tabProfils);
 	
-		return array($tabAnnees, $tabDonneesAnnuelle, $tabMois, $tabProfils, $tabProfilsAnneesMois);
+		return array($tabAnnees, $tabDonneesAnnuelle, $tabMois, $tabProfils, $tabProfilsAnneesMois, count($listeResultatsDepistages));
 	}
 	
 	
@@ -9036,7 +9087,7 @@ class TechnicienController extends AbstractActionController {
 			$infosStatistique = $this->infosStatistiquesParametreesAction($typeInfos, $date_debut, $date_fin);
 		}
 	
-		$pdf = new infosStatistiquePdf();
+		$pdf = new infosStatistiquePdf('L','mm','A4');
 		$pdf->SetMargins(13.5,13.5,13.5);
 		$pdf->setTabInformations($infosStatistique);
 			
