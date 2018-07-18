@@ -127,6 +127,8 @@ class TechnicienController extends AbstractActionController {
 	}
 	
 	public function listeBilansAction() {
+		$this->layout ()->setTemplate ( 'layout/technicien' );
+		
 		
 		//$listeBilan = $this->getBilanPrelevementTable()->pourCorrection();
 		//var_dump($listeBilan); exit();
@@ -138,8 +140,12 @@ class TechnicienController extends AbstractActionController {
 		//$listeResultatsDepistages = $this->getResultatsDepistagesTable()->getResultatsDepistages();
 		//var_dump($listeResultatsDepistages); exit();
 		
-		$this->layout ()->setTemplate ( 'layout/technicien' );
-		$bilanPrelevement = $this->getBilanPrelevementTable() ->getBilanPrelevementRepris(12);
+		//$bilanPrelevement = $this->getBilanPrelevementTable() ->getBilanPrelevementRepris(12);
+		
+		
+		//$listeResultatsDepistages = $this->getResultatsDepistagesTable()->getPatientsDepistagesSansResultat();
+		
+		//var_dump($listeResultatsDepistages); exit();
 		
 		return new ViewModel ( );
 		
@@ -8620,7 +8626,7 @@ class TechnicienController extends AbstractActionController {
 				   <tr class="ligneTitreTableauInfos">
 				     <td style="width: 16%; height: 40px;">P&eacute;riodes</td>';
 				     
-		        if(count($tabProfils) == 0){ $largeur = 72; }else{ $largeur = 65/count($tabProfils); }
+		        if(count($tabProfils) == 0){ $largeur = 72; }else{ $largeur = 72/count($tabProfils); }
 		
 				for($iProf=0 ; $iProf<count($tabProfils) ;$iProf++){
 					$html .='
@@ -8738,8 +8744,8 @@ class TechnicienController extends AbstractActionController {
 		$html .="<script> $('#dateDebutPeriodeDiag div').html('".$control->convertDate($intervalleDate[0])."'); </script>";
 		$html .="<script> $('#dateFinPeriodeDiag div').html('".$control->convertDate($intervalleDate[1])."'); </script>";
 		$html .="<script> $('.champOP1 input, .champOP2 input').attr({'min':'".$intervalleDate[0]."', 'max':'".$intervalleDate[1]."'}); </script>";
-		$html .="<script> setTimeout(function(){ $('.champOP1 input').val('".$intervalleDate[0]."'); },1000); </script>";
-		$html .="<script> setTimeout(function(){ $('.champOP2 input').val('".$intervalleDate[1]."'); },1000); </script>";
+		$html .="<script> $('.champOP1 input').val('".$intervalleDate[0]."'); </script>";
+		$html .="<script> $('.champOP2 input').val('".$intervalleDate[1]."'); </script>";
 		
 		
 		$html .="<script> var nbkligne = ".$kligne."; $('.tableauInfosTotalDepistage tr').html('".$piedTotal."'); </script>";
@@ -8836,7 +8842,7 @@ class TechnicienController extends AbstractActionController {
 				   <tr class="ligneTitreTableauInfos">
 				     <td style="width: 16%; height: 40px;">P&eacute;riodes</td>';
 
-		if(count($tabProfils) == 0){ $largeur = 72; }else{ $largeur = 65/count($tabProfils); }
+		if(count($tabProfils) == 0){ $largeur = 72; }else{ $largeur = 72/count($tabProfils); }
 		
 		for($iProf=0 ; $iProf<count($tabProfils) ;$iProf++){
 			$html .='
@@ -9099,6 +9105,192 @@ class TechnicienController extends AbstractActionController {
 		$pdf->ImpressionInfosStatistiques();
 		$pdf->Output('I');
 			
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Liste des patients dépistés n'ayant pas de résultat (renseigné par un technicien)
+	 * Liste des patients dépistés n'ayant pas de résultat (renseigné par un technicien)
+	 * Liste des patients dépistés n'ayant pas de résultat (renseigné par un technicien)
+	 */
+	public function infosStatistiquesDepistagesNayantPasResultatAction(){
+	
+		$listeResultatsDepistages = $this->getResultatsDepistagesTable()->getPatientsDepistagesSansResultat();
+		$intervalleDate = $this->getResultatsDepistagesTable() ->getMinMaxDateResultatsDepistages();
+	
+		$tabAnnees = array();
+		$tabDonneesAnnuelle = array();
+		$tabMois = array();
+		$tabProfils = array();
+		$tabProfilsAnneesMois = array();
+		
+		$tabNumDossier = array();
+		$tabNumDossierAnneesMois = array();
+	
+		for($i=0 ; $i<count($listeResultatsDepistages) ; $i++){
+	
+			$annee_naissance = $listeResultatsDepistages[$i]['annee_prelevement'];
+			if(!in_array($annee_naissance, $tabAnnees)){
+				$tabAnnees[] = $annee_naissance;
+				$tabDonneesAnnuelle[$annee_naissance] = array();
+				$tabMois[$annee_naissance] = array();
+			}
+	
+			$mois_naissance = $listeResultatsDepistages[$i]['mois_prelevement'];
+			$tabDonneesAnnuelle[$annee_naissance][] = $mois_naissance;
+	
+			if(!in_array($mois_naissance, $tabMois[$annee_naissance])){
+				$tabMois[$annee_naissance][] = $mois_naissance;
+				$tabProfilsAnneesMois[$annee_naissance][$mois_naissance] = array();
+				$tabNumDossierAnneesMois[$annee_naissance][$mois_naissance] = array();
+			}
+	
+			$profil = $listeResultatsDepistages[$i]['profil'];
+			$tabProfilsAnneesMois[$annee_naissance][$mois_naissance][] = $profil;
+			
+			$tabNumDossierAnneesMois[$annee_naissance][$mois_naissance][] = $listeResultatsDepistages[$i]['numero_dossier'];
+	
+			if(!in_array($profil, $tabProfils)){
+				$tabProfils[] = $profil;
+			}
+	
+			
+		}
+	
+		$html = '<table class="titreTableauInfosStatistiquesDNPR">
+				   <tr class="ligneTitreTableauInfosDNPR">
+				     <td style="width: 30%; height: 40px;">P&eacute;riodes</td>';
+		 
+		$html .='<td style="width: 50%; height: 40px; text-align: center; color: black; font-family: times new roman; font-size: 18px; font-weight: bold; "> Num&eacute;ro dossier </td>';
+		$html .='<td style="width: 20%; height: 40px; text-align: center; font-family: Goudy Old Style; font-size: 20px; ">Total</td>
+				 </tr>
+				 </table>';
+	
+	
+		$nombrePatientDepistes = 0;
+		$kligne = 0;
+	
+		$html .="<div id='listeTableauInfosStatistiquesDNPR'>
+		         <table class='tableauInfosStatistiquesDNPR'>";
+	
+		sort($tabAnnees);
+		for($i=0 ; $i<count($tabAnnees) ; $i++){
+	
+			$annee = $tabAnnees[$i];
+			$tabDonneesAnnee = array_count_values($tabDonneesAnnuelle[$annee]);
+			sort($tabMois[$annee]); //ordonne la liste des mois
+			$tabIndexDonnees = $tabMois[$annee];
+				
+				
+			for($ij=0 ; $ij<count($tabIndexDonnees) ; $ij++){
+				$mois = $tabIndexDonnees[$ij];
+				$listeProfils = array_count_values($tabProfilsAnneesMois[$annee][$mois]);
+				
+				$listeNumDossier = $tabNumDossierAnneesMois[$annee][$mois];
+	
+				if($ij==0){
+					$html .='<tr style="width: 100%; " class="couleurLigne_'.$kligne.'">
+				             <td class="infosPath periodeInfosLigne" style="width: 30%; height: 40px; padding-left: 15px; font-family: police2; font-size: 20px;">'. $this->moisEnLettre($mois).' '.$annee.' </td>';
+
+					
+					$listeNumDossierChaine = "";
+					
+				    for($iNumDossier=0 ; $iNumDossier<count($listeNumDossier) ;$iNumDossier++){
+				    	
+				    	$listeNumDossierChaine .= $listeNumDossier[$iNumDossier].",";
+				    	if($iNumDossier+1 == count($listeNumDossier)){
+				    		$voirPlus = "";
+				    		if(count($listeNumDossier) > 1){ $voirPlus='<span class="voirPlusNumDossier_'.$i.''.$ij.'" style="margin-top: 22px;"></span> <span onclick="voirPlusNumeroDossier('.$i.','.$ij.',\''.$listeNumDossierChaine.'\');" style="position: absolute; font-size: 25px; color: red; cursor: pointer; font-weight: bold; ">+</span>'; }
+				    		$html .='<td class="infosPath" style="width: 50%; height: 40px; text-align: center; padding-right: 15px; font-family: Goudy Old Style; font-size: 21px; font-weight: normal; color: green;"> '.$listeNumDossier[0].' <span style="font-size: 13px; color: black; align: right;"> '.$voirPlus.' </span></td>';		
+				    	}
+					}
+					 
+					
+					$html .='<td class="infosPath DepPourcentageTotalEnLigne_'.$kligne.'" style="width: 20%; height: 40px; text-align: right; padding-right: 15px; font-family: Goudy Old Style; font-size: 22px; font-weight: bold; border-left: 2.5px solid #cccccc;"><span>'.$tabDonneesAnnee[$mois].'</span></td>
+				             </tr>';
+	
+	
+				}else{
+					$html .='<tr style="width: 100%; " class="couleurLigne_'.$kligne.'">
+				             <td class="infosPath periodeInfosLigne" style="width: 30%; height: 40px; padding-left: 15px; font-family: police2; font-size: 20px;">'. $this->moisEnLettre($mois).' '.$annee.' </td>';
+					 
+					
+					$listeNumDossierChaine = "";
+					
+				    for($iNumDossier=0 ; $iNumDossier<count($listeNumDossier) ;$iNumDossier++){
+				    	
+				    	$listeNumDossierChaine .= $listeNumDossier[$iNumDossier].",";
+				    	if($iNumDossier+1 == count($listeNumDossier)){
+				    		$voirPlus = "";
+				    		if(count($listeNumDossier) > 1){ $voirPlus='<span class="voirPlusNumDossier_'.$i.''.$ij.'" style="margin-top: 22px;"></span> <span onclick="voirPlusNumeroDossier('.$i.','.$ij.',\''.$listeNumDossierChaine.'\');" style="position: absolute; font-size: 25px; color: red; cursor: pointer; font-weight: bold; ">+</span>'; }
+				    		$html .='<td class="infosPath" style="width: 50%; height: 40px; text-align: center; padding-right: 15px; font-family: Goudy Old Style; font-size: 21px; font-weight: normal; color: green;"> '.$listeNumDossier[0].' <span style="font-size: 13px; color: black; align: right;"> '.$voirPlus.' </span></td>';		
+				    	}
+					}
+					 
+					
+					$html .='<td class="infosPath DepPourcentageTotalEnLigne_'.$kligne.'" style="width: 20%; height: 40px; text-align: right; padding-right: 15px; font-family: Goudy Old Style; font-size: 22px; font-weight: bold; border-left: 2.5px solid #cccccc;"><span>'.$tabDonneesAnnee[$mois].'</span></td>
+				         </tr>';
+	
+				}
+	
+	
+				if(($kligne%2)==0){
+					$html .='<script>$(".tableauInfosStatistiquesDNPR .couleurLigne_'.$kligne.'").css({"background":"#f9f9f9"}); </script>';
+				}
+	
+				$kligne++;
+				$nombrePatientDepistes += $tabDonneesAnnee[$mois];
+				
+			}
+				
+	
+		}
+	
+		$html .="</table>
+                 </div>";
+
+		
+		$html .= '<table class="titreTableauInfosStatistiquesDNPR">
+				   <tr class="ligneTitreTableauInfosDNPR">
+				     <td style="width: 30%; height: 40px;"></td>';
+			
+		$html .='<td style="width: 50%; height: 40px; text-align: right; color: black; font-family: times new roman; font-size: 18px; font-weight: bold; "> Total </td>';
+		$html .='<td style="width: 20%; height: 40px; text-align: right; font-family: Goudy Old Style; font-size: 22px; padding-right: 16px; font-weight: bold;">'.$nombrePatientDepistes.'</td>
+				 </tr>
+				 </table>';
+
+		
+		
+		$this->getResponse ()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html; charset=utf-8' );
+		return $this->getResponse ()->setContent ( Json::encode ( $html ) );
 	}
 	
 }

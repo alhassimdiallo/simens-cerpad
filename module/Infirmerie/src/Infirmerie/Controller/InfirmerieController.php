@@ -26,6 +26,7 @@ class InfirmerieController extends AbstractActionController {
 	protected $consultation;
 	protected $motifAdmissionTable;
 	protected $demandeAnalyseTable;
+	protected $listeBilanPrelevement;
 	
 	public function getFacturationTable() {
 	    if (! $this->facturationTable) {
@@ -105,6 +106,14 @@ class InfirmerieController extends AbstractActionController {
 			$this->demandeAnalyseTable = $sm->get ( 'Infirmerie\Model\DemandeAnalyseTable' );
 		}
 		return $this->demandeAnalyseTable;
+	}
+	
+	public function getListeBilanPrelevementTable() {
+		if (! $this->listeBilanPrelevement) {
+			$sm = $this->getServiceLocator ();
+			$this->listeBilanPrelevement = $sm->get ( 'Infirmerie\Model\ListeBilanPrelevementTable' );
+		}
+		return $this->listeBilanPrelevement;
 	}
 	//=============================================================================================
 	//---------------------------------------------------------------------------------------------
@@ -977,7 +986,8 @@ class InfirmerieController extends AbstractActionController {
 	
 
 	public function listeBilanAjaxAction() {
-		$output = $this->getPatientTable ()->getListeBilansPrelevement();
+		//$output = $this->getPatientTable ()->getListeBilansPrelevement();
+		$output = $this->getListeBilanPrelevementTable()->getListeBilanPrelevement();
 		return $this->getResponse ()->setContent ( Json::encode ( $output, array (
 				'enableJsonExprFinder' => true
 		) ) );
@@ -992,13 +1002,12 @@ class InfirmerieController extends AbstractActionController {
 
 		//$output = $this->getPatientTable ()->getListeBilansPrelevement();
 		
+		//$output = $this->getListeBilanPrelevementTable()->getListeBilanPrelevement();
+		//var_dump($output); exit();
 		//$timeend = microtime(true);
 		//$time = $timeend-$timestart;
 		
 		//var_dump(number_format($time,3)); exit();
-		
-		
-		
 		
 		return  array ();
 	}
@@ -2307,7 +2316,7 @@ class InfirmerieController extends AbstractActionController {
 						if($nb_jours == 0){
 							$age ="<span style='font-size:18px; font-family: time new romans; color: green; font-weight: bold;'> ".$age_annees."an ".$nb_mois."m </span>";
 						}else{
-							$html .="<span style='font-size:17px; font-family: time new romans; color: green; font-weight: bold;'> ".$age_annees."an ".$nb_mois."m ".$nb_jours."j </span>";
+							$age ="<span style='font-size:17px; font-family: time new romans; color: green; font-weight: bold;'> ".$age_annees."an ".$nb_mois."m ".$nb_jours."j </span>";
 						}
 							
 					}else{
@@ -2436,6 +2445,10 @@ class InfirmerieController extends AbstractActionController {
 	public function listePatientsConsultesAction() {
 		$this->layout ()->setTemplate ( 'layout/infirmerie' );
 		
+		//$listeDemande = $this->getDemandeAnalyseTable()->getDemandeAnalyse();
+		//$intervalleDate = $this->getDemandeAnalyseTable()->getMinMaxDateDemandeAnalyse();
+		
+		//var_dump($intervalleDate); exit();
 	}
 	
 	public function visualiserHistoriqueConsultationAction(){
@@ -2525,7 +2538,7 @@ class InfirmerieController extends AbstractActionController {
 						if($nb_jours == 0){
 							$age ="<span style='font-size:18px; font-family: time new romans; color: green; font-weight: bold;'> ".$age_annees."an ".$nb_mois."m </span>";
 						}else{
-							$html .="<span style='font-size:17px; font-family: time new romans; color: green; font-weight: bold;'> ".$age_annees."an ".$nb_mois."m ".$nb_jours."j </span>";
+							$age ="<span style='font-size:17px; font-family: time new romans; color: green; font-weight: bold;'> ".$age_annees."an ".$nb_mois."m ".$nb_jours."j </span>";
 						}
 							
 					}else{
@@ -2776,10 +2789,14 @@ class InfirmerieController extends AbstractActionController {
 			$html .="<script> setTimeout(function(){ $('.affichageInfosTotalDepistage').css('margin-right', '0px'); }); </script>";
 		}
 		
+		$control = new DateHelper();
+		
 		$html .="<script> $('.infosPathTotalDepiste span').html('".$nombrePatientDepistes."'); </script>";
 		$html .="<script> $('.champOP1 input, .champOP2 input').attr({'min':'".$intervalleDate[0]."', 'max':'".$intervalleDate[1]."'}); </script>";
 		
-		$control = new DateHelper();
+		$html .="<script> $('.champOP1 input').val('".$intervalleDate[0]."'); </script>";
+		$html .="<script> $('.champOP2 input').val('".$intervalleDate[1]."'); </script>";
+		
 		$html .="<script> $('#dateDebutPeriodeDiag div').html('".$control->convertDate($intervalleDate[0])."'); </script>";
 		$html .="<script> $('#dateFinPeriodeDiag div').html('".$control->convertDate($intervalleDate[1])."'); </script>";
 		$html .="<script> var nbkligne = ".$kligne."; </script>";

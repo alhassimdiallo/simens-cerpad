@@ -1868,7 +1868,7 @@ class PatientTable {
 	
 		/*
 		 * SQL queries
-		* Liste des patients admis deja consultés aujourd'hui par l'infirmier
+		* Liste des patients admis deja consultés les jours précédents par l'infirmier
 		*/
 		$sql = new Sql($db);
 		$sQuery = $sql->select()
@@ -1884,7 +1884,15 @@ class PatientTable {
 		$iFilteredTotal = count($rResultFt);
 			
 		$rResult = $rResultFt;
-			
+
+		$output = array(
+				//"sEcho" => intval($_GET['sEcho']),
+				//"iTotalRecords" => $iTotal,
+				//"iTotalDisplayRecords" => $iFilteredTotal,
+				
+				"aaData" => array()
+		);
+		
 		/*
 		 * ADRESSE URL RELATIF
 		*/

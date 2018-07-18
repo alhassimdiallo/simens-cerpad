@@ -217,7 +217,9 @@ return array(
             		'infos-statistiques-resultats-depistages-optionnelles' => 'technicien',
             		'imprimer-informations-statistiques-depistages' => 'technicien',
             			
-            		'supprimer-un-tri' => 'technicien'
+            		'supprimer-un-tri' => 'technicien',
+            			
+            		'infos-statistiques-depistages-nayant-pas-resultat' => 'technicien',
             	),	
             		
             		
