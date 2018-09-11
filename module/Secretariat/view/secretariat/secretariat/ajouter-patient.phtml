@@ -83,7 +83,16 @@ echo $this->form ()->openTag ( $form );
                      <td > <?php echo $this->formRow($this->form->get('nom'));?></td>
                      <td > <?php echo $this->formRow($this->form->get('telephone'));?></td>
                      <td > <?php echo $this->formRow($this->form->get('situation_matrimoniale'));?></td>
-                     <td style='display: none;'> <?php echo $this->formRow($this->form->get('ethnie'));?></td>
+                     <td style='display: none;'> 
+                       <?php echo $this->formRow($this->form->get('ethnie'));?>
+                       <script> 
+                         var listeDesEthnies = [];
+                         var iEth = 0;
+                         <?php foreach($this->listeEthniesDepistes as $Liste) {?>
+                           listeDesEthnies[iEth++] = "<?php echo $Liste['ethnie']; ?>"; 
+                         <?php } ?>
+                       </script>
+                     </td>
                   </tr>
 
                   <tr class="comment-form-patient">
@@ -303,6 +312,8 @@ echo $this->form ()->openTag ( $form );
 	     return false;
 	});
 
+    $( "#ethnie" ).autocomplete({ source: listeDesEthnies });
+    
     //Envoyer le formulaire
     //Envoyer le formulaire
     $('#terminer').click(function(){ 

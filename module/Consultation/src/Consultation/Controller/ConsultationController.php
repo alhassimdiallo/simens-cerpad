@@ -2556,7 +2556,7 @@ class ConsultationController extends AbstractActionController {
 	function item_percentage($item, $total){
 	
 		if($total){
-			return number_format(($item * 100 / $total), 1);
+			return number_format(($item * 100 / $total), 1,',', ' ');
 		}else{
 			return 0;
 		}
@@ -2576,6 +2576,10 @@ class ConsultationController extends AbstractActionController {
 	public function informationsStatistiquesAction() {
 		$this->layout ()->setTemplate ( 'layout/consultation' );
 		
+		/*
+		 * INFOS GENERAL --- INFOS GENERAL --- INFOS GENERAL
+		 * INFOS GENERAL --- INFOS GENERAL --- INFOS GENERAL
+		 */
 		$nbPatientD   = $this->getDepistageTable()->getNbPatientsDepistes();
 		$nbPatientDN  = $this->getDepistageTable()->getNbPatientsDepistesNegatifs();
 		$nbPatientDP  = $this->getDepistageTable()->getNbPatientsDepistesPositifs();
@@ -2602,6 +2606,56 @@ class ConsultationController extends AbstractActionController {
 		$pourcentageProfilsPatientsInterne = $this->pourcentage_element_tab($tableau, $totalProfilsPatientsInterne);
 		
 		
+		/*
+		 * AUTRES INFOS --- AUTRES INFOS --- AUTRES INFOS
+		 * AUTRES INFOS --- AUTRES INFOS --- AUTRES INFOS
+		 */
+		/**
+		  Nouveau-nés dépistés avec sex-ratio
+		  Nouveau-nés dépistés avec sex-ratio
+		  Nouveau-nés dépistés avec sex-ratio*/
+		$nbPatientDVSF = $this->getDepistageTable()->getNbPatientsDepistesValidesSexeFeminin();
+		$nbPatientDVSM = $this->getDepistageTable()->getNbPatientsDepistesValidesSexeMasculin();
+		
+		$nbPatientDnVSF = $this->getDepistageTable()->getNbPatientsDepistesNonValidesSexeFeminin(); 
+		$nbPatientDnVSM = $this->getDepistageTable()->getNbPatientsDepistesNonValidesSexeMasculin(); 
+
+		//Pourcentage des dépistages validés
+		//Pourcentage des dépistages validés
+		$tabNbDepistagesValides = array($nbPatientDVSM, $nbPatientDVSF);
+		$pourcentageDepistagesValides = $this->pourcentage_element_tab($tabNbDepistagesValides, ($nbPatientDVSM+$nbPatientDVSF));
+		
+		
+		/**
+		 Répartition des nouveau-nés selon leurs ethnies
+		 Répartition des nouveau-nés selon leurs ethnies
+		 Répartition des nouveau-nés selon leurs ethnies*/
+		$peresNouveauNesSelonEthnies = $this->getDepistageTable()->getRepartitionDesPeresSelonEthnies();
+		$totalNouveauNes = array_sum($peresNouveauNesSelonEthnies[1]);
+		$tableauNouveauNes = array_values($peresNouveauNesSelonEthnies[1]);
+		
+		$pourcentagePeresNouveauNesSelonEthnies = $this->pourcentage_element_tab($tableauNouveauNes, $totalNouveauNes);
+		
+		/**
+		  Les différents types d'hémoglobine rencontrés
+		  Les différents types d'hémoglobine rencontrés
+		  Les différents types d'hémoglobine rencontrés*/
+		$differentsTypesProfils = $this->getDepistageTable()->getDifferentsTypesProfils();
+		$totalDifferentsTypages = array_sum($differentsTypesProfils[1]);
+		$tableauDifferentsTypages = array_values($differentsTypesProfils[1]);
+		
+		$pourcentageDifferentsTypesProfils = $this->pourcentage_element_tab($tableauDifferentsTypages, $totalDifferentsTypages);
+		
+		/**
+		 * Répartition des différents types d'hémoglobine selon les ethnies
+		 * Répartition des différents types d'hémoglobine selon les ethnies
+		 * Répartition des différents types d'hémoglobine selon les ethnies*/
+		
+		$repartitionTypesProfilsSelonEthnies = $this->getDepistageTable()->getRepartitionTypesProfilsSelonEthnies();
+		
+		
+		//var_dump($repartitionTypesProfilsSelonEthnies[2]['Bambara']); exit();
+		
 		return array (
 				'nbPatientD'   => $nbPatientD,
 				'nbPatientDN'  => $nbPatientDN,
@@ -2611,8 +2665,18 @@ class ConsultationController extends AbstractActionController {
 				'pourcentageDepister' => $pourcentageDepister,
 				'pourcentageDepisterPositif' => $pourcentageDepisterPositif,
 				'pourcentageProfilsPatientsInterne' => $pourcentageProfilsPatientsInterne,
-				
 				'typagesPatientsInternes' => $typagesPatientsInternes,
+				
+				
+				'nbPatientDVSF' => $nbPatientDVSF,
+				'nbPatientDVSM' => $nbPatientDVSM,
+				'pourcentageDepistagesValides' => $pourcentageDepistagesValides,
+				'peresNouveauNesSelonEthnies' => $peresNouveauNesSelonEthnies,
+				'pourcentagePeresNouveauNesSelonEthnies' => $pourcentagePeresNouveauNesSelonEthnies,
+				
+				'differentsTypesProfils' => $differentsTypesProfils,
+				'pourcentageDifferentsTypesProfils' => $pourcentageDifferentsTypesProfils,
+				'repartitionTypesProfilsSelonEthnies' => $repartitionTypesProfilsSelonEthnies,
 		);
 		
 	}

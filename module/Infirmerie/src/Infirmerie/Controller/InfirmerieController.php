@@ -169,9 +169,19 @@ class InfirmerieController extends AbstractActionController {
 		//$intervalleDate = $this->getDemandeAnalyseTable()->getMinMaxDateDemandeAnalyse();
 		//var_dump($intervalleDate); exit();
 		
-		return  array ();
+		$output = $this->getPatientTable ()->getListePatientsAdmisPrelevement();
+		$nbDemandes = count($output['aaData']);
+		
+		return  array ('nbDemandes' => $nbDemandes,);
 	}
 	
+	public function getNbPatientAdmisAction() {
+		$output = $this->getPatientTable ()->getListeDemandesDesPatients();
+		$nbDemandes = count($output['aaData']);
+	
+		$this->getResponse ()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html; charset=utf-8' );
+		return $this->getResponse ()->setContent ( Json::encode ( $nbDemandes ) );
+	}
 	
 	public function numeroFacture() {
 		$derniereFacturation = $this->getFacturationTable()->getDerniereFacturation();
