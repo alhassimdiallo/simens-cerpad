@@ -40,6 +40,7 @@ $(window).load(function () {
 
 
     <script type="text/javascript"> 
+    
      var ordonnees = [];
      var abcisses  = [];
      var i = 1;
@@ -55,7 +56,7 @@ $(window).load(function () {
 
      <?php } ?>
 
-
+     //===============================================================================
      
      var ordEthnie = [];
      var absEthnie = [];
@@ -70,7 +71,7 @@ $(window).load(function () {
 
      <?php }?>
 
-
+     //=================================================================================
      
      var ordTypeHemo = [];
      var absTypeHemo = [];
@@ -85,7 +86,8 @@ $(window).load(function () {
 
      <?php }?>
 
-     
+     //==================================================================================
+
     </script>
     
 
@@ -103,6 +105,8 @@ $(window).load(function () {
     //Patients depistés
 	function patientsDepistes() {
 		var patientsDepistes = new CanvasJS.Chart("patientsDepistes", {
+			animationEnabled: true,
+			animationDuration: 2000,
 			data: [{
 				type: "column",
 				dataPoints: [
@@ -121,6 +125,8 @@ $(window).load(function () {
 	//Patients internes
 	function patientsInternes() {
 		var patientsInternes = new CanvasJS.Chart("patientsInternes", {
+			animationEnabled: true,
+			animationDuration: 2000,
 			data: [{
 				type: "pie",
 				dataPoints: [
@@ -147,6 +153,9 @@ $(window).load(function () {
 
 	function typagePatientsInternes() {
 		var typagePatientsInternes = new CanvasJS.Chart("typagePatientsInternes", {
+
+			animationEnabled: true,
+			animationDuration: 2000,
 			data: [{
 				type: "bar",
 				dataPoints: Pile
@@ -216,6 +225,17 @@ $(window).load(function () {
 		});
 		lesDifferentsTypesHemoglobineRencontresPie.render();
 	}
+
+
+
+	//Répartition des différents types d'hémoglobine selon l'ethnie
+	//Répartition des différents types d'hémoglobine selon l'ethnie
+
+	
+
+
+
+
 	
 	
 	//APPEL DES FONCTIONS
@@ -609,7 +629,88 @@ $(window).load(function () {
 	             
 	          </tr>  
 	          
+	          
+	          
+	          <tr style="width: 100%;"> 
+	          
+	            <!-- PREMIERE COLONNE -->
+	            <!-- PREMIERE COLONNE -->
+	            <td colspan="2" style="width: 100%; height: 150px; background: indig; text-align: center; border-top: 2px solid #cccccc; vertical-align: top; ">
 	             
+	              <!-- Les professions rencontrées chez les mères et chez les pères -->
+	              <!-- Les professions rencontrées chez les mères et chez les pères -->
+	              
+	              <div style="width: 100%; font-family: Goudy Old Style; font-size: 21px; font-weight: normal; margin-top: 10px;"> 
+	                <span style="font-size: 16px; color: green; font-weight: bold;">&#9883;</span> Les professions rencontr&eacute;es chez les m&egrave;res  
+	              </div>
+	            
+	              <div style="width: 100%;" align="center">
+	               <div style="width: 100%; margin-top: 5px; max-width: 1090px; overflow: auto; margin-bottom: 15px; font-family: Goudy Old Style;" >
+	                <table style="height: 36px; border: 1px solid #cccccc;">
+	                  <tr style="height: 18px; border: 1px solid #cccccc;">
+	                    <?php for( $i = 0 ; $i < count($this->repartitionProfessionChezLesMeres[0]) ; $i++){ ?>
+    	                  <td style="min-width: 90px; border: 2px solid #cccccc; padding-left: 10px; padding-right: 5px; font-weight: bold; text-align: center;"> <?php echo $this->repartitionProfessionChezLesMeres[0][$i]; ?> </td>
+	                    <?php } ?>
+	                  </tr>
+	                  
+	                  <tr style="height: 18px; border: 1px solid #cccccc;">
+	                    <?php for( $i = 0 ; $i < count($this->repartitionProfessionChezLesMeres[0]) ; $i++){ ?>
+    	                  <td style="border: 2px solid #cccccc; padding-left: 10px; text-align: center;"> 
+    	                    <span style="font-weight: bold;"><?php echo $this->repartitionProfessionChezLesMeres[1][$this->repartitionProfessionChezLesMeres[0][$i]].' '; ?> </span>
+    	                    <?php echo ' - ('.$this->pourcentageDifferentsProfessionMeres[$i].'%)'; ?>
+    	                  </td>
+	                    <?php } ?>
+	                  </tr>
+	                  
+	                </table>
+	               </div>
+	              </div>
+	              
+	            </td>
+	             
+	          </tr>  
+	          
+	          
+	          
+	          <tr style="width: 100%;"> 
+	          
+	            <!-- PREMIERE COLONNE -->
+	            <!-- PREMIERE COLONNE -->
+	            <td colspan="2" style="width: 100%; height: 150px; background: indig; text-align: center;  vertical-align: top; ">
+	             
+	              <!-- Les professions rencontrées chez les mères et chez les pères -->
+	              <!-- Les professions rencontrées chez les mères et chez les pères -->
+	              
+	              <div style="width: 100%; font-family: Goudy Old Style; font-size: 21px; font-weight: normal; margin-top: 10px;"> 
+	                <span style="font-size: 16px; color: green; font-weight: bold;">&#9883;</span> Les professions rencontr&eacute;es chez les p&egrave;res  
+	              </div>
+	            
+	              <div style="width: 100%;" align="center">
+	               <div style="width: 100%; margin-top: 5px; max-width: 1090px; overflow: auto; margin-bottom: 15px; font-family: Goudy Old Style;" >
+	                <table style="height: 36px; border: 1px solid #cccccc;">
+	                  <tr style="height: 18px; border: 1px solid #cccccc;">
+	                    <?php for( $i = 0 ; $i < count($this->repartitionProfessionChezLesPeres[0]) ; $i++){ ?>
+    	                  <td style="min-width: 90px; border: 2px solid #cccccc; padding-left: 10px; padding-right: 5px; font-weight: bold; text-align: center;"> <?php echo $this->repartitionProfessionChezLesPeres[0][$i]; ?> </td>
+	                    <?php } ?>
+	                  </tr>
+	                  
+	                  <tr style="height: 18px; border: 1px solid #cccccc;">
+	                    <?php for( $i = 0 ; $i < count($this->repartitionProfessionChezLesPeres[0]) ; $i++){ ?>
+    	                  <td style="border: 2px solid #cccccc; padding-left: 10px; text-align: center;"> 
+    	                    <span style="font-weight: bold;"><?php echo $this->repartitionProfessionChezLesPeres[1][$this->repartitionProfessionChezLesPeres[0][$i]].' '; ?> </span>
+    	                    <?php echo ' - ('.$this->pourcentageDifferentsProfessionPeres[$i].'%)'; ?>
+    	                  </td>
+	                    <?php } ?>
+	                  </tr>
+	                  
+	                </table>
+	               </div>
+	              </div>
+	              
+	            </td>
+	             
+	          </tr>  
+	          
 	          
 	        </table>
 	       

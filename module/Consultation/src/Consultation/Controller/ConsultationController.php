@@ -958,8 +958,6 @@ class ConsultationController extends AbstractActionController {
 		
 		$tabDonnees = $this->params ()->fromPost();
 		
-		//var_dump($tabDonnees); exit();
-		
 		/**
 		 *ANTECEDENT FAMILIAUX --- ANTECEDENTS FAMILIAUX
 		 *ANTECEDENT FAMILIAUX --- ANTECEDENTS FAMILIAUX
@@ -1008,7 +1006,7 @@ class ConsultationController extends AbstractActionController {
 		/** Résultats des examens complémentaires (Examens radiologiques) **/
 		$this->getExamenTable()->insertResultatExamenRadiologique($tabDonnees, $idmedecin);
 		
-		
+		//var_dump($tabDonnees); exit();
 		
 		/**
 		 * MOTIFS DES DEMANDES D'EXAMENS --- MOTIFS DES DEMANDES D'EXAMENS
@@ -1033,7 +1031,6 @@ class ConsultationController extends AbstractActionController {
 		$this->getDiagnosticConsultationTable()->insertComplicationsChroniques($tabDonnees, $idmedecin);
 		
 
-		
 		
 				
 		/**
@@ -1096,7 +1093,6 @@ class ConsultationController extends AbstractActionController {
 		 * FIN FIN FIN POUR LES TRAITEMENTS MEDICAMENTEUX --- POUR LES TRAITEMENTS MEDICAMENTEUX
 		 */
 		
-				
 		
 		/**
 		 * HOSPITALISATION --- HOSPITALISATION --- HOSPITALISATION
@@ -2654,7 +2650,27 @@ class ConsultationController extends AbstractActionController {
 		$repartitionTypesProfilsSelonEthnies = $this->getDepistageTable()->getRepartitionTypesProfilsSelonEthnies();
 		
 		
-		//var_dump($repartitionTypesProfilsSelonEthnies[2]['Bambara']); exit();
+		/**
+		 * Les professions rencontrées chez les mères et chez les pères
+		 * Les professions rencontrées chez les mères et chez les pères
+		 * Les professions rencontrées chez les mères et chez les pères*/
+		/** Mères --- Mères*/
+		$repartitionProfessionChezLesMeres = $this->getDepistageTable()->getRepartitionProfessionChezLesMeres();
+		$totalDifferentsProfessionMeres = array_sum($repartitionProfessionChezLesMeres[1]);
+		$tableauDifferentsProfessionMeres = array_values($repartitionProfessionChezLesMeres[1]);
+		
+		$pourcentageDifferentsProfessionMeres = $this->pourcentage_element_tab($tableauDifferentsProfessionMeres, $totalDifferentsProfessionMeres);
+		
+		/** Pères --- Pères */
+		$repartitionProfessionChezLesPeres = $this->getDepistageTable()->getRepartitionProfessionChezLesPeres();
+		$totalDifferentsProfessionPeres = array_sum($repartitionProfessionChezLesPeres[1]);
+		$tableauDifferentsProfessionPeres = array_values($repartitionProfessionChezLesPeres[1]);
+		
+		$pourcentageDifferentsProfessionPeres = $this->pourcentage_element_tab($tableauDifferentsProfessionPeres, $totalDifferentsProfessionPeres);
+		
+		//var_dump($pourcentageDifferentsProfessionMeres); exit();
+		
+		
 		
 		return array (
 				'nbPatientD'   => $nbPatientD,
@@ -2677,6 +2693,12 @@ class ConsultationController extends AbstractActionController {
 				'differentsTypesProfils' => $differentsTypesProfils,
 				'pourcentageDifferentsTypesProfils' => $pourcentageDifferentsTypesProfils,
 				'repartitionTypesProfilsSelonEthnies' => $repartitionTypesProfilsSelonEthnies,
+				
+				'repartitionProfessionChezLesMeres' => $repartitionProfessionChezLesMeres,
+				'pourcentageDifferentsProfessionMeres' => $pourcentageDifferentsProfessionMeres,
+				
+				'repartitionProfessionChezLesPeres' => $repartitionProfessionChezLesPeres,
+				'pourcentageDifferentsProfessionPeres' => $pourcentageDifferentsProfessionPeres,
 		);
 		
 	}
